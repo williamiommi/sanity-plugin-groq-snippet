@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       enabled: true,
       all: true,
-      include: ['src/components/*.{ts,tsx}', 'src/lib/*.{ts,tsx}'],
+      include: ['src/components/**/*.{ts,tsx}', 'src/lib/**/*.{ts,tsx}'],
       provider: 'v8',
       reporter: 'text',
     },
