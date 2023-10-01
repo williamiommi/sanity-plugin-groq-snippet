@@ -1,13 +1,16 @@
-import {Box, ThemeProvider} from '@sanity/ui'
+import {Box} from '@sanity/ui'
+import useFetchData from '../../hooks/useFetchData'
+import {useGroqSnippetStore} from '../../zustand/store'
 import Heading from '../Heading'
 
 const GroqSnippetTool = () => {
+  const snippets = useGroqSnippetStore((s) => s.snippets)
+  useFetchData()
   return (
-    <ThemeProvider>
-      <Box marginX={3} marginY={4}>
-        <Heading />
-      </Box>
-    </ThemeProvider>
+    <Box marginX={3} marginY={4}>
+      <Heading />
+      {snippets && <pre>{JSON.stringify(snippets, null, 2)}</pre>}
+    </Box>
   )
 }
 

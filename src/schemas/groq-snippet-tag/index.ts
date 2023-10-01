@@ -9,7 +9,7 @@ const GroqSnippetTag = defineType({
   icon: TagIcon,
   fields: [
     defineField({
-      type: 'string',
+      type: 'slug',
       name: 'name',
       title: 'Name',
     }),
