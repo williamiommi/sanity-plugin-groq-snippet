@@ -5,11 +5,17 @@ import Heading from '../Heading'
 
 const GroqSnippetTool = () => {
   const snippets = useGroqSnippetStore((s) => s.snippets)
+  const snippetsCount = useGroqSnippetStore((s) => s.snippetsCount)
   useFetchData()
   return (
     <Box marginX={3} marginY={4}>
       <Heading />
-      {snippets && <pre>{JSON.stringify(snippets, null, 2)}</pre>}
+      {snippets && (
+        <>
+          <h4>Total: {snippetsCount}</h4>
+          <pre>{JSON.stringify(snippets, null, 2)}</pre>
+        </>
+      )}
     </Box>
   )
 }

@@ -1,10 +1,20 @@
-import {GROQ_SNIPPET_TYPE} from '../types/GroqSnippet'
-import {GROQ_SNIPPET_TAG_TYPE} from '../types/GroqSnippetTag'
+import GroqSnippet, {GROQ_SNIPPET_TYPE} from '../types/GroqSnippet'
+import GroqSnippetTag, {GROQ_SNIPPET_TAG_TYPE} from '../types/GroqSnippetTag'
 
-export const ALL_SNIPPETS = `*[_type=='${GROQ_SNIPPET_TYPE}']`
-export const ALL_TAGS = `*[_type=='${GROQ_SNIPPET_TAG_TYPE}']`
+export const SNIPPETS = `*[_type == "${GROQ_SNIPPET_TYPE}"][0..100]`
+export const SNIPPETS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TYPE}"])`
+export const TAGS = `*[_type=='${GROQ_SNIPPET_TAG_TYPE}']`
+export const TAGS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TAG_TYPE}"])`
 
-export const ALL_DATA = `{
-  "snippets": ${ALL_SNIPPETS},
-  "tags": ${ALL_TAGS}
+export interface QueryInitialDataResponse {
+  snippets: GroqSnippet[]
+  snippetsCount: number
+  tags: GroqSnippetTag[]
+  tagsCount: number
+}
+export const QUERY_INITIAL_DATA = `{
+  "snippets": ${SNIPPETS},
+  "snippetsCount": ${SNIPPETS_COUNT},
+  "tags": ${TAGS},
+  "tagsCount": ${SNIPPETS_COUNT}
 }`
