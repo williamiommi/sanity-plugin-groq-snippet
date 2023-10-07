@@ -7,6 +7,14 @@ const GroqSnippetTag = defineType({
   name: GroqSnippetTagMetadata.name,
   title: GroqSnippetTagMetadata.title,
   icon: TagIcon,
+  preview: {
+    select: {
+      name: 'name',
+    },
+    prepare({name}) {
+      return {title: name.current}
+    },
+  },
   fields: [
     defineField({
       type: 'slug',
