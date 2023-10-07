@@ -1,11 +1,9 @@
-import {useToast} from '@sanity/ui'
 import {useEffect} from 'react'
-import {useClient} from 'sanity'
 import {useGroqSnippetStore} from '../zustand/store'
+import useSanityInfo from './useSanityInfo'
 
 const useFetchData = (): void => {
-  const client = useClient({apiVersion: '2021-06-07'})
-  const toast = useToast()
+  const {client, toast} = useSanityInfo()
   const fetchData = useGroqSnippetStore((s) => s.fetchData)
   useEffect(() => {
     fetchData(client, toast)

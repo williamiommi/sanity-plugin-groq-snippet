@@ -3,12 +3,10 @@ import {ToastContextValue} from '@sanity/ui'
 interface ToastObj {
   toast: ToastContextValue
   err?: any
-  title?: string
   description?: string
 }
 
 export const toastError = (props: ToastObj): void => {
-  const title = props.title || 'Something went wrong'
   let description
   if (typeof props.err === 'string') {
     description = props.err
@@ -18,9 +16,9 @@ export const toastError = (props: ToastObj): void => {
     description = props.description
   }
   if (props.err) console.error(props.err)
-  if (props.toast) props.toast.push({status: 'error', title, description})
+  if (props.toast) props.toast.push({status: 'error', title: 'Groq Snippet Tool', description})
 }
 
 export const toastSuccess = (props: ToastObj): void => {
-  props.toast.push({status: 'success', title: props.title, description: props.description})
+  props.toast.push({status: 'success', title: 'Groq Snippet Tool', description: props.description})
 }
