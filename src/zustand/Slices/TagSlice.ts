@@ -1,7 +1,10 @@
 import {StateCreator} from 'zustand'
 import {toastError, toastSuccess} from '../../lib/toastUtils'
 import {QUERY_TAG_HAS_REFERENCES, TAG_EXISTS} from '../../queries'
-import GroqSnippetTag, {GROQ_SNIPPET_TAG_TYPE} from '../../types/GroqSnippetTag'
+import GroqSnippetTag, {
+  GROQ_SNIPPET_TAG_TYPE,
+  GroqSnippetTagMutation,
+} from '../../types/GroqSnippetTag'
 import {SanitySlice} from './SanitySlice'
 
 export interface TagSlice {
@@ -36,7 +39,10 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
         throw Error(`Tag '${name}' already exists`)
       }
       // create tag
-      await client.create({_type: `${GROQ_SNIPPET_TAG_TYPE}`, name: {current: name}})
+      await client.create<GroqSnippetTagMutation>({
+        _type: `${GROQ_SNIPPET_TAG_TYPE}`,
+        name: {_type: 'slug', current: name},
+      })
       toastSuccess({toast: get().toast!, description: 'Tag created'})
     } catch (err: any) {
       toastError({toast, err})
@@ -46,10 +52,7 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
     const client = get().client!
     const toast = get().toast!
     try {
-      await client
-        .patch(id)
-        .set({name: {current: name}})
-        .commit()
+      await client.patch(id).set({'name.current': name}).commit()
       toastSuccess({toast, description: 'Tag updated'})
     } catch (err: any) {
       toastError({toast, err})
