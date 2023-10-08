@@ -28,7 +28,7 @@ const GroqSnippet = defineType({
       type: 'array',
       name: 'tags',
       title: 'Tags',
-      of: [{type: GroqSnippetTagMetadata.name}],
+      of: [{type: 'reference', to: [{type: GroqSnippetTagMetadata.name}]}],
     }),
   ],
 })
