@@ -1,22 +1,23 @@
-import {ToastContextValue} from '@sanity/ui'
-import {SanityClient} from 'sanity'
 import {StateCreator} from 'zustand'
 import {toastError} from '../../lib/toastUtils'
 import {QUERY_INITIAL_DATA, QueryInitialDataResponse} from '../../queries'
+import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
 
 export interface UtilsSlice {
-  fetchData: (client: SanityClient, toast: ToastContextValue) => void
+  fetchData: () => void
 }
 
 export const createUtilsSlice: StateCreator<
-  UtilsSlice & TagSlice & SnippetSlice,
+  SanitySlice & UtilsSlice & TagSlice & SnippetSlice,
   [],
   [],
   UtilsSlice
 > = (set, get) => ({
-  fetchData: async (client: SanityClient, toast: ToastContextValue) => {
+  fetchData: async () => {
+    const client = get().client!
+    const toast = get().toast!
     try {
       const response = await client.fetch<QueryInitialDataResponse>(
         QUERY_INITIAL_DATA,
