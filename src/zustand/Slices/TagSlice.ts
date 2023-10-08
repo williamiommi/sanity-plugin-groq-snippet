@@ -6,20 +6,25 @@ import GroqSnippetTag, {
   GroqSnippetTagMutation,
 } from '../../types/GroqSnippetTag'
 import {SanitySlice} from './SanitySlice'
+import {UtilsSlice} from './UtilsSlice'
+
+type SelectedTagsType = {id: string; name: string}
 
 export interface TagSlice {
   tags: GroqSnippetTag[]
   tagsCount: number
   tagFieldError?: string
+  tagsToDelete?: SelectedTagsType
   setTags: (tags: GroqSnippetTag[]) => void
   setTagsCount: (tagsCount: number) => void
   addTag: (name: string) => void
   updateTag: (id: string, name: string) => void
-  deleteTag: (id: string, name: string) => void
+  deleteTag: (tags: SelectedTagsType) => void
   setTagFieldError: (tagFieldError?: string) => void
+  setTagToDelete: (tagToDelete?: SelectedTagsType) => void
 }
 
-export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSlice> = (
+export const createTagSlice: StateCreator<SanitySlice & TagSlice & UtilsSlice, [], [], TagSlice> = (
   set,
   get,
 ) => ({
@@ -56,7 +61,7 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
       toastError(toast!, {err})
     }
   },
-  deleteTag: async (id: string, name: string) => {
+  deleteTag: async ({id, name}: SelectedTagsType) => {
     const {client, toast} = get()
     try {
       // check if tag has references
@@ -69,8 +74,10 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
       // delete the tag
       await client!.delete(id)
       toastSuccess(toast!, {description: 'Tag deleted'})
+      get().setTagToDelete(undefined)
     } catch (err: any) {
       toastError(toast!, {err})
     }
   },
+  setTagToDelete: (tagsToDelete?: SelectedTagsType) => set({tagsToDelete}),
 })
