@@ -29,51 +29,48 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
   setTagsCount: (tagsCount: number) => set({tagsCount}),
   setTagFieldError: (tagFieldError?: string) => set({tagFieldError}),
   addTag: async (name: string) => {
-    const client = get().client!
-    const toast = get().toast!
+    const {client, toast} = get()
     try {
       // check if already exist a tag with the same name
-      const alreadyExist = await client.fetch(TAG_EXISTS, {name})
+      const alreadyExist = await client!.fetch(TAG_EXISTS, {name})
       if (alreadyExist) {
         set({tagFieldError: 'Tag already exists'})
         throw Error(`Tag '${name}' already exists`)
       }
       // create tag
-      await client.create<GroqSnippetTagMutation>({
+      await client!.create<GroqSnippetTagMutation>({
         _type: `${GROQ_SNIPPET_TAG_TYPE}`,
         name: {_type: 'slug', current: name},
       })
-      toastSuccess({toast: get().toast!, description: 'Tag created'})
+      toastSuccess(toast!, {description: 'Tag created'})
     } catch (err: any) {
-      toastError({toast, err})
+      toastError(toast!, {err})
     }
   },
   updateTag: async (id: string, name: string) => {
-    const client = get().client!
-    const toast = get().toast!
+    const {client, toast} = get()
     try {
-      await client.patch(id).set({'name.current': name}).commit()
-      toastSuccess({toast, description: 'Tag updated'})
+      await client!.patch(id).set({'name.current': name}).commit()
+      toastSuccess(toast!, {description: 'Tag updated'})
     } catch (err: any) {
-      toastError({toast, err})
+      toastError(toast!, {err})
     }
   },
   deleteTag: async (id: string, name: string) => {
-    const client = get().client!
-    const toast = get().toast!
+    const {client, toast} = get()
     try {
       // check if tag has references
-      const referencesCount = await client.fetch(QUERY_TAG_HAS_REFERENCES, {id})
+      const referencesCount = await client!.fetch(QUERY_TAG_HAS_REFERENCES, {id})
       if (referencesCount > 0) {
         throw Error(
           `Tag '${name}' is used by ${referencesCount} snippet${referencesCount > 1 ? 's' : ''}`,
         )
       }
       // delete the tag
-      await client.delete(id)
-      toastSuccess({toast, description: 'Tag deleted'})
+      await client!.delete(id)
+      toastSuccess(toast!, {description: 'Tag deleted'})
     } catch (err: any) {
-      toastError({toast, err})
+      toastError(toast!, {err})
     }
   },
 })

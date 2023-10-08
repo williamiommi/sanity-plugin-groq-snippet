@@ -1,12 +1,19 @@
 import {SanityDocumentLike} from 'sanity'
-import GroqSnippetTag from './GroqSnippetTag'
+import {GroqSnippetTagReference} from './GroqSnippetTag'
 
 export const GROQ_SNIPPET_TYPE = 'groq.snippet'
 
-export default interface GroqSnippet extends SanityDocumentLike {
+export interface GroqSnippet extends SanityDocumentLike {
   _type: typeof GROQ_SNIPPET_TYPE
   title: string
   description?: string
   snippet: string
-  tags?: GroqSnippetTag[]
+  tags?: GroqSnippetTagReference[]
 }
+
+export type GroqSnippetMutation = Pick<
+  GroqSnippet,
+  '_type' | 'title' | 'description' | 'snippet' | 'tags'
+>
+
+export default GroqSnippet

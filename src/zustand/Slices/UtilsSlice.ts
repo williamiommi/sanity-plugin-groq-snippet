@@ -16,20 +16,19 @@ export const createUtilsSlice: StateCreator<
   UtilsSlice
 > = (set, get) => ({
   fetchData: async () => {
-    const client = get().client!
-    const toast = get().toast!
+    const {client, toast, setSnippets, setSnippetsCount, setTags, setTagsCount} = get()
     try {
-      const response = await client.fetch<QueryInitialDataResponse>(
+      const response = await client!.fetch<QueryInitialDataResponse>(
         QUERY_INITIAL_DATA,
         {},
         {perspective: 'published'},
       )
-      get().setSnippets(response.snippets)
-      get().setSnippetsCount(response.snippetsCount)
-      get().setTags(response.tags)
-      get().setTagsCount(response.tagsCount)
+      setSnippets(response.snippets)
+      setSnippetsCount(response.snippetsCount)
+      setTags(response.tags)
+      setTagsCount(response.tagsCount)
     } catch (err: any) {
-      toastError({toast, err})
+      toastError(toast!, {err})
     }
   },
 })
