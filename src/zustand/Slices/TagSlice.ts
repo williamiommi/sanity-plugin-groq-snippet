@@ -46,11 +46,10 @@ export const createTagSlice: StateCreator<SanitySlice & TagSlice, [], [], TagSli
     const client = get().client!
     const toast = get().toast!
     try {
-      await client.createOrReplace({
-        _id: id,
-        _type: GROQ_SNIPPET_TAG_TYPE,
-        name: {current: name},
-      })
+      await client
+        .patch(id)
+        .set({name: {current: name}})
+        .commit()
       toastSuccess({toast, description: 'Tag updated'})
     } catch (err: any) {
       toastError({toast, err})
