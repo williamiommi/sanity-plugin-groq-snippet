@@ -9,7 +9,7 @@ import Header from './Header'
 const TagsDialog = () => {
   const isAllTagsDialogOpen = useGroqSnippetStore((s) => s.isAllTagsDialogOpen)
   const closeAllTagsDialog = useGroqSnippetStore((s) => s.closeAllTagsDialog)
-  const {toggleTag} = useTagOperation()
+  const {toggleTag, toggleAll, hasAllTagsChecked} = useTagOperation()
   const tags = useGroqSnippetStore((s) => s.tags)
 
   if (!isAllTagsDialogOpen) return null
@@ -23,6 +23,12 @@ const TagsDialog = () => {
         width={1}
         onClose={closeAllTagsDialog}
       >
+        <Flex margin={4} marginBottom={3} align="center" as="label" htmlFor="check-all" gap={2}>
+          <Checkbox id="check-all" onChange={toggleAll} checked={hasAllTagsChecked} />
+          <Text muted as="i" size={1}>
+            {hasAllTagsChecked ? 'Deselect' : 'Select'} all
+          </Text>
+        </Flex>
         <Box style={{maxHeight: '300px', overflow: 'scroll', position: 'relative'}}>
           <Flex direction="column" paddingY={2}>
             {tags.map((tag) => (
@@ -40,6 +46,7 @@ const TagsDialog = () => {
                     onChange={toggleTag}
                     data-id={tag._id}
                     data-name={tag.name.current}
+                    checked={tag.checked || false}
                   />
                   <Text size={1}>{tag.name.current}</Text>
                 </Flex>

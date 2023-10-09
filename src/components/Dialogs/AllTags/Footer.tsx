@@ -1,10 +1,11 @@
 import {AddIcon} from '@sanity/icons'
 import {Button, Flex} from '@sanity/ui'
+import useTagOperation from '../../../hooks/useTagOperation'
 import {useGroqSnippetStore} from '../../../zustand/store'
 
 const Footer = () => {
-  const selectedTags = useGroqSnippetStore((s) => s.selectedTags)
   const openDeleteTagsDialog = useGroqSnippetStore((s) => s.openDeleteTagsDialog)
+  const {hasAtLeastOneTagChecked} = useTagOperation()
   return (
     <Flex flex={1} justify="space-between" gap={2} marginY={3} marginX={4}>
       <Button
@@ -12,7 +13,7 @@ const Footer = () => {
         text="Delete Selected"
         fontSize={1}
         onClick={openDeleteTagsDialog}
-        disabled={selectedTags.length === 0}
+        disabled={!hasAtLeastOneTagChecked}
       />
       <Button tone="primary" icon={<AddIcon fontSize={0} />} text="Create" fontSize={1} />
     </Flex>

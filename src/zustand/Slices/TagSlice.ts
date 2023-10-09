@@ -9,20 +9,17 @@ import {DialogSlice} from './DialogSlice'
 import {SanitySlice} from './SanitySlice'
 import {UtilsSlice} from './UtilsSlice'
 
-type SelectedTagsType = {id: string; name: string}
-
 export interface TagSlice {
   tags: GroqSnippetTag[]
   tagsCount: number
   tagFieldError?: string
-  selectedTags: SelectedTagsType[]
   setTags: (tags: GroqSnippetTag[]) => void
+  resetCheckedTags: () => void
   setTagsCount: (tagsCount: number) => void
   addTag: (name: string) => void
   updateTag: (id: string, name: string) => void
   deleteTags: () => void
   setTagFieldError: (tagFieldError?: string) => void
-  setSelectedTags: (selectedTags?: SelectedTagsType[]) => void
 }
 
 export const createTagSlice: StateCreator<
@@ -33,8 +30,8 @@ export const createTagSlice: StateCreator<
 > = (set, get) => ({
   tags: [],
   tagsCount: 0,
-  selectedTags: [],
   setTags: (tags: GroqSnippetTag[]) => set({tags}),
+  resetCheckedTags: () => set({tags: get().tags.map((t) => ({...t, checked: false}))}),
   setTagsCount: (tagsCount: number) => set({tagsCount}),
   setTagFieldError: (tagFieldError?: string) => set({tagFieldError}),
   addTag: async (name: string) => {
@@ -67,10 +64,12 @@ export const createTagSlice: StateCreator<
   },
   deleteTags: async () => {
     const {client, toast} = get()
-    const ids = get().selectedTags.map((tag) => tag.id)
+    const ids = get()
+      .tags.filter((t) => t.checked)
+      .map((t) => t._id)
     if (ids.length === 0) return
     try {
-      // check if tag has references
+      // check if tag(s) has/have references
       const referencesCount = await client!.fetch(QUERY_TAG_HAS_REFERENCES, {ids})
       if (referencesCount > 0) {
         throw Error(
@@ -79,17 +78,16 @@ export const createTagSlice: StateCreator<
           } used by ${referencesCount} snippet${referencesCount > 1 ? 's' : ''}`,
         )
       }
-      // delete the tag
+      // delete the tag(s)
       await client!.delete({
         query: QUERY_TAG_DELETE,
         params: {ids},
       })
       toastSuccess(toast!, {description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
-      get().setSelectedTags([])
+      get().resetCheckedTags()
       get().closeDeleteTagsDialog()
     } catch (err: any) {
       toastError(toast!, {err})
     }
   },
-  setSelectedTags: (selectedTags?: SelectedTagsType[]) => set({selectedTags}),
 })

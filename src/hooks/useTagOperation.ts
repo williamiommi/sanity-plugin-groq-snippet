@@ -3,22 +3,35 @@ import {useGroqSnippetStore} from '../zustand/store'
 
 interface useTagOperationReturn {
   toggleTag: (e: FormEvent<HTMLInputElement>) => void
+  toggleAll: (e: FormEvent<HTMLInputElement>) => void
+  hasAtLeastOneTagChecked: boolean
+  hasAllTagsChecked: boolean
 }
 
 const useTagOperation = (): useTagOperationReturn => {
-  const selectedTags = useGroqSnippetStore((s) => s.selectedTags)
-  const setSelectedTags = useGroqSnippetStore((s) => s.setSelectedTags)
+  const tags = useGroqSnippetStore((s) => s.tags)
+  const setTags = useGroqSnippetStore((s) => s.setTags)
+  const hasAtLeastOneTagChecked = tags.some((t) => t.checked)
+  const hasAllTagsChecked = tags.every((t) => t.checked)
 
-  const toggleTag = (e: FormEvent<HTMLInputElement>) => {
-    const {id, name} = e.currentTarget.dataset
+  const toggleAll = (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.checked) {
-      setSelectedTags([...selectedTags, {id: id!, name: name!}])
+      setTags(tags.map((t) => ({...t, checked: true})))
     } else {
-      setSelectedTags(selectedTags.filter((tag) => tag.id !== id!))
+      setTags(tags.map((t) => ({...t, checked: false})))
     }
   }
 
-  return {toggleTag}
+  const toggleTag = (e: FormEvent<HTMLInputElement>) => {
+    const {id} = e.currentTarget.dataset
+    if (e.currentTarget.checked) {
+      setTags(tags.map((t) => ({...t, checked: t._id === id ? true : t.checked})))
+    } else {
+      setTags(tags.map((t) => ({...t, checked: t._id === id ? false : t.checked})))
+    }
+  }
+
+  return {toggleTag, toggleAll, hasAtLeastOneTagChecked, hasAllTagsChecked}
 }
 
 export default useTagOperation

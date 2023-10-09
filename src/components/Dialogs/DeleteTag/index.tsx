@@ -4,7 +4,7 @@ import Footer from './Footer'
 import Header from './Header'
 
 const DeleteTagDialog = () => {
-  const selectedTags = useGroqSnippetStore((s) => s.selectedTags)
+  const tags = useGroqSnippetStore((s) => s.tags)
   const deleteTags = useGroqSnippetStore((s) => s.deleteTags)
   const closeDeleteTagsDialog = useGroqSnippetStore((s) => s.closeDeleteTagsDialog)
   const isDeleteTagsDialogOpen = useGroqSnippetStore((s) => s.isDeleteTagsDialogOpen)
@@ -20,13 +20,16 @@ const DeleteTagDialog = () => {
       onClose={closeDeleteTagsDialog}
     >
       <Box padding={4}>
-        <Text>Do you really want to remove the following tag{selectedTags.length > 1 && 's'}?</Text>
-        <Flex direction="column" gap={2} marginTop={5} as="ul">
-          {selectedTags.map((tag) => (
-            <Text key={tag.id} weight="semibold">
-              - {tag.name}
-            </Text>
-          ))}
+        <Text>Do you really want to remove the following tag(s)?</Text>
+        <Flex direction="column" gap={2} marginTop={5}>
+          {tags.map((tag) => {
+            if (!tag.checked) return null
+            return (
+              <Text key={tag._id} weight="semibold">
+                - {tag.name.current}
+              </Text>
+            )
+          })}
         </Flex>
       </Box>
     </Dialog>

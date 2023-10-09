@@ -21,8 +21,10 @@ export const createDialogSlice: StateCreator<
 > = (set, get) => ({
   isAllTagsDialogOpen: false,
   openAllTagsDialog: () => set({isAllTagsDialogOpen: true}),
-  closeAllTagsDialog: () => set({isAllTagsDialogOpen: false, selectedTags: []}),
-
+  closeAllTagsDialog: () => {
+    get().resetCheckedTags()
+    set({isAllTagsDialogOpen: false})
+  },
   isDeleteTagsDialogOpen: false,
   openDeleteTagsDialog: () => set({isDeleteTagsDialogOpen: true}),
   closeDeleteTagsDialog: () => set({isDeleteTagsDialogOpen: false}),
