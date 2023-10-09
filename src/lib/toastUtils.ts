@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {ToastContextValue} from '@sanity/ui'
+import SimpleHtmlRenderer from '../components/SimpleHtmlRenderer'
 
 const TOAST_TITLE = 'Groq Snippet Tool'
 
@@ -15,9 +16,19 @@ export const toastError = (toast: ToastContextValue, {err, description}: ToastOb
     description = err.message
   }
   if (err) console.error(err)
-  if (toast) toast.push({status: 'error', title: TOAST_TITLE, description})
+  if (toast)
+    toast.push({
+      status: 'error',
+      title: TOAST_TITLE,
+      description: SimpleHtmlRenderer({html: description}),
+    })
 }
 
 export const toastSuccess = (toast: ToastContextValue, {description}: ToastObj): void => {
-  if (toast) toast.push({status: 'success', title: TOAST_TITLE, description})
+  if (toast)
+    toast.push({
+      status: 'success',
+      title: TOAST_TITLE,
+      description: SimpleHtmlRenderer({html: description}),
+    })
 }

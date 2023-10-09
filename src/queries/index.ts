@@ -6,7 +6,8 @@ export const SNIPPETS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TYPE}"])`
 export const TAGS = `*[_type=='${GROQ_SNIPPET_TAG_TYPE}'] | order(lower(name.current) asc)`
 export const TAGS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TAG_TYPE}"])`
 export const TAG_EXISTS = `count(*[_type == "${GROQ_SNIPPET_TAG_TYPE}" && name.current == $name]) > 0`
-export const QUERY_TAG_HAS_REFERENCES = `count(*[_type == "${GROQ_SNIPPET_TYPE}" && $id in tags[]._ref])`
+export const QUERY_TAG_HAS_REFERENCES = `count(*[_type == "${GROQ_SNIPPET_TYPE}" && references($ids)])`
+export const QUERY_TAG_DELETE = `*[_type == "${GROQ_SNIPPET_TAG_TYPE}" && _id in $ids]`
 
 export interface QueryInitialDataResponse {
   snippets: GroqSnippet[]

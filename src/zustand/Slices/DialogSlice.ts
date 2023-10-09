@@ -7,6 +7,10 @@ export interface DialogSlice {
   isAllTagsDialogOpen: boolean
   openAllTagsDialog: () => void
   closeAllTagsDialog: () => void
+
+  isDeleteTagsDialogOpen: boolean
+  openDeleteTagsDialog: () => void
+  closeDeleteTagsDialog: () => void
 }
 
 export const createDialogSlice: StateCreator<
@@ -17,5 +21,9 @@ export const createDialogSlice: StateCreator<
 > = (set, get) => ({
   isAllTagsDialogOpen: false,
   openAllTagsDialog: () => set({isAllTagsDialogOpen: true}),
-  closeAllTagsDialog: () => set({isAllTagsDialogOpen: false}),
+  closeAllTagsDialog: () => set({isAllTagsDialogOpen: false, selectedTags: []}),
+
+  isDeleteTagsDialogOpen: false,
+  openDeleteTagsDialog: () => set({isDeleteTagsDialogOpen: true}),
+  closeDeleteTagsDialog: () => set({isDeleteTagsDialogOpen: false}),
 })

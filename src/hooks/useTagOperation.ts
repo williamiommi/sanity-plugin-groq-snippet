@@ -2,30 +2,23 @@ import {FormEvent} from 'react'
 import {useGroqSnippetStore} from '../zustand/store'
 
 interface useTagOperationReturn {
-  openDeleteTagDialog: (e: FormEvent<HTMLButtonElement>) => void
-  closeDeleteTagDialog: () => void
-  confirmDeleteTag: () => void
+  toggleTag: (e: FormEvent<HTMLInputElement>) => void
 }
 
 const useTagOperation = (): useTagOperationReturn => {
-  const tagsToDelete = useGroqSnippetStore((s) => s.tagsToDelete)
-  const setTagToDelete = useGroqSnippetStore((s) => s.setTagToDelete)
-  const deleteTag = useGroqSnippetStore((s) => s.deleteTag)
+  const selectedTags = useGroqSnippetStore((s) => s.selectedTags)
+  const setSelectedTags = useGroqSnippetStore((s) => s.setSelectedTags)
 
-  const openDeleteTagDialog = (e: FormEvent<HTMLButtonElement>) => {
+  const toggleTag = (e: FormEvent<HTMLInputElement>) => {
     const {id, name} = e.currentTarget.dataset
-    setTagToDelete({id: id!, name: name!})
+    if (e.currentTarget.checked) {
+      setSelectedTags([...selectedTags, {id: id!, name: name!}])
+    } else {
+      setSelectedTags(selectedTags.filter((tag) => tag.id !== id!))
+    }
   }
 
-  const closeDeleteTagDialog = () => {
-    setTagToDelete(undefined)
-  }
-
-  const confirmDeleteTag = () => {
-    deleteTag(tagsToDelete!)
-  }
-
-  return {openDeleteTagDialog, closeDeleteTagDialog, confirmDeleteTag}
+  return {toggleTag}
 }
 
 export default useTagOperation
