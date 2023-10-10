@@ -1,9 +1,9 @@
 import {Box, Dialog, Flex, Text} from '@sanity/ui'
-import {useGroqSnippetStore} from '../../../zustand/store'
+import {useGroqSnippetStore} from '../../../../zustand/store'
 import Footer from './Footer'
 import Header from './Header'
 
-const DeleteTagDialog = () => {
+const DeleteDialog = () => {
   const tags = useGroqSnippetStore((s) => s.tags)
   const deleteTags = useGroqSnippetStore((s) => s.deleteTags)
   const closeDeleteTagsDialog = useGroqSnippetStore((s) => s.closeDeleteTagsDialog)
@@ -36,4 +36,4 @@ const DeleteTagDialog = () => {
   )
 }
 
-export default DeleteTagDialog
+export default DeleteDialog

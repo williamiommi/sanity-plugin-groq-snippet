@@ -1,12 +1,12 @@
 import {EditIcon} from '@sanity/icons'
 import {Box, Button, Checkbox, Dialog, Flex, Text} from '@sanity/ui'
-import useTagOperation from '../../../hooks/useTagOperation'
-import {useGroqSnippetStore} from '../../../zustand/store'
-import DeleteTagDialog from '../DeleteTag'
+import useTagOperation from '../../../../hooks/useTagOperation'
+import {useGroqSnippetStore} from '../../../../zustand/store'
+import DeleteTagDialog from '../Delete'
 import Footer from './Footer'
 import Header from './Header'
 
-const TagsDialog = () => {
+const AllDialog = () => {
   const isAllTagsDialogOpen = useGroqSnippetStore((s) => s.isAllTagsDialogOpen)
   const closeAllTagsDialog = useGroqSnippetStore((s) => s.closeAllTagsDialog)
   const {toggleTag, toggleAll, hasAllTagsChecked} = useTagOperation()
@@ -73,4 +73,4 @@ const TagsDialog = () => {
   )
 }
 
-export default TagsDialog
+export default AllDialog

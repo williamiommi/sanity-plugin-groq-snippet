@@ -1,6 +1,6 @@
 import {Box, Flex} from '@sanity/ui'
 import useSetupTool from '../../hooks/useSetupTool'
-import TagsDialog from '../Dialogs/AllTags'
+import DialogTags from '../Dialogs/Tag'
 import Heading from '../Heading'
 import MainActions from '../MainActions'
 
@@ -14,7 +14,7 @@ const GroqSnippetTool = () => {
           <MainActions />
         </Flex>
       </Box>
-      <TagsDialog />
+      <DialogTags />
     </>
   )
 }

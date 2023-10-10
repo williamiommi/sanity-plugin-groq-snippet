@@ -1,7 +1,7 @@
 import {AddIcon} from '@sanity/icons'
 import {Button, Flex} from '@sanity/ui'
-import useTagOperation from '../../../hooks/useTagOperation'
-import {useGroqSnippetStore} from '../../../zustand/store'
+import useTagOperation from '../../../../hooks/useTagOperation'
+import {useGroqSnippetStore} from '../../../../zustand/store'
 
 const Footer = () => {
   const openDeleteTagsDialog = useGroqSnippetStore((s) => s.openDeleteTagsDialog)
