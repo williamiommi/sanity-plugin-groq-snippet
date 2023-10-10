@@ -12,14 +12,14 @@ import {UtilsSlice} from './UtilsSlice'
 export interface TagSlice {
   tags: GroqSnippetTag[]
   tagsCount: number
-  tagFieldError?: string
+  tagToUpdate?: GroqSnippetTag
   setTags: (tags: GroqSnippetTag[]) => void
   resetCheckedTags: () => void
   setTagsCount: (tagsCount: number) => void
   addTag: (name: string) => void
   updateTag: (id: string, name: string) => void
   deleteTags: () => void
-  setTagFieldError: (tagFieldError?: string) => void
+  setTagToUpdate: (tagToUpdate?: GroqSnippetTag) => void
 }
 
 export const createTagSlice: StateCreator<
@@ -33,14 +33,13 @@ export const createTagSlice: StateCreator<
   setTags: (tags: GroqSnippetTag[]) => set({tags}),
   resetCheckedTags: () => set({tags: get().tags.map((t) => ({...t, checked: false}))}),
   setTagsCount: (tagsCount: number) => set({tagsCount}),
-  setTagFieldError: (tagFieldError?: string) => set({tagFieldError}),
+  setTagToUpdate: (tagToUpdate?: GroqSnippetTag) => set({tagToUpdate}),
   addTag: async (name: string) => {
     const {client, toast} = get()
     try {
       // check if already exist a tag with the same name
       const alreadyExist = await client!.fetch(TAG_EXISTS, {name})
       if (alreadyExist) {
-        set({tagFieldError: 'Tag already exists'})
         throw Error(`Tag '${name}' already exists`)
       }
       // create tag
@@ -49,6 +48,7 @@ export const createTagSlice: StateCreator<
         name: {_type: 'slug', current: name},
       })
       toastSuccess(toast!, {description: 'Tag created'})
+      get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
@@ -59,6 +59,7 @@ export const createTagSlice: StateCreator<
     try {
       await client!.patch(id).set({'name.current': name}).commit()
       toastSuccess(toast!, {description: 'Tag updated'})
+      get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})

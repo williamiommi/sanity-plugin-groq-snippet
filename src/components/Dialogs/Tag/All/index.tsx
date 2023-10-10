@@ -9,6 +9,7 @@ import Header from './Header'
 const AllDialog = () => {
   const isAllTagsDialogOpen = useGroqSnippetStore((s) => s.isAllTagsDialogOpen)
   const closeAllTagsDialog = useGroqSnippetStore((s) => s.closeAllTagsDialog)
+  const openInsertUpdateTagsDialog = useGroqSnippetStore((s) => s.openInsertUpdateTagsDialog)
   const {toggleTag, toggleAll, hasAllTagsChecked} = useTagOperation()
   const tags = useGroqSnippetStore((s) => s.tags)
 
@@ -51,7 +52,14 @@ const AllDialog = () => {
                   <Text size={1}>{tag.name.current}</Text>
                 </Flex>
                 <Flex align="center" gap={1}>
-                  <Button mode="bleed" tone="primary" icon={EditIcon} fontSize={1} padding={2} />
+                  <Button
+                    mode="bleed"
+                    tone="primary"
+                    icon={EditIcon}
+                    fontSize={1}
+                    padding={2}
+                    onClick={() => openInsertUpdateTagsDialog(tag)}
+                  />
                   {/* <Button
                     mode="bleed"
                     tone="critical"
