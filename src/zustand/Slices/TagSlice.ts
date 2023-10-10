@@ -49,6 +49,7 @@ export const createTagSlice: StateCreator<
         name: {_type: 'slug', current: name},
       })
       toastSuccess(toast!, {description: 'Tag created'})
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }
@@ -58,6 +59,7 @@ export const createTagSlice: StateCreator<
     try {
       await client!.patch(id).set({'name.current': name}).commit()
       toastSuccess(toast!, {description: 'Tag updated'})
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }
@@ -86,6 +88,7 @@ export const createTagSlice: StateCreator<
       toastSuccess(toast!, {description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
       get().resetCheckedTags()
       get().closeDeleteTagsDialog()
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }
