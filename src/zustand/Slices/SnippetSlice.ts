@@ -9,6 +9,7 @@ import {UtilsSlice} from './UtilsSlice'
 export interface SnippetSlice {
   snippets: GroqSnippet[]
   snippetsCount: number
+  snippetToUpdate?: GroqSnippet
   setSnippets: (snippets: GroqSnippet[]) => void
   setSnippetsCount: (snippetsCount: number) => void
   addSnippet: (mutation: GroqSnippetMutation) => void

@@ -1,4 +1,5 @@
 import {StateCreator} from 'zustand'
+import GroqSnippet from '../../types/GroqSnippet'
 import GroqSnippetTag from '../../types/GroqSnippetTag'
 import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
@@ -8,6 +9,10 @@ export interface DialogSlice {
   isDeleteSnippetsDialogOpen: boolean
   openDeleteSnippetsDialog: () => void
   closeDeleteSnippetsDialog: () => void
+
+  isInsertUpdateSnippetsDialogOpen: boolean
+  openInsertUpdateSnippetsDialog: (snippetToUpdate?: GroqSnippet) => void
+  closeInsertUpdateSnippetsDialog: () => void
 
   isAllTagsDialogOpen: boolean
   openAllTagsDialog: () => void
@@ -31,6 +36,12 @@ export const createDialogSlice: StateCreator<
   isDeleteSnippetsDialogOpen: false,
   openDeleteSnippetsDialog: () => set({isDeleteSnippetsDialogOpen: true}),
   closeDeleteSnippetsDialog: () => set({isDeleteSnippetsDialogOpen: false}),
+
+  isInsertUpdateSnippetsDialogOpen: false,
+  openInsertUpdateSnippetsDialog: (snippetToUpdate?: GroqSnippet) =>
+    set({isInsertUpdateSnippetsDialogOpen: true, snippetToUpdate}),
+  closeInsertUpdateSnippetsDialog: () =>
+    set({isInsertUpdateSnippetsDialogOpen: false, snippetToUpdate: undefined}),
 
   isAllTagsDialogOpen: false,
   openAllTagsDialog: () => set({isAllTagsDialogOpen: true}),
