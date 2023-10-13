@@ -1,7 +1,10 @@
 import {StateCreator} from 'zustand'
 import {toastError, toastSuccess} from '../../lib/toastUtils'
+import {QUERY_SNIPPET_DELETE} from '../../queries'
 import GroqSnippet, {GroqSnippetMutation} from '../../types/GroqSnippet'
+import {DialogSlice} from './DialogSlice'
 import {SanitySlice} from './SanitySlice'
+import {UtilsSlice} from './UtilsSlice'
 
 export interface SnippetSlice {
   snippets: GroqSnippet[]
@@ -10,17 +13,21 @@ export interface SnippetSlice {
   setSnippetsCount: (snippetsCount: number) => void
   addSnippet: (mutation: GroqSnippetMutation) => void
   updateSnippet: (id: string, mutation: GroqSnippetMutation) => void
-  deleteSnippet: (id: string) => void
+  deleteSnippets: () => void
+  resetCheckedSnippets: () => void
 }
 
-export const createSnippetSlice: StateCreator<SnippetSlice & SanitySlice, [], [], SnippetSlice> = (
-  set,
-  get,
-) => ({
+export const createSnippetSlice: StateCreator<
+  SnippetSlice & SanitySlice & UtilsSlice & DialogSlice,
+  [],
+  [],
+  SnippetSlice
+> = (set, get) => ({
   snippets: [],
   snippetsCount: 0,
   setSnippets: (snippets: GroqSnippet[]) => set({snippets}),
   setSnippetsCount: (snippetsCount: number) => set({snippetsCount}),
+  resetCheckedSnippets: () => set({snippets: get().snippets.map((t) => ({...t, checked: false}))}),
   addSnippet: async (mutation: GroqSnippetMutation) => {
     const {client, toast} = get()
     try {
@@ -39,11 +46,22 @@ export const createSnippetSlice: StateCreator<SnippetSlice & SanitySlice, [], []
       toastError(toast!, {err})
     }
   },
-  deleteSnippet: async (id: string) => {
+  deleteSnippets: async () => {
     const {client, toast} = get()
+    const ids = get()
+      .snippets.filter((t) => t.checked)
+      .map((t) => t._id)
+    if (ids.length === 0) return
     try {
-      await client!.delete(id)
-      toastSuccess(toast!, {description: 'Snippet deleted'})
+      // delete the snippet(s)
+      await client!.delete({
+        query: QUERY_SNIPPET_DELETE,
+        params: {ids},
+      })
+      toastSuccess(toast!, {description: `Snippet${ids.length > 1 ? 's' : ''} deleted`})
+      get().resetCheckedSnippets()
+      get().closeDeleteSnippetsDialog()
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }

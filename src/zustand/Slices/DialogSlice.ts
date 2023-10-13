@@ -5,6 +5,10 @@ import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
 
 export interface DialogSlice {
+  isDeleteSnippetsDialogOpen: boolean
+  openDeleteSnippetsDialog: () => void
+  closeDeleteSnippetsDialog: () => void
+
   isAllTagsDialogOpen: boolean
   openAllTagsDialog: () => void
   closeAllTagsDialog: () => void
@@ -24,6 +28,10 @@ export const createDialogSlice: StateCreator<
   [],
   DialogSlice
 > = (set, get) => ({
+  isDeleteSnippetsDialogOpen: false,
+  openDeleteSnippetsDialog: () => set({isDeleteSnippetsDialogOpen: true}),
+  closeDeleteSnippetsDialog: () => set({isDeleteSnippetsDialogOpen: false}),
+
   isAllTagsDialogOpen: false,
   openAllTagsDialog: () => set({isAllTagsDialogOpen: true}),
   closeAllTagsDialog: () => {

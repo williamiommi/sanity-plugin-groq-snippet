@@ -7,8 +7,10 @@ export interface GroqSnippet extends SanityDocumentLike {
   _type: typeof GROQ_SNIPPET_TYPE
   title: string
   description?: string
-  snippet: string
+  query: string
+  variables?: string
   tags?: GroqSnippetTagReference[]
+  checked?: boolean // used only in form for checkbox selection
 }
 
 export type GroqSnippetMutation = Pick<

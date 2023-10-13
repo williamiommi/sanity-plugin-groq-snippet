@@ -21,8 +21,13 @@ const GroqSnippet = defineType({
     }),
     defineField({
       type: 'text',
-      name: 'snippet',
-      title: 'Snippet',
+      name: 'query',
+      title: 'Query',
+    }),
+    defineField({
+      type: 'text',
+      name: 'variables',
+      title: 'variables',
     }),
     defineField({
       type: 'array',
