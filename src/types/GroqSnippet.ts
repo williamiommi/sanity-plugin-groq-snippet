@@ -15,7 +15,7 @@ export interface GroqSnippet extends SanityDocumentLike {
 
 export type GroqSnippetMutation = Pick<
   GroqSnippet,
-  '_type' | 'title' | 'description' | 'snippet' | 'tags'
+  '_type' | 'title' | 'description' | 'query' | 'tags' | 'variables'
 >
 
 export default GroqSnippet

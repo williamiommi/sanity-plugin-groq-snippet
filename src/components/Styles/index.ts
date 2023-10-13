@@ -2,7 +2,7 @@ import {Flex} from '@sanity/ui'
 import styled from 'styled-components'
 
 export const VerticalWrapper = styled(Flex)`
-  min-height: 50vh;
+  min-height: 70vh;
 `
 
 export const HorizontalWrapper = styled(Flex)`

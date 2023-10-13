@@ -1,10 +1,14 @@
+import {useGroqSnippetStore} from '../../../zustand/store'
 import DeleteDialog from './Delete'
 import InsertUpdateDialog from './InsertUpdate'
 
 const DialogSnippets = () => {
+  const isInsertUpdateSnippetsDialogOpen = useGroqSnippetStore(
+    (s) => s.isInsertUpdateSnippetsDialogOpen,
+  )
   return (
     <>
-      <InsertUpdateDialog />
+      {isInsertUpdateSnippetsDialogOpen && <InsertUpdateDialog />}
       <DeleteDialog />
     </>
   )
