@@ -87,33 +87,33 @@ const InsertUpdateDialog = () => {
               bottomHeight="30%"
               bottomNode={
                 <Flex direction="column" gap={0} style={{width: '100%'}}>
+                  <Flex gap={2} align="center" justify="space-between">
+                    <Flex gap={2} align="center">
+                      <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
+                        Params
+                      </Text>
+                      {variablesError && (
+                        <Tooltip
+                          content={
+                            <Card padding={2}>
+                              <Text>{variablesError}</Text>
+                            </Card>
+                          }
+                        >
+                          <InfoOutlineIcon fontSize={20} />
+                        </Tooltip>
+                      )}
+                    </Flex>
+                    <Button
+                      mode="bleed"
+                      icon={<BroomIcon width={20} height={20} />}
+                      onClick={beautifyVariables}
+                    />
+                  </Flex>
                   <Card
                     {...(variablesError && {tone: 'critical'})}
                     style={{width: '100%', height: '100%'}}
                   >
-                    <Flex gap={2} align="center" justify="space-between">
-                      <Flex gap={2} align="center">
-                        <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
-                          Params
-                        </Text>
-                        {variablesError && (
-                          <Tooltip
-                            content={
-                              <Card padding={2}>
-                                <Text>{variablesError}</Text>
-                              </Card>
-                            }
-                          >
-                            <InfoOutlineIcon fontSize={20} />
-                          </Tooltip>
-                        )}
-                      </Flex>
-                      <Button
-                        mode="bleed"
-                        icon={<BroomIcon width={20} height={20} />}
-                        onClick={beautifyVariables}
-                      />
-                    </Flex>
                     <CodeMirrorEditor value={variables} onChange={setVariables} />
                   </Card>
                 </Flex>

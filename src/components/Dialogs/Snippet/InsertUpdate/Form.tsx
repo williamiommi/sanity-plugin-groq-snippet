@@ -39,7 +39,13 @@ const Form = ({
   }
 
   return (
-    <Flex direction="column" margin={4} gap={4} style={{width: '100%', minWidth: '100px'}}>
+    <Flex
+      direction="column"
+      margin={4}
+      marginTop={3}
+      gap={4}
+      style={{width: '100%', minWidth: '100px'}}
+    >
       <Flex direction="column" gap={2}>
         <Text as="label" htmlFor="title" weight="semibold" size={1}>
           Title *
