@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from 'react'
 import GroqSnippet, {GROQ_SNIPPET_TYPE} from '../types/GroqSnippet'
-import GroqSnippetTag from '../types/GroqSnippetTag'
+import GroqSnippetTag, {GroqSnippetTagReference} from '../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../zustand/store'
 
 interface useSnippetFormReturn {
@@ -50,7 +50,13 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
 
   const saveSnippet = () => {
     if (title && query) {
-      addSnippet({_type: GROQ_SNIPPET_TYPE, title, description, query, variables})
+      let tagsToSave: GroqSnippetTagReference[] = []
+      if (formTags) {
+        tagsToSave = formTags
+          ?.filter((t) => t.checked)
+          .map((t) => ({_type: 'reference', _ref: t._id}))
+      }
+      addSnippet({_type: GROQ_SNIPPET_TYPE, title, description, query, variables, tags: tagsToSave})
     }
   }
 
