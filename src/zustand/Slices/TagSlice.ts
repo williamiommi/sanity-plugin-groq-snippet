@@ -19,7 +19,6 @@ export interface TagSlice {
   addTag: (name: string) => void
   updateTag: (id: string, name: string) => void
   deleteTags: () => void
-  setTagToUpdate: (tagToUpdate?: GroqSnippetTag) => void
 }
 
 export const createTagSlice: StateCreator<
@@ -33,7 +32,6 @@ export const createTagSlice: StateCreator<
   setTags: (tags: GroqSnippetTag[]) => set({tags}),
   resetCheckedTags: () => set({tags: get().tags.map((t) => ({...t, checked: false}))}),
   setTagsCount: (tagsCount: number) => set({tagsCount}),
-  setTagToUpdate: (tagToUpdate?: GroqSnippetTag) => set({tagToUpdate}),
   addTag: async (name: string) => {
     const {client, toast} = get()
     try {

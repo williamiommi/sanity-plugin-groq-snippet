@@ -1,6 +1,5 @@
 import {useTheme} from '@sanity/ui'
 import CodeMirror, {ReactCodeMirrorProps} from '@uiw/react-codemirror'
-import {memo} from 'react'
 import {useCodemirrorTheme} from '../../hooks/useCodemirrorTheme'
 import {CodemirrorWrapper} from '../Styles'
 import {codemirrorExtensions} from './CustomExtensions'
@@ -18,4 +17,4 @@ const CodeMirrorEditor = (props: CodeMirrorEditorProps) => {
   )
 }
 
-export default memo(CodeMirrorEditor)
+export default CodeMirrorEditor

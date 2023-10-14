@@ -18,11 +18,13 @@ const InsertUpdateDialog = () => {
     description,
     formTags,
     query,
+    variables,
     canConfirm,
     setTitle,
     setDescription,
     setFormTag,
     setQuery,
+    setVariables,
     saveSnippet,
   } = useSnippetForm(snippetToUpdate)
 
@@ -63,7 +65,11 @@ const InsertUpdateDialog = () => {
                   <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
                     Query *
                   </Text>
-                  <CodeMirrorEditor value={query} onChange={setQuery} />
+                  <CodeMirrorEditor
+                    value={query}
+                    onChange={setQuery}
+                    placeholder="Insert your groq query..."
+                  />
                 </Flex>
               }
               bottomHeight="30%"
@@ -72,7 +78,7 @@ const InsertUpdateDialog = () => {
                   <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
                     Params
                   </Text>
-                  <CodeMirrorEditor value={query} onChange={setQuery} />
+                  <CodeMirrorEditor value={variables} onChange={setVariables} />
                 </Flex>
               }
             />

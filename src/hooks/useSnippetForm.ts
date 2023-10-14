@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from 'react'
-import GroqSnippet, {GROQ_SNIPPET_TYPE} from '../types/GroqSnippet'
+import GroqSnippet, {GROQ_SNIPPET_TYPE, GroqSnippetMutation} from '../types/GroqSnippet'
 import GroqSnippetTag, {GroqSnippetTagReference} from '../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../zustand/store'
 
@@ -8,6 +8,7 @@ interface useSnippetFormReturn {
   title?: string
   description?: string
   query?: string
+  variables?: string
   formTags?: GroqSnippetTag[]
   setTitle: (title: string) => void
   setDescription: (description: string) => void
@@ -20,6 +21,7 @@ interface useSnippetFormReturn {
 const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => {
   const tags = useGroqSnippetStore((s) => s.tags)
   const addSnippet = useGroqSnippetStore((s) => s.addSnippet)
+  const updateSnippet = useGroqSnippetStore((s) => s.updateSnippet)
   const [title, setTitle] = useState(snippetToUpdate?.title)
   const [description, setDescription] = useState(snippetToUpdate?.description)
   const [query, setQuery] = useState(snippetToUpdate?.query)
@@ -56,16 +58,32 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
           ?.filter((t) => t.checked)
           .map((t) => ({_type: 'reference', _ref: t._id}))
       }
-      addSnippet({_type: GROQ_SNIPPET_TYPE, title, description, query, variables, tags: tagsToSave})
+
+      const snippetToStore: GroqSnippetMutation = {
+        _type: GROQ_SNIPPET_TYPE,
+        title,
+        description,
+        query,
+        variables,
+        tags: tagsToSave,
+      }
+
+      if (snippetToUpdate) {
+        updateSnippet(snippetToUpdate._id, snippetToStore)
+      } else {
+        addSnippet(snippetToStore)
+      }
     }
   }
 
   return {
     title,
     description,
-    setQuery,
     formTags,
     canConfirm,
+    query,
+    variables,
+    setQuery,
     setTitle,
     setDescription,
     setVariables,
