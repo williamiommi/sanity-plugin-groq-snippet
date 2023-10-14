@@ -17,7 +17,7 @@ export const CodemirrorWrapper = styled.div`
   & .cm-editor {
     height: 100%;
 
-    font-size: 16px;
+    font-size: 0.875rem;
     line-height: 21px;
   }
 
