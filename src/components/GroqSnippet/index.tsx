@@ -5,6 +5,7 @@ import DialogSnippets from '../Dialogs/Snippet'
 import DialogTags from '../Dialogs/Tag'
 import Heading from '../Heading'
 import MainActions from '../MainActions'
+import SearchInput from '../SearchInput'
 import SnippetsGrid from '../SnippetsGrid'
 
 const GroqSnippetTool = () => {
@@ -12,13 +13,14 @@ const GroqSnippetTool = () => {
   useSetupTool()
   return (
     <ThemeProvider theme={theme}>
-      <Box marginX={3} marginY={4}>
+      <Box marginX={3} marginY={3}>
         <Flex justify="space-between" align="center" gap={2}>
           <Heading />
           <MainActions />
         </Flex>
+        <SearchInput />
+        <SnippetsGrid />
       </Box>
-      <SnippetsGrid />
       <DialogSnippets />
       <DialogTags />
     </ThemeProvider>
