@@ -1,11 +1,18 @@
 import {StateCreator} from 'zustand'
 import {toastError} from '../../lib/toastUtils'
-import {QUERY_INITIAL_DATA, QUERY_SNIPPETS_SEARCH, QueryInitialDataResponse} from '../../queries'
+import {
+  QUERY_GET_SNIPPET,
+  QUERY_INITIAL_DATA,
+  QUERY_SNIPPETS_SEARCH,
+  QueryInitialDataResponse,
+} from '../../queries'
+import GroqSnippet from '../../types/GroqSnippet'
 import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
 
 export interface UtilsSlice {
+  getSnippet: (id: string) => Promise<GroqSnippet | undefined>
   searchSnippets: (term: string) => void
   fetchData: () => void
 }
@@ -16,6 +23,20 @@ export const createUtilsSlice: StateCreator<
   [],
   UtilsSlice
 > = (set, get) => ({
+  getSnippet: async (id: string) => {
+    const {client, toast} = get()
+    try {
+      const response = await client!.fetch<GroqSnippet>(
+        QUERY_GET_SNIPPET,
+        {id},
+        {perspective: 'published'},
+      )
+      return response
+    } catch (err: any) {
+      toastError(toast!, {err})
+      return undefined
+    }
+  },
   searchSnippets: async (term: string) => {
     const {client, toast, setSnippets} = get()
     try {

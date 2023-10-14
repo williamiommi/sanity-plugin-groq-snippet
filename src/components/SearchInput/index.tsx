@@ -6,18 +6,19 @@ import useDebounce from '../../hooks/useDebounce'
 import {useGroqSnippetStore} from '../../zustand/store'
 
 const SearchInput = () => {
+  const [isDirty, setIsDirty] = useState(false)
   const [term, setTerm] = useState<string>('')
   const debouncedTerm = useDebounce<string>(term)
-  const client = useGroqSnippetStore((s) => s.client)
   const searchSnippets = useGroqSnippetStore((s) => s.searchSnippets)
 
   const handleSearch = (e: FormEvent<HTMLInputElement>) => {
+    if (!isDirty) setIsDirty(true)
     setTerm(e.currentTarget.value)
   }
 
   useEffect(() => {
-    if (searchSnippets && client) searchSnippets(debouncedTerm)
-  }, [debouncedTerm, searchSnippets, client])
+    if (isDirty) searchSnippets(debouncedTerm)
+  }, [debouncedTerm, searchSnippets, isDirty])
 
   return (
     <Box marginY={4} style={{minWidth: '200', maxWidth: '30%'}}>

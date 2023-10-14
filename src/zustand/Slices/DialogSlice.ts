@@ -1,9 +1,9 @@
 import {StateCreator} from 'zustand'
-import GroqSnippet from '../../types/GroqSnippet'
 import GroqSnippetTag from '../../types/GroqSnippetTag'
 import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
+import {UtilsSlice} from './UtilsSlice'
 
 export interface DialogSlice {
   isDeleteSnippetsDialogOpen: boolean
@@ -11,7 +11,7 @@ export interface DialogSlice {
   closeDeleteSnippetsDialog: () => void
 
   isInsertUpdateSnippetsDialogOpen: boolean
-  openInsertUpdateSnippetsDialog: (snippetToUpdate?: GroqSnippet) => void
+  openInsertUpdateSnippetsDialog: (id?: string) => void
   closeInsertUpdateSnippetsDialog: () => void
 
   isAllTagsDialogOpen: boolean
@@ -28,7 +28,7 @@ export interface DialogSlice {
 }
 
 export const createDialogSlice: StateCreator<
-  SanitySlice & DialogSlice & TagSlice & SnippetSlice,
+  SanitySlice & DialogSlice & TagSlice & SnippetSlice & UtilsSlice,
   [],
   [],
   DialogSlice
@@ -38,8 +38,10 @@ export const createDialogSlice: StateCreator<
   closeDeleteSnippetsDialog: () => set({isDeleteSnippetsDialogOpen: false}),
 
   isInsertUpdateSnippetsDialogOpen: false,
-  openInsertUpdateSnippetsDialog: (snippetToUpdate?: GroqSnippet) =>
-    set({isInsertUpdateSnippetsDialogOpen: true, snippetToUpdate}),
+  openInsertUpdateSnippetsDialog: async (id?: string) => {
+    const snippetToUpdate = id ? await get().getSnippet(id) : undefined
+    set({isInsertUpdateSnippetsDialogOpen: true, snippetToUpdate})
+  },
   closeInsertUpdateSnippetsDialog: () =>
     set({isInsertUpdateSnippetsDialogOpen: false, snippetToUpdate: undefined}),
 

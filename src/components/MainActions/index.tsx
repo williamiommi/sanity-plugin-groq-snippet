@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import {AddIcon, TagIcon} from '@sanity/icons'
 import {Button, Flex} from '@sanity/ui'
 import {useGroqSnippetStore} from '../../zustand/store'
