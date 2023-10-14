@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
 import beautify from '../lib/beautify'
 import isValidJSON from '../lib/isValidJSON'
 import GroqSnippet, {GROQ_SNIPPET_TYPE, GroqSnippetMutation} from '../types/GroqSnippet'
@@ -95,13 +95,13 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     }
   }
 
-  const beautifyQuery = () => {
+  const beautifyQuery = useCallback(() => {
     if (query) setQuery(beautify(query))
-  }
+  }, [query])
 
-  const beautifyVariables = () => {
-    if (query) setVariables(beautify(variables))
-  }
+  const beautifyVariables = useCallback(() => {
+    if (variables) setVariables(beautify(variables))
+  }, [variables])
 
   return {
     title,

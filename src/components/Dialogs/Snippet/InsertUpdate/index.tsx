@@ -1,11 +1,10 @@
 import {ErrorOutlineIcon} from '@sanity/icons'
-import {Button, Card, Dialog, Flex, Text, Tooltip} from '@sanity/ui'
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
+import {Card, Dialog, Flex, Text, Tooltip} from '@sanity/ui'
 import useSnippetForm from '../../../../hooks/useSnippetForm'
 import {useGroqSnippetStore} from '../../../../zustand/store'
+import BeautifyCta from '../../../BeautifyCta'
 import CodeMirrorEditor from '../../../CodeMirrorEditor'
-import BroomIcon from '../../../Icons/BroomIcon'
-import CopyIcon from '../../../Icons/CopyIcon'
+import Copy2ClipboardCta from '../../../Copy2ClipboardCta'
 import Horizontal from '../../../Resizer/Horizontal'
 import Vertical from '../../../Resizer/Vertical'
 import Footer from './Footer'
@@ -13,7 +12,6 @@ import Form from './Form'
 import Header from './Header'
 
 const InsertUpdateDialog = () => {
-  const copy2clipboard = useCopyToClipboard()
   const closeInsertUpdateSnippetsDialog = useGroqSnippetStore(
     (s) => s.closeInsertUpdateSnippetsDialog,
   )
@@ -75,20 +73,8 @@ const InsertUpdateDialog = () => {
                       Query *
                     </Text>
                     <Flex align="center" gap={0}>
-                      <Button
-                        mode="bleed"
-                        icon={<CopyIcon width={20} height={20} />}
-                        paddingX={2}
-                        paddingY={3}
-                        onClick={() => copy2clipboard(query)}
-                      />
-                      <Button
-                        mode="bleed"
-                        icon={<BroomIcon width={20} height={20} />}
-                        paddingX={2}
-                        paddingY={3}
-                        onClick={beautifyQuery}
-                      />
+                      <Copy2ClipboardCta value={query} />
+                      <BeautifyCta beautifyFn={beautifyQuery} />
                     </Flex>
                   </Flex>
                   <CodeMirrorEditor
@@ -119,20 +105,8 @@ const InsertUpdateDialog = () => {
                       )}
                     </Flex>
                     <Flex align="center" gap={0}>
-                      <Button
-                        mode="bleed"
-                        icon={<CopyIcon width={20} height={20} />}
-                        paddingX={2}
-                        paddingY={3}
-                        onClick={() => copy2clipboard(variables)}
-                      />
-                      <Button
-                        mode="bleed"
-                        icon={<BroomIcon width={20} height={20} />}
-                        paddingX={2}
-                        paddingY={3}
-                        onClick={beautifyVariables}
-                      />
+                      <Copy2ClipboardCta value={variables} />
+                      <BeautifyCta beautifyFn={beautifyVariables} />
                     </Flex>
                   </Flex>
                   <Card
