@@ -5,9 +5,10 @@ import CopyIcon from '../Icons/CopyIcon'
 
 interface Copy2ClipboardCtaProps {
   value: string | undefined
+  disabled: boolean | undefined
 }
 
-const Copy2ClipboardCta = ({value}: Copy2ClipboardCtaProps) => {
+const Copy2ClipboardCta = ({value, disabled}: Copy2ClipboardCtaProps) => {
   const copy2clipboard = useCopyToClipboard()
   return (
     <Tooltip
@@ -24,6 +25,7 @@ const Copy2ClipboardCta = ({value}: Copy2ClipboardCtaProps) => {
         icon={<CopyIcon width={20} height={20} />}
         paddingX={2}
         paddingY={3}
+        disabled={disabled}
         onClick={() => copy2clipboard(value)}
       />
     </Tooltip>

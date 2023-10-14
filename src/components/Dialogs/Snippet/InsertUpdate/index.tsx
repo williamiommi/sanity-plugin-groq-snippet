@@ -73,8 +73,8 @@ const InsertUpdateDialog = () => {
                       Query *
                     </Text>
                     <Flex align="center" gap={0}>
-                      <Copy2ClipboardCta value={query} />
-                      <BeautifyCta beautifyFn={beautifyQuery} />
+                      <Copy2ClipboardCta value={query} disabled={!query} />
+                      <BeautifyCta beautifyFn={beautifyQuery} disabled={!query} />
                     </Flex>
                   </Flex>
                   <CodeMirrorEditor
@@ -105,8 +105,8 @@ const InsertUpdateDialog = () => {
                       )}
                     </Flex>
                     <Flex align="center" gap={0}>
-                      <Copy2ClipboardCta value={variables} />
-                      <BeautifyCta beautifyFn={beautifyVariables} />
+                      <Copy2ClipboardCta value={variables} disabled={!variables} />
+                      <BeautifyCta beautifyFn={beautifyVariables} disabled={!variables} />
                     </Flex>
                   </Flex>
                   <Card

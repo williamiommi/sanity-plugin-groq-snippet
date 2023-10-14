@@ -4,9 +4,10 @@ import BroomIcon from '../Icons/BroomIcon'
 
 interface BeautifyCtaProps {
   beautifyFn: () => void
+  disabled: boolean | undefined
 }
 
-const BeautifyCta = ({beautifyFn}: BeautifyCtaProps) => {
+const BeautifyCta = ({beautifyFn, disabled}: BeautifyCtaProps) => {
   return (
     <Tooltip
       content={
@@ -22,6 +23,7 @@ const BeautifyCta = ({beautifyFn}: BeautifyCtaProps) => {
         icon={<BroomIcon width={20} height={20} />}
         paddingX={2}
         paddingY={3}
+        disabled={disabled}
         onClick={beautifyFn}
       />
     </Tooltip>
