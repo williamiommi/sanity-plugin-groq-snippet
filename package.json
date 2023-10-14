@@ -49,8 +49,16 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.10.2",
+    "@codemirror/commands": "^6.3.0",
+    "@codemirror/lang-javascript": "^6.2.1",
+    "@codemirror/language": "^6.9.1",
+    "@codemirror/search": "^6.5.4",
+    "@codemirror/view": "^6.21.3",
+    "@lezer/highlight": "^1.1.6",
     "@sanity/incompatible-plugin": "^1.0.4",
     "@sanity/ui": "^1.8.2",
+    "@uiw/react-codemirror": "^4.21.20",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
