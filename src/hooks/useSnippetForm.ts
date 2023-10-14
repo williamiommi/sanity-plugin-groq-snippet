@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useState} from 'react'
+import beautify from '../lib/beautify'
 import isValidJSON from '../lib/isValidJSON'
 import GroqSnippet, {GROQ_SNIPPET_TYPE, GroqSnippetMutation} from '../types/GroqSnippet'
 import GroqSnippetTag, {GroqSnippetTagReference} from '../types/GroqSnippetTag'
@@ -15,8 +16,10 @@ interface useSnippetFormReturn {
   setTitle: (title: string) => void
   setDescription: (description: string) => void
   setQuery: (query: string) => void
+  beautifyQuery: () => void
   setFormTag: (query: string) => void
   setVariables: (variables: string) => void
+  beautifyVariables: () => void
   saveSnippet: () => void
 }
 
@@ -92,6 +95,14 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     }
   }
 
+  const beautifyQuery = () => {
+    if (query) setQuery(beautify(query))
+  }
+
+  const beautifyVariables = () => {
+    if (query) setVariables(beautify(variables))
+  }
+
   return {
     title,
     description,
@@ -101,9 +112,11 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     variables,
     variablesError,
     setQuery,
+    beautifyQuery,
     setTitle,
     setDescription,
     setVariables: handleVariables,
+    beautifyVariables,
     saveSnippet,
     setFormTag,
   }
