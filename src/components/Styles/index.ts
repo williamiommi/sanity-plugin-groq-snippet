@@ -33,6 +33,7 @@ export const CodemirrorWrapper = styled.div`
 
 export const VerticalWrapper = styled(Flex)`
   min-height: 70vh;
+  max-height: 70vh;
   height: 100%;
 `
 
@@ -54,6 +55,7 @@ export const RightColumn = styled(Column)``
 const Row = styled(Flex)<{customHeight: string | undefined}>`
   height: ${(props) => (props.customHeight ? props.customHeight : '50%')};
   width: 100%;
+  overflow-y: hidden;
 `
 export const TopRow = styled(Row)``
 export const BottomRow = styled(Row)``
