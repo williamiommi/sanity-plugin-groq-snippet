@@ -5,6 +5,9 @@ import {useGroqSnippetStore} from '../zustand/store'
 
 interface useSnippetFormReturn {
   canConfirm: boolean
+  title?: string
+  description?: string
+  query?: string
   formTags?: GroqSnippetTag[]
   setTitle: (title: string) => void
   setDescription: (description: string) => void
@@ -25,8 +28,15 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
   const [formTags, setFormTags] = useState<GroqSnippetTag[]>()
 
   useEffect(() => {
-    if (tags) setFormTags(tags)
-  }, [tags])
+    if (tags) {
+      setFormTags(
+        tags.map((t) => ({
+          ...t,
+          checked: !!snippetToUpdate?.tags?.find((nt) => nt._ref === t._id),
+        })),
+      )
+    }
+  }, [tags, snippetToUpdate?.tags])
 
   const setFormTag = (tagRef: string) => {
     setFormTags((state) => {
@@ -45,11 +55,13 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
   }
 
   return {
+    title,
+    description,
+    setQuery,
     formTags,
     canConfirm,
     setTitle,
     setDescription,
-    setQuery,
     setVariables,
     saveSnippet,
     setFormTag,

@@ -5,8 +5,8 @@ import {LeftColumn, RightColumn, VerticalDivider, VerticalWrapper} from '../Styl
 interface VerticalProps {
   leftNode: ReactNode
   rightNode: ReactNode
-  leftWidth?: string
-  rightWidth?: string
+  leftWidth: string | undefined
+  rightWidth: string | undefined
 }
 
 const Vertical = ({leftWidth, rightWidth, leftNode, rightNode}: VerticalProps) => {
@@ -17,17 +17,24 @@ const Vertical = ({leftWidth, rightWidth, leftNode, rightNode}: VerticalProps) =
 
   useEffect(() => {
     if (wrapperRef.current && leftRef.current && dividerRef.current && rightRef.current) {
-      verticalResizer(wrapperRef.current, leftRef.current, dividerRef.current, rightRef.current)
+      verticalResizer(
+        wrapperRef.current,
+        leftRef.current,
+        dividerRef.current,
+        rightRef.current,
+        leftWidth,
+        rightWidth,
+      )
     }
   }, [])
 
   return (
     <VerticalWrapper ref={wrapperRef}>
-      <LeftColumn ref={leftRef} width={leftWidth}>
+      <LeftColumn ref={leftRef} customWidth={leftWidth}>
         {leftNode}
       </LeftColumn>
       <VerticalDivider ref={dividerRef} />
-      <RightColumn ref={rightRef} width={rightWidth}>
+      <RightColumn ref={rightRef} customWidth={rightWidth}>
         {rightNode}
       </RightColumn>
     </VerticalWrapper>

@@ -32,8 +32,10 @@ export const createSnippetSlice: StateCreator<
   addSnippet: async (mutation: GroqSnippetMutation) => {
     const {client, toast} = get()
     try {
-      await client!.create<GroqSnippetMutation>(mutation)
+      await client!.create<GroqSnippetMutation>(mutation, {autoGenerateArrayKeys: true})
       toastSuccess(toast!, {description: 'Snippet created'})
+      get().closeInsertUpdateSnippetsDialog()
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }
@@ -43,6 +45,8 @@ export const createSnippetSlice: StateCreator<
     try {
       await client!.patch(id).set(mutation).commit({autoGenerateArrayKeys: true})
       toastSuccess(toast!, {description: 'Snippet updated'})
+      get().closeInsertUpdateSnippetsDialog()
+      get().fetchData()
     } catch (err: any) {
       toastError(toast!, {err})
     }

@@ -1,16 +1,26 @@
+/* eslint-disable react/jsx-no-bind */
 import {CloseIcon} from '@sanity/icons'
 import {Badge, Flex, Select, Text, TextArea, TextInput} from '@sanity/ui'
 import {FormEvent, useMemo} from 'react'
 import GroqSnippetTag from '../../../../types/GroqSnippetTag'
 
 interface FormProps {
+  title: string | undefined
+  description: string | undefined
+  formTags: GroqSnippetTag[] | undefined
   onChangeTitle: (value: string) => void
   onChangeDescription: (value: string) => void
   onSelectTag: (value: string) => void
-  formTags?: GroqSnippetTag[]
 }
 
-const Form = ({formTags, onChangeTitle, onChangeDescription, onSelectTag}: FormProps) => {
+const Form = ({
+  title,
+  description,
+  formTags,
+  onChangeTitle,
+  onChangeDescription,
+  onSelectTag,
+}: FormProps) => {
   const noTagsAvailable = useMemo(() => {
     if (!formTags) return true
     return formTags.every((t) => t.checked)
@@ -29,26 +39,31 @@ const Form = ({formTags, onChangeTitle, onChangeDescription, onSelectTag}: FormP
   }
 
   return (
-    <Flex direction="column" margin={4} gap={3} style={{width: '100%', minWidth: '100px'}}>
+    <Flex direction="column" margin={4} gap={4} style={{width: '100%', minWidth: '100px'}}>
       <Flex direction="column" gap={2}>
-        <Text weight="semibold" size={1}>
-          Title
+        <Text as="label" htmlFor="title" weight="semibold" size={1}>
+          Title *
         </Text>
-        <TextInput onChange={handleChangeTitle} />
+        <TextInput id="title" onChange={handleChangeTitle} defaultValue={title} />
       </Flex>
       <Flex direction="column" gap={2}>
-        <Text weight="semibold" size={1}>
+        <Text as="label" htmlFor="description" weight="semibold" size={1}>
           Description
         </Text>
-        <TextArea rows={4} onChange={handleChangeDescription} />
+        <TextArea
+          id="description"
+          rows={4}
+          onChange={handleChangeDescription}
+          defaultValue={description}
+        />
       </Flex>
       <Flex direction="column" gap={2}>
-        <Text weight="semibold" size={1}>
+        <Text as="label" htmlFor="tags" weight="semibold" size={1}>
           Tags
         </Text>
         {formTags && (
           <>
-            <Select onChange={handleSelectTag} disabled={noTagsAvailable}>
+            <Select id="tags" onChange={handleSelectTag} disabled={noTagsAvailable}>
               <option>{noTagsAvailable ? 'No tags remaining' : 'Select tag...'}</option>
               {formTags
                 .filter((t) => !t.checked)

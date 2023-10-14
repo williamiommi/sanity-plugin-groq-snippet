@@ -1,8 +1,11 @@
+/* eslint-disable max-params */
 export const verticalResizer = (
   wrapperEl: HTMLDivElement,
   leftEl: HTMLDivElement,
   dividerEl: HTMLDivElement,
   rightEl: HTMLDivElement,
+  initialLeftWidth: string = '50%',
+  initialRightWidth: string = '50%',
 ): void => {
   let condition = 'off'
   let pageX: number
@@ -35,8 +38,8 @@ export const verticalResizer = (
   })
 
   dividerEl.addEventListener('dblclick', () => {
-    leftEl.style.width = '50%'
-    rightEl.style.width = '50%'
+    leftEl.style.width = initialLeftWidth
+    rightEl.style.width = initialRightWidth
   })
 
   wrapperEl.addEventListener('mousemove', (e) => {
@@ -49,6 +52,8 @@ export const horizontalResizer = (
   topEl: HTMLElement,
   dividerEl: HTMLElement,
   bottomEl: HTMLElement,
+  initialTopHeight: string = '50%',
+  initialBottomHeight: string = '50%',
 ): void => {
   let condition = 'off'
   let pageY: number
@@ -81,8 +86,8 @@ export const horizontalResizer = (
   })
 
   dividerEl.addEventListener('dblclick', () => {
-    topEl.style.height = '50%'
-    bottomEl.style.height = '50%'
+    topEl.style.height = initialTopHeight
+    bottomEl.style.height = initialBottomHeight
   })
 
   wrapperEl.addEventListener('mousemove', (e) => {

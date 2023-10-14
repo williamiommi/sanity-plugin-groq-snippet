@@ -5,9 +5,11 @@ import {BottomRow, HorizontalDivider, HorizontalWrapper, TopRow} from '../Styles
 interface HorizontalProps {
   topNode: ReactNode
   bottomNode: ReactNode
+  topHeight: string | undefined
+  bottomHeight: string | undefined
 }
 
-const Horizontal = ({topNode, bottomNode}: HorizontalProps) => {
+const Horizontal = ({topHeight, bottomHeight, topNode, bottomNode}: HorizontalProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const topRef = useRef<HTMLDivElement>(null)
   const dividerRef = useRef<HTMLDivElement>(null)
@@ -15,15 +17,26 @@ const Horizontal = ({topNode, bottomNode}: HorizontalProps) => {
 
   useEffect(() => {
     if (wrapperRef.current && topRef.current && dividerRef.current && bottomRef.current) {
-      horizontalResizer(wrapperRef.current, topRef.current, dividerRef.current, bottomRef.current)
+      horizontalResizer(
+        wrapperRef.current,
+        topRef.current,
+        dividerRef.current,
+        bottomRef.current,
+        topHeight,
+        bottomHeight,
+      )
     }
   }, [])
 
   return (
     <HorizontalWrapper ref={wrapperRef}>
-      <TopRow ref={topRef}>{topNode}</TopRow>
+      <TopRow ref={topRef} customHeight={topHeight}>
+        {topNode}
+      </TopRow>
       <HorizontalDivider ref={dividerRef} />
-      <BottomRow ref={bottomRef}>{bottomNode}</BottomRow>
+      <BottomRow ref={bottomRef} customHeight={bottomHeight}>
+        {bottomNode}
+      </BottomRow>
     </HorizontalWrapper>
   )
 }

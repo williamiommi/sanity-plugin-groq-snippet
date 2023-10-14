@@ -1,7 +1,8 @@
-import {Dialog} from '@sanity/ui'
-import {useCallback} from 'react'
+import {Dialog, Flex, Text} from '@sanity/ui'
 import useSnippetForm from '../../../../hooks/useSnippetForm'
 import {useGroqSnippetStore} from '../../../../zustand/store'
+import CodeMirrorEditor from '../../../CodeMirrorEditor'
+import Horizontal from '../../../Resizer/Horizontal'
 import Vertical from '../../../Resizer/Vertical'
 import Footer from './Footer'
 import Form from './Form'
@@ -12,12 +13,18 @@ const InsertUpdateDialog = () => {
     (s) => s.closeInsertUpdateSnippetsDialog,
   )
   const snippetToUpdate = useGroqSnippetStore((s) => s.snippetToUpdate)
-  const {formTags, canConfirm, setTitle, setDescription, setFormTag} =
-    useSnippetForm(snippetToUpdate)
-
-  const handleConfirm = useCallback(() => {}, [])
-
-  const RightNode = () => <div style={{width: '100%'}}>right</div>
+  const {
+    title,
+    description,
+    formTags,
+    query,
+    canConfirm,
+    setTitle,
+    setDescription,
+    setFormTag,
+    setQuery,
+    saveSnippet,
+  } = useSnippetForm(snippetToUpdate)
 
   return (
     <Dialog
@@ -28,7 +35,7 @@ const InsertUpdateDialog = () => {
           isEdit={!!snippetToUpdate}
           onCancel={closeInsertUpdateSnippetsDialog}
           canConfirm={canConfirm}
-          onConfirm={handleConfirm}
+          onConfirm={saveSnippet}
         />
       }
       onClose={closeInsertUpdateSnippetsDialog}
@@ -39,13 +46,38 @@ const InsertUpdateDialog = () => {
         rightWidth="60%"
         leftNode={
           <Form
+            title={title}
+            description={description}
             formTags={formTags}
             onSelectTag={setFormTag}
             onChangeTitle={setTitle}
             onChangeDescription={setDescription}
           />
         }
-        rightNode={<RightNode />}
+        rightNode={
+          <Flex style={{minHeight: '100%', width: '100%'}}>
+            <Horizontal
+              topHeight="70%"
+              topNode={
+                <Flex direction="column" gap={0} style={{width: '100%'}}>
+                  <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
+                    Query *
+                  </Text>
+                  <CodeMirrorEditor value={query} onChange={setQuery} />
+                </Flex>
+              }
+              bottomHeight="30%"
+              bottomNode={
+                <Flex direction="column" gap={0} style={{width: '100%'}}>
+                  <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
+                    Params
+                  </Text>
+                  <CodeMirrorEditor value={query} onChange={setQuery} />
+                </Flex>
+              }
+            />
+          </Flex>
+        }
       />
     </Dialog>
   )

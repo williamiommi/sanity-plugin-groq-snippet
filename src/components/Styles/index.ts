@@ -1,8 +1,39 @@
-import {Flex} from '@sanity/ui'
+import {Flex, rem} from '@sanity/ui'
 import styled from 'styled-components'
+
+export const CodemirrorWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  overflow: clip;
+  position: relative;
+  display: flex;
+
+  & .cm-theme {
+    width: 100%;
+  }
+
+  & .cm-editor {
+    height: 100%;
+
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  & .cm-line {
+    padding-left: ${({theme}) => rem(theme.sanity.space[3])};
+  }
+
+  & .cm-content {
+    border-right-width: ${({theme}) => rem(theme.sanity.space[4])} !important;
+    padding-top: 0;
+  }
+`
 
 export const VerticalWrapper = styled(Flex)`
   min-height: 70vh;
+  height: 100%;
 `
 
 export const HorizontalWrapper = styled(Flex)`
@@ -11,8 +42,8 @@ export const HorizontalWrapper = styled(Flex)`
   flex-direction: column;
 `
 
-const Column = styled(Flex)`
-  width: ${(props) => (props.width ? props.width : '50%')};
+const Column = styled(Flex)<{customWidth: string | undefined}>`
+  width: ${(props) => (props.customWidth ? props.customWidth : '50%')};
   height: 100%;
   overflow-x: hidden;
 `
@@ -20,8 +51,8 @@ const Column = styled(Flex)`
 export const LeftColumn = styled(Column)``
 export const RightColumn = styled(Column)``
 
-const Row = styled(Flex)`
-  height: ${(props) => (props.height ? props.height : '50%')};
+const Row = styled(Flex)<{customHeight: string | undefined}>`
+  height: ${(props) => (props.customHeight ? props.customHeight : '50%')};
   width: 100%;
 `
 export const TopRow = styled(Row)``
