@@ -1,3 +1,4 @@
+// code taken from sanity vision plugin https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/vision/src/codemirror/useCodemirrorTheme.ts
 import {HighlightStyle, syntaxHighlighting} from '@codemirror/language'
 import {EditorView} from '@codemirror/view'
 import {tags as t} from '@lezer/highlight'

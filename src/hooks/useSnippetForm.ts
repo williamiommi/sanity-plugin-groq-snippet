@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useState} from 'react'
+import isValidJSON from '../lib/isValidJSON'
 import GroqSnippet, {GROQ_SNIPPET_TYPE, GroqSnippetMutation} from '../types/GroqSnippet'
 import GroqSnippetTag, {GroqSnippetTagReference} from '../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../zustand/store'
@@ -9,6 +10,7 @@ interface useSnippetFormReturn {
   description?: string
   query?: string
   variables?: string
+  variablesError?: string | undefined
   formTags?: GroqSnippetTag[]
   setTitle: (title: string) => void
   setDescription: (description: string) => void
@@ -26,7 +28,11 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
   const [description, setDescription] = useState(snippetToUpdate?.description)
   const [query, setQuery] = useState(snippetToUpdate?.query)
   const [variables, setVariables] = useState(snippetToUpdate?.variables)
-  const canConfirm = useMemo(() => !!title && !!query, [title, query])
+  const [variablesError, setVariablesError] = useState<string | undefined>()
+  const canConfirm = useMemo(
+    () => !!title && !!query && !variablesError,
+    [title, query, variablesError],
+  )
   const [formTags, setFormTags] = useState<GroqSnippetTag[]>()
 
   useEffect(() => {
@@ -76,6 +82,16 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     }
   }
 
+  const handleVariables = (value: string) => {
+    const isValid = isValidJSON(value)
+    if (typeof isValid === 'boolean') {
+      setVariables(value)
+      setVariablesError(undefined)
+    } else {
+      setVariablesError(isValid)
+    }
+  }
+
   return {
     title,
     description,
@@ -83,10 +99,11 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     canConfirm,
     query,
     variables,
+    variablesError,
     setQuery,
     setTitle,
     setDescription,
-    setVariables,
+    setVariables: handleVariables,
     saveSnippet,
     setFormTag,
   }

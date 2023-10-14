@@ -1,4 +1,5 @@
-import {Dialog, Flex, Text} from '@sanity/ui'
+import {InfoOutlineIcon} from '@sanity/icons'
+import {Card, Dialog, Flex, Text, Tooltip} from '@sanity/ui'
 import useSnippetForm from '../../../../hooks/useSnippetForm'
 import {useGroqSnippetStore} from '../../../../zustand/store'
 import CodeMirrorEditor from '../../../CodeMirrorEditor'
@@ -19,6 +20,7 @@ const InsertUpdateDialog = () => {
     formTags,
     query,
     variables,
+    variablesError,
     canConfirm,
     setTitle,
     setDescription,
@@ -74,12 +76,27 @@ const InsertUpdateDialog = () => {
               }
               bottomHeight="30%"
               bottomNode={
-                <Flex direction="column" gap={0} style={{width: '100%'}}>
-                  <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
-                    Params
-                  </Text>
-                  <CodeMirrorEditor value={variables} onChange={setVariables} />
-                </Flex>
+                <Card {...(variablesError && {tone: 'critical'})} style={{width: '100%'}}>
+                  <Flex direction="column" gap={0} style={{width: '100%'}}>
+                    <Flex gap={2} align="center">
+                      <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
+                        Params
+                      </Text>
+                      {variablesError && (
+                        <Tooltip
+                          content={
+                            <Card padding={2}>
+                              <Text>{variablesError}</Text>
+                            </Card>
+                          }
+                        >
+                          <InfoOutlineIcon fontSize={20} />
+                        </Tooltip>
+                      )}
+                    </Flex>
+                    <CodeMirrorEditor value={variables} onChange={setVariables} />
+                  </Flex>
+                </Card>
               }
             />
           </Flex>

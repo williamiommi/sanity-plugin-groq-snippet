@@ -1,3 +1,4 @@
+// code taken from sanity vision plugin https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/vision/src/codemirror/extensions.ts
 import {closeBrackets} from '@codemirror/autocomplete'
 import {defaultKeymap, history, historyKeymap} from '@codemirror/commands'
 import {javascriptLanguage} from '@codemirror/lang-javascript'

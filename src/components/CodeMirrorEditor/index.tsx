@@ -1,3 +1,4 @@
+// code taken from sanity vision plugin https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/vision/src/codemirror/VisionCodeMirror.tsx
 import {useTheme} from '@sanity/ui'
 import CodeMirror, {ReactCodeMirrorProps} from '@uiw/react-codemirror'
 import {useCodemirrorTheme} from '../../hooks/useCodemirrorTheme'
