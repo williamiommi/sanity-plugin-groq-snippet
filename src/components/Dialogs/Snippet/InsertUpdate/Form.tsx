@@ -86,6 +86,7 @@ const Form = ({
                   <Badge
                     key={t._id}
                     tone="primary"
+                    tabIndex={0}
                     fontSize={0}
                     padding={2}
                     onClick={() => handleSelectTag(t._id)}

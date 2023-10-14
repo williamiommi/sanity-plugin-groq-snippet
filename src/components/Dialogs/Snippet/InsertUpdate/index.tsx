@@ -1,5 +1,5 @@
 import {ErrorOutlineIcon} from '@sanity/icons'
-import {Card, Dialog, Flex, Text, Tooltip} from '@sanity/ui'
+import {Box, Card, Dialog, Flex, Text, Tooltip} from '@sanity/ui'
 import useSnippetForm from '../../../../hooks/useSnippetForm'
 import {useGroqSnippetStore} from '../../../../zustand/store'
 import BeautifyCta from '../../../BeautifyCta'
@@ -95,9 +95,9 @@ const InsertUpdateDialog = () => {
                       {variablesError && (
                         <Tooltip
                           content={
-                            <Card padding={2}>
-                              <Text>{variablesError}</Text>
-                            </Card>
+                            <Box padding={2}>
+                              <Text size={1}>{variablesError}</Text>
+                            </Box>
                           }
                         >
                           <ErrorOutlineIcon fontSize={20} />

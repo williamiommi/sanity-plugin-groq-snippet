@@ -1,4 +1,4 @@
-import {Button} from '@sanity/ui'
+import {Box, Button, Text, Tooltip} from '@sanity/ui'
 import {memo} from 'react'
 import useCopyToClipboard from '../../hooks/useCopyToClipboard'
 import CopyIcon from '../Icons/CopyIcon'
@@ -10,13 +10,23 @@ interface Copy2ClipboardCtaProps {
 const Copy2ClipboardCta = ({value}: Copy2ClipboardCtaProps) => {
   const copy2clipboard = useCopyToClipboard()
   return (
-    <Button
-      mode="bleed"
-      icon={<CopyIcon width={20} height={20} />}
-      paddingX={2}
-      paddingY={3}
-      onClick={() => copy2clipboard(value)}
-    />
+    <Tooltip
+      content={
+        <Box padding={2}>
+          <Text muted size={1}>
+            Copy to Clipboard
+          </Text>
+        </Box>
+      }
+    >
+      <Button
+        mode="bleed"
+        icon={<CopyIcon width={20} height={20} />}
+        paddingX={2}
+        paddingY={3}
+        onClick={() => copy2clipboard(value)}
+      />
+    </Tooltip>
   )
 }
 
