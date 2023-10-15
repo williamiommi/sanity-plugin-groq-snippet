@@ -22,14 +22,12 @@ const SnippetCheckbox = ({snippet}: SnippetCheckboxProps) => {
   }
 
   return (
-    <Flex
-      role="button"
-      align="center"
-      justify="center"
-      style={{cursor: 'pointer', width: tableWidth.checkbox, height: '100%', alignSelf: 'center'}}
-      onClick={handleCheckbox}
-    >
-      <Checkbox id={`snippet-${snippet._id}`} checked={snippet.checked} onChange={handleCheckbox} />
+    <Flex align="center" justify="center" style={{width: tableWidth.checkbox}}>
+      <Checkbox
+        id={`snippet-${snippet._id}`}
+        checked={!!snippet.checked}
+        onChange={handleCheckbox}
+      />
     </Flex>
   )
 }
