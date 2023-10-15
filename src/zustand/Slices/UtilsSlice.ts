@@ -58,7 +58,7 @@ export const createUtilsSlice: StateCreator<
         {},
         {perspective: 'published'},
       )
-      setSnippets(response.snippets)
+      setSnippets(response.snippets.length === 0 ? undefined : response.snippets)
       setSnippetsCount(response.snippetsCount)
       setTags(response.tags)
       setTagsCount(response.tagsCount)

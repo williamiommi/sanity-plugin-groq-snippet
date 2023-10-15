@@ -1,5 +1,9 @@
-import {Box, Card, Flex, rem} from '@sanity/ui'
+import {Box, Card, Flex, TextArea, rem} from '@sanity/ui'
 import styled from 'styled-components'
+
+export const TextAreaWrapper = styled(TextArea)`
+  resize: vertical !important;
+`
 
 export const CodemirrorWrapper = styled.div`
   width: 100%;

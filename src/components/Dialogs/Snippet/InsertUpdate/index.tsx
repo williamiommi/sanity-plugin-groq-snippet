@@ -77,11 +77,7 @@ const InsertUpdateDialog = () => {
                       <BeautifyCta beautifyFn={beautifyQuery} disabled={!query} />
                     </Flex>
                   </Flex>
-                  <CodeMirrorEditor
-                    value={query}
-                    onChange={setQuery}
-                    placeholder="Insert your groq query..."
-                  />
+                  <CodeMirrorEditor value={query} onChange={setQuery} />
                 </Flex>
               }
               bottomHeight="30%"

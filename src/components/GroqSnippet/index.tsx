@@ -5,7 +5,6 @@ import DialogSnippets from '../Dialogs/Snippet'
 import DialogTags from '../Dialogs/Tag'
 import Heading from '../Heading'
 import MainActions from '../MainActions'
-import SearchInput from '../SearchInput'
 import SnippetsTable from '../SnippetsTable'
 
 const GroqSnippetTool = () => {
@@ -18,7 +17,6 @@ const GroqSnippetTool = () => {
           <Heading />
           <MainActions />
         </Flex>
-        <SearchInput />
         <SnippetsTable />
       </Box>
       <DialogSnippets />

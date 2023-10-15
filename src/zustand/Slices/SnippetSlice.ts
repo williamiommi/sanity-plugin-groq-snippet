@@ -10,7 +10,7 @@ export interface SnippetSlice {
   snippets?: GroqSnippet[]
   snippetsCount: number
   snippetToUpdate?: GroqSnippet
-  setSnippets: (snippets: GroqSnippet[]) => void
+  setSnippets: (snippets?: GroqSnippet[]) => void
   setSnippetsCount: (snippetsCount: number) => void
   addSnippet: (mutation: GroqSnippetMutation) => void
   updateSnippet: (id: string, mutation: GroqSnippetMutation) => void
@@ -25,7 +25,7 @@ export const createSnippetSlice: StateCreator<
   SnippetSlice
 > = (set, get) => ({
   snippetsCount: 0,
-  setSnippets: (snippets: GroqSnippet[]) => set({snippets}),
+  setSnippets: (snippets?: GroqSnippet[]) => set({snippets}),
   setSnippetsCount: (snippetsCount: number) => set({snippetsCount}),
   resetCheckedSnippets: () => set({snippets: get().snippets!.map((t) => ({...t, checked: false}))}),
   addSnippet: async (mutation: GroqSnippetMutation) => {
