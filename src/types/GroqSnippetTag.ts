@@ -11,6 +11,7 @@ interface GroqSnippetTag extends SanityDocumentLike {
 export type GroqSnippetTagReference = {
   _type: 'reference'
   _ref: string
+  name?: string
 }
 
 export type GroqSnippetTagMutation = Pick<GroqSnippetTag, '_type' | 'name'>

@@ -7,7 +7,7 @@ import {SanitySlice} from './SanitySlice'
 import {UtilsSlice} from './UtilsSlice'
 
 export interface SnippetSlice {
-  snippets: GroqSnippet[]
+  snippets?: GroqSnippet[]
   snippetsCount: number
   snippetToUpdate?: GroqSnippet
   setSnippets: (snippets: GroqSnippet[]) => void
@@ -24,11 +24,10 @@ export const createSnippetSlice: StateCreator<
   [],
   SnippetSlice
 > = (set, get) => ({
-  snippets: [],
   snippetsCount: 0,
   setSnippets: (snippets: GroqSnippet[]) => set({snippets}),
   setSnippetsCount: (snippetsCount: number) => set({snippetsCount}),
-  resetCheckedSnippets: () => set({snippets: get().snippets.map((t) => ({...t, checked: false}))}),
+  resetCheckedSnippets: () => set({snippets: get().snippets!.map((t) => ({...t, checked: false}))}),
   addSnippet: async (mutation: GroqSnippetMutation) => {
     const {client, toast} = get()
     try {
@@ -54,7 +53,7 @@ export const createSnippetSlice: StateCreator<
   deleteSnippets: async () => {
     const {client, toast} = get()
     const ids = get()
-      .snippets.filter((t) => t.checked)
+      .snippets!.filter((t) => t.checked)
       .map((t) => t._id)
     if (ids.length === 0) return
     try {

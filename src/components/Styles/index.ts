@@ -1,4 +1,4 @@
-import {Flex, rem} from '@sanity/ui'
+import {Box, Card, Flex, rem} from '@sanity/ui'
 import styled from 'styled-components'
 
 export const CodemirrorWrapper = styled.div`
@@ -87,4 +87,27 @@ export const HorizontalDivider = styled(DividerShared)`
   cursor: row-resize;
   width: 100%;
   z-index: 4;
+`
+
+export const TextClamp = styled(Box)<{lines?: number}>`
+  display: -webkit-box;
+  -webkit-line-clamp: ${(props) => (props.lines ? props.lines : 1)};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--card-muted-fg-color);
+`
+
+// table
+export const TableHeadingWrapper = styled(Flex)`
+  width: 100%;
+  border-top: 1px solid var(--card-border-color);
+  border-bottom: 1px solid var(--card-border-color);
+`
+
+export const TableRowWrapper = styled(Card)`
+  width: 100%;
+  border-bottom: 1px solid var(--card-border-color);
+  &:last-child {
+    border-bottom: 0;
+  }
 `

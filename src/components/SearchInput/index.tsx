@@ -21,12 +21,13 @@ const SearchInput = () => {
   }, [debouncedTerm, searchSnippets, isDirty])
 
   return (
-    <Box marginY={4} style={{minWidth: '200', maxWidth: '30%'}}>
+    <Box paddingY={4} paddingX={3} style={{width: '100%', maxWidth: '600px'}}>
       <TextInput
         icon={SearchIcon}
         id="search-snippet"
         placeholder="Search snippets..."
         onChange={handleSearch}
+        padding={4}
       />
     </Box>
   )
