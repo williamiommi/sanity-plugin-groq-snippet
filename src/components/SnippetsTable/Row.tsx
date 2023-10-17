@@ -52,8 +52,8 @@ const Row = ({snippet, odd}: RowProps) => {
             </Flex>
           </Flex>
           <Flex align="center" justify="center" style={{width: tableWidth.actions}}>
-            <Button mode="bleed" tone="primary" icon={EditIcon} onClick={handleEditDialog} />
-            <Button mode="bleed" tone="default" icon={CogIcon} />
+            <Button mode="bleed" icon={EditIcon} onClick={handleEditDialog} />
+            <Button mode="bleed" icon={CogIcon} />
           </Flex>
         </Flex>
       </Flex>

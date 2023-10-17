@@ -25,6 +25,10 @@ export interface DialogSlice {
   isInsertUpdateTagsDialogOpen: boolean
   openInsertUpdateTagsDialog: (tagToUpdate?: GroqSnippetTag) => void
   closeInsertUpdateTagsDialog: () => void
+
+  isExportDialogOpen: boolean
+  openExportDialog: () => void
+  closeExportDialog: () => void
 }
 
 export const createDialogSlice: StateCreator<
@@ -61,4 +65,8 @@ export const createDialogSlice: StateCreator<
     set({isInsertUpdateTagsDialogOpen: true, tagToUpdate}),
   closeInsertUpdateTagsDialog: () =>
     set({isInsertUpdateTagsDialogOpen: false, tagToUpdate: undefined}),
+
+  isExportDialogOpen: false,
+  openExportDialog: () => set({isExportDialogOpen: true}),
+  closeExportDialog: () => set({isExportDialogOpen: false}),
 })

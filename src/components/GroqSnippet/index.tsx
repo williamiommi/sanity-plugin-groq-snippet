@@ -1,6 +1,7 @@
 import {Box, Flex, useTheme} from '@sanity/ui'
 import {ThemeProvider} from 'styled-components'
 import useSetupTool from '../../hooks/useSetupTool'
+import DialogExport from '../Dialogs/Export'
 import DialogSnippets from '../Dialogs/Snippet'
 import DialogTags from '../Dialogs/Tag'
 import Heading from '../Heading'
@@ -21,6 +22,7 @@ const GroqSnippetTool = () => {
       </Box>
       <DialogSnippets />
       <DialogTags />
+      <DialogExport />
     </ThemeProvider>
   )
 }

@@ -1,12 +1,13 @@
 import {StateCreator} from 'zustand'
 import {toastError} from '../../lib/toastUtils'
 import {
+  QUERY_EXPORT_SNIPPETS,
   QUERY_GET_SNIPPET,
   QUERY_INITIAL_DATA,
   QUERY_SNIPPETS_SEARCH,
   QueryInitialDataResponse,
 } from '../../queries'
-import GroqSnippet from '../../types/GroqSnippet'
+import GroqSnippet, {GroqSnippetExport} from '../../types/GroqSnippet'
 import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
@@ -15,6 +16,7 @@ export interface UtilsSlice {
   getSnippet: (id: string) => Promise<GroqSnippet | undefined>
   searchSnippets: (term: string) => void
   fetchData: () => void
+  exportData: () => Promise<GroqSnippetExport[]>
 }
 
 export const createUtilsSlice: StateCreator<
@@ -64,6 +66,24 @@ export const createUtilsSlice: StateCreator<
       setTagsCount(response.tagsCount)
     } catch (err: any) {
       toastError(toast!, {err})
+    }
+  },
+  exportData: async () => {
+    const {client, toast} = get()
+    try {
+      const ids = get()
+        .snippets!.filter((t) => t.checked)
+        .map((t) => t._id)
+      if (ids.length === 0) return []
+      const response = await client!.fetch<GroqSnippetExport[]>(
+        QUERY_EXPORT_SNIPPETS,
+        {ids},
+        {perspective: 'published'},
+      )
+      return response
+    } catch (err: any) {
+      toastError(toast!, {err})
+      return []
     }
   },
 })
