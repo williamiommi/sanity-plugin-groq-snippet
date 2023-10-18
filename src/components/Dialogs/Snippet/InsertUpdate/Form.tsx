@@ -127,8 +127,8 @@ const Form = ({
       <Box style={{padding: '1.25rem'}}>
         {snippetToExport && (
           <Flex align="center" justify="flex-end" gap={2}>
-            <GeneratePdfCta initialData={[snippetToExport]} />
-            <GenerateCsvCta initialData={[snippetToExport]} />
+            <GeneratePdfCta snippetToExport={snippetToExport} />
+            <GenerateCsvCta snippetToExport={snippetToExport} />
           </Flex>
         )}
       </Box>

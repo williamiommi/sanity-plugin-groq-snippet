@@ -15,13 +15,13 @@ const headers = [
 ]
 
 interface GenerateCsvCtaProps {
-  initialData?: GroqSnippetExport[]
+  snippetToExport?: GroqSnippetExport
 }
 
-const GenerateCsvCta = ({initialData = []}: GenerateCsvCtaProps) => {
+const GenerateCsvCta = ({snippetToExport}: GenerateCsvCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<GroqSnippetExport[]>(initialData)
+  const [data, setData] = useState<GroqSnippetExport[]>([])
   const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const handleGenerateCsv = async () => {
@@ -39,7 +39,7 @@ const GenerateCsvCta = ({initialData = []}: GenerateCsvCtaProps) => {
     }
   }
 
-  if (data.length === 0 || loading) {
+  if (!snippetToExport || data.length === 0 || loading) {
     return (
       <Button
         mode="ghost"
@@ -57,7 +57,7 @@ const GenerateCsvCta = ({initialData = []}: GenerateCsvCtaProps) => {
   }
 
   return (
-    <CSVLink data={data} headers={headers} filename={fileName}>
+    <CSVLink data={[snippetToExport] || data} headers={headers} filename={fileName}>
       <Button
         mode="ghost"
         paddingY={1}

@@ -7,13 +7,13 @@ import {useGroqSnippetStore} from '../../zustand/store'
 import PdfDocument from './PdfDocument'
 
 interface GeneratePdfCtaProps {
-  initialData?: GroqSnippetExport[]
+  snippetToExport?: GroqSnippetExport
 }
 
-const GeneratePdfCta = ({initialData = []}: GeneratePdfCtaProps) => {
+const GeneratePdfCta = ({snippetToExport}: GeneratePdfCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<GroqSnippetExport[]>(initialData)
+  const [data, setData] = useState<GroqSnippetExport[]>([])
   const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const handleGeneratePdf = async () => {
@@ -31,7 +31,7 @@ const GeneratePdfCta = ({initialData = []}: GeneratePdfCtaProps) => {
     }
   }
 
-  if (data.length === 0 || loading) {
+  if (!snippetToExport || data.length === 0 || loading) {
     return (
       <Button
         mode="ghost"
@@ -49,7 +49,10 @@ const GeneratePdfCta = ({initialData = []}: GeneratePdfCtaProps) => {
   }
 
   return (
-    <PDFDownloadLink document={<PdfDocument snippets={data} />} fileName={fileName}>
+    <PDFDownloadLink
+      document={<PdfDocument snippets={[snippetToExport] || data} />}
+      fileName={fileName}
+    >
       <Button
         mode="ghost"
         paddingY={1}
