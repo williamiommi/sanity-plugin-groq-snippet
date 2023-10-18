@@ -1,7 +1,7 @@
-import {DocumentPdfIcon} from '@sanity/icons'
-import {Box, Button, Dialog, Flex, Label, Text} from '@sanity/ui'
+import {Box, Dialog, Flex, Text} from '@sanity/ui'
 import {useGroqSnippetStore} from '../../../zustand/store'
 import GenerateCsvCta from '../../GenerateCsvCta'
+import GeneratePdfCta from '../../GeneratePdfCta'
 import Header from './Header'
 
 const DialogExport = () => {
@@ -17,12 +17,7 @@ const DialogExport = () => {
       </Box>
       <Flex margin={4} direction="column" align="center" justify="center" gap={3}>
         <GenerateCsvCta />
-        <Button mode="ghost" paddingY={1} paddingX={2}>
-          <Flex align="center" justify="center">
-            <DocumentPdfIcon width={30} height={30} />
-            <Label size={1}>Generate PDF</Label>
-          </Flex>
-        </Button>
+        <GeneratePdfCta />
       </Flex>
     </Dialog>
   )

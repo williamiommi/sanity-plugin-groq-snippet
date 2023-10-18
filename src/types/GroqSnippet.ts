@@ -18,8 +18,9 @@ export type GroqSnippetMutation = Pick<
   '_type' | 'title' | 'description' | 'query' | 'tags' | 'variables'
 >
 
-export type GroqSnippetExport = Omit<GroqSnippet, 'tags'> & {
-  tags: string[]
-}
+export type GroqSnippetExport = Pick<
+  GroqSnippet,
+  '_id' | '_type' | 'title' | 'description' | 'query' | 'variables'
+> & {tags: string[]}
 
 export default GroqSnippet
