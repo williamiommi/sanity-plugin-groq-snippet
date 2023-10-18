@@ -2,13 +2,17 @@
 import {CloseIcon} from '@sanity/icons'
 import {Badge, Box, Flex, Select, Text, TextInput} from '@sanity/ui'
 import {FormEvent, useMemo} from 'react'
+import {GroqSnippetExport} from '../../../../types/GroqSnippet'
 import GroqSnippetTag from '../../../../types/GroqSnippetTag'
+import GenerateCsvCta from '../../../GenerateCsvCta'
+import GeneratePdfCta from '../../../GeneratePdfCta'
 import {TextAreaWrapper} from '../../../Styles'
 
 interface FormProps {
   title: string | undefined
   description: string | undefined
   formTags: GroqSnippetTag[] | undefined
+  snippetToExport: GroqSnippetExport | undefined
   onChangeTitle: (value: string) => void
   onChangeDescription: (value: string) => void
   onSelectTag: (value: string) => void
@@ -18,6 +22,7 @@ const Form = ({
   title,
   description,
   formTags,
+  snippetToExport,
   onChangeTitle,
   onChangeDescription,
   onSelectTag,
@@ -40,7 +45,12 @@ const Form = ({
   }
 
   return (
-    <Box style={{width: '100%', minWidth: '100px'}}>
+    <Flex
+      direction="column"
+      justify="space-between"
+      gap={2}
+      style={{width: '100%', minWidth: '100px'}}
+    >
       <Box style={{padding: '1.25rem'}}>
         <Box style={{marginBottom: '1.25rem'}}>
           <Text
@@ -114,7 +124,15 @@ const Form = ({
           )}
         </Box>
       </Box>
-    </Box>
+      <Box style={{padding: '1.25rem'}}>
+        {snippetToExport && (
+          <Flex align="center" justify="flex-end" gap={2}>
+            <GeneratePdfCta initialData={[snippetToExport]} />
+            <GenerateCsvCta initialData={[snippetToExport]} />
+          </Flex>
+        )}
+      </Box>
+    </Flex>
   )
 }
 

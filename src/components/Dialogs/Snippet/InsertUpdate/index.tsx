@@ -24,6 +24,7 @@ const InsertUpdateDialog = () => {
     variables,
     variablesError,
     canConfirm,
+    snippetToExport,
     setTitle,
     setDescription,
     setFormTag,
@@ -57,6 +58,7 @@ const InsertUpdateDialog = () => {
             title={title}
             description={description}
             formTags={formTags}
+            snippetToExport={snippetToExport}
             onSelectTag={setFormTag}
             onChangeTitle={setTitle}
             onChangeDescription={setDescription}

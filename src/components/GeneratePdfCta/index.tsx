@@ -6,10 +6,14 @@ import {GroqSnippetExport} from '../../types/GroqSnippet'
 import {useGroqSnippetStore} from '../../zustand/store'
 import PdfDocument from './PdfDocument'
 
-const GeneratePdfCta = () => {
+interface GeneratePdfCtaProps {
+  initialData?: GroqSnippetExport[]
+}
+
+const GeneratePdfCta = ({initialData = []}: GeneratePdfCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<GroqSnippetExport[]>([])
+  const [data, setData] = useState<GroqSnippetExport[]>(initialData)
   const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const handleGeneratePdf = async () => {

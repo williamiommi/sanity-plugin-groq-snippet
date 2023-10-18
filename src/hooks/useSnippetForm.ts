@@ -1,7 +1,11 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import beautify from '../lib/beautify'
 import isValidJSON from '../lib/isValidJSON'
-import GroqSnippet, {GROQ_SNIPPET_TYPE, GroqSnippetMutation} from '../types/GroqSnippet'
+import GroqSnippet, {
+  GROQ_SNIPPET_TYPE,
+  GroqSnippetExport,
+  GroqSnippetMutation,
+} from '../types/GroqSnippet'
 import GroqSnippetTag, {GroqSnippetTagReference} from '../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../zustand/store'
 
@@ -13,6 +17,7 @@ interface useSnippetFormReturn {
   variables?: string
   variablesError?: string | undefined
   formTags?: GroqSnippetTag[]
+  snippetToExport: GroqSnippetExport | undefined
   setTitle: (title: string) => void
   setDescription: (description: string) => void
   setQuery: (query: string) => void
@@ -36,7 +41,20 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     () => !!title && !!query && !variablesError,
     [title, query, variablesError],
   )
-  const [formTags, setFormTags] = useState<GroqSnippetTag[]>()
+  const [formTags, setFormTags] = useState<GroqSnippetTag[]>([])
+
+  const snippetToExport = useMemo<GroqSnippetExport | undefined>(() => {
+    if (!snippetToUpdate) return undefined
+    return {
+      _id: snippetToUpdate?._id,
+      _type: snippetToUpdate?._type,
+      title: title!,
+      description: description!,
+      tags: formTags.map((tag) => tag.name.current),
+      query: query!,
+      variables,
+    }
+  }, [snippetToUpdate, title, description, formTags, query, variables])
 
   useEffect(() => {
     if (tags) {
@@ -111,6 +129,7 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     query,
     variables,
     variablesError,
+    snippetToExport,
     setQuery,
     beautifyQuery,
     setTitle,

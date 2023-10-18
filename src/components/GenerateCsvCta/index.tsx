@@ -14,10 +14,14 @@ const headers = [
   {label: 'Variables', key: 'variables'},
 ]
 
-const GenerateCsvCta = () => {
+interface GenerateCsvCtaProps {
+  initialData?: GroqSnippetExport[]
+}
+
+const GenerateCsvCta = ({initialData = []}: GenerateCsvCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<GroqSnippetExport[]>([])
+  const [data, setData] = useState<GroqSnippetExport[]>(initialData)
   const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const handleGenerateCsv = async () => {
