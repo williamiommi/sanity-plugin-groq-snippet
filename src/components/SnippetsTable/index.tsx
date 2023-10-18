@@ -32,7 +32,7 @@ const SnippetsTable = () => {
       <Flex marginY={3} direction="column">
         <TableHeading />
         {snippets.map((snippet, index) => (
-          <Row key={snippet._id} snippet={snippet} odd={index % 2 !== 0} />
+          <Row key={snippet._id} snippet={snippet} />
         ))}
       </Flex>
     </>

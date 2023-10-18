@@ -1,4 +1,4 @@
-import {CogIcon, EditIcon} from '@sanity/icons'
+import {ControlsIcon} from '@sanity/icons'
 import {Badge, Button, Flex, Text} from '@sanity/ui'
 import {useState} from 'react'
 import {tableWidth} from '.'
@@ -9,10 +9,9 @@ import {TableRowWrapper, TextClamp} from '../Styles'
 
 interface RowProps {
   snippet: GroqSnippet
-  odd?: boolean
 }
 
-const Row = ({snippet, odd}: RowProps) => {
+const Row = ({snippet}: RowProps) => {
   const [isHover, setIsHover] = useState(false)
   const openInsertUpdateSnippetsDialog = useGroqSnippetStore(
     (s) => s.openInsertUpdateSnippetsDialog,
@@ -52,8 +51,7 @@ const Row = ({snippet, odd}: RowProps) => {
             </Flex>
           </Flex>
           <Flex align="center" justify="center" style={{width: tableWidth.actions}}>
-            <Button mode="bleed" icon={EditIcon} onClick={handleEditDialog} />
-            <Button mode="bleed" icon={CogIcon} />
+            <Button mode="bleed" icon={ControlsIcon} onClick={handleEditDialog} />
           </Flex>
         </Flex>
       </Flex>

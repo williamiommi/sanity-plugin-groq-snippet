@@ -66,7 +66,7 @@ const Form = ({
           </Text>
           <TextAreaWrapper
             id="description"
-            rows={4}
+            rows={7}
             onChange={handleChangeDescription}
             defaultValue={description}
           />

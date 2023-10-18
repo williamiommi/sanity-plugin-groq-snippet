@@ -23,7 +23,7 @@ const TableHeading = () => {
           </Flex>
         </Flex>
         <Flex align="center" justify="center" style={{width: tableWidth.actions}}>
-          <Label weight="medium">actions</Label>
+          &nbsp;
         </Flex>
       </TableHeadingWrapper>
     </>
