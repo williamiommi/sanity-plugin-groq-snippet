@@ -1,7 +1,9 @@
 import {DocumentSheetIcon} from '@sanity/icons'
 import {Button, Flex, Label} from '@sanity/ui'
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {CSVLink} from 'react-csv'
+import {sanitizeCsvData} from '../../lib/csvUtils'
+import sleep from '../../lib/sleep'
 import {GroqSnippetExport} from '../../types/GroqSnippet'
 import {useGroqSnippetStore} from '../../zustand/store'
 
@@ -18,11 +20,17 @@ interface GenerateCsvCtaProps {
   snippetToExport?: GroqSnippetExport
 }
 
-const GenerateCsvCta = ({snippetToExport}: GenerateCsvCtaProps) => {
+const GenerateCsvCta = ({snippetToExport = undefined}: GenerateCsvCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<GroqSnippetExport[]>([])
   const fileName = `groq_snippet_export_${new Date().getTime()}`
+
+  const csvData = useMemo(() => {
+    if (snippetToExport) return [sanitizeCsvData(snippetToExport)]
+    if (data) return data.map((d) => sanitizeCsvData(d))
+    return []
+  }, [snippetToExport, data])
 
   const handleGenerateCsv = async () => {
     try {
@@ -31,6 +39,7 @@ const GenerateCsvCta = ({snippetToExport}: GenerateCsvCtaProps) => {
         const res = await exportData()
         if (res.length > 0) {
           setData(res)
+          await sleep(2000)
           setLoading(false)
         }
       }
@@ -39,7 +48,7 @@ const GenerateCsvCta = ({snippetToExport}: GenerateCsvCtaProps) => {
     }
   }
 
-  if (!snippetToExport || data.length === 0 || loading) {
+  if (csvData.length === 0 || loading) {
     return (
       <Button
         mode="ghost"
@@ -50,16 +59,17 @@ const GenerateCsvCta = ({snippetToExport}: GenerateCsvCtaProps) => {
       >
         <Flex align="center" justify="center">
           <DocumentSheetIcon width={30} height={30} />
-          <Label size={1}>{loading ? 'Loading...' : 'Generate CSV'}</Label>
+          <Label size={1}>{loading ? 'Cooking...' : 'Generate CSV'}</Label>
         </Flex>
       </Button>
     )
   }
 
   return (
-    <CSVLink data={[snippetToExport] || data} headers={headers} filename={fileName}>
+    <CSVLink data={csvData} headers={headers} filename={fileName}>
       <Button
-        mode="ghost"
+        mode="default"
+        tone="positive"
         paddingY={1}
         paddingX={2}
         style={{cursor: 'pointer', minWidth: '150px'}}
