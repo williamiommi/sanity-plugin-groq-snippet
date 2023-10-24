@@ -68,7 +68,7 @@ const GenerateCsvCta = ({snippetToExport = undefined}: GenerateCsvCtaProps) => {
   return (
     <CSVLink data={csvData} headers={headers} filename={fileName}>
       <Button
-        mode="default"
+        mode="bleed"
         tone="positive"
         paddingY={1}
         paddingX={2}

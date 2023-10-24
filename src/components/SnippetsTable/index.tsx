@@ -16,25 +16,24 @@ const SnippetsTable = () => {
   const snippets = useGroqSnippetStore((s) => s.snippets)
   if (!snippets) return null
 
-  if (snippets.length === 0) {
-    return (
-      <Flex align="center" justify="center" padding={5}>
-        <Label weight="semibold" size={3}>
-          NO RESULTS
-        </Label>
-      </Flex>
-    )
-  }
-
   return (
     <>
       <SearchInput />
-      <Flex marginY={3} direction="column">
-        <TableHeading />
-        {snippets.map((snippet, index) => (
-          <Row key={snippet._id} snippet={snippet} />
-        ))}
-      </Flex>
+      {snippets.length === 0 && (
+        <Flex align="center" justify="center" padding={5}>
+          <Label weight="semibold" size={3}>
+            NO RESULTS
+          </Label>
+        </Flex>
+      )}
+      {snippets.length > 0 && (
+        <Flex marginY={3} direction="column">
+          <TableHeading />
+          {snippets.map((snippet, index) => (
+            <Row key={snippet._id} snippet={snippet} />
+          ))}
+        </Flex>
+      )}
     </>
   )
 }

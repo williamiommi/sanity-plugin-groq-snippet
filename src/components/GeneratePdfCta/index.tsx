@@ -59,7 +59,7 @@ const GeneratePdfCta = ({snippetToExport = undefined}: GeneratePdfCtaProps) => {
   return (
     <PDFDownloadLink document={<PdfDocument snippets={pdfData} />} fileName={fileName}>
       <Button
-        mode="default"
+        mode="bleed"
         tone="positive"
         paddingY={1}
         paddingX={2}
