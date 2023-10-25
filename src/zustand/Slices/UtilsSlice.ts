@@ -1,4 +1,5 @@
 import {StateCreator} from 'zustand'
+import {SortOption, sortingOptions} from '../../components/Sorting'
 import {toastError} from '../../lib/toastUtils'
 import {
   QUERY_EXPORT_SNIPPETS,
@@ -13,8 +14,12 @@ import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
 
 export interface UtilsSlice {
+  searchTerm: string
+  setSearchTerm: (searchTerm?: string) => void
+  sortOption: SortOption
+  setSortOption: (sortOption?: SortOption) => void
   getSnippet: (id: string) => Promise<GroqSnippet | undefined>
-  searchSnippets: (term: string) => void
+  searchSnippets: (term: string, sortOption: SortOption) => void
   fetchData: () => void
   exportData: () => Promise<GroqSnippetExport[]>
 }
@@ -25,6 +30,10 @@ export const createUtilsSlice: StateCreator<
   [],
   UtilsSlice
 > = (set, get) => ({
+  searchTerm: '',
+  setSearchTerm: (searchTerm?: string) => set({searchTerm}),
+  sortOption: sortingOptions[0],
+  setSortOption: (sortOption?: SortOption) => set({sortOption}),
   getSnippet: async (id: string) => {
     const {client, toast} = get()
     try {
@@ -39,11 +48,11 @@ export const createUtilsSlice: StateCreator<
       return undefined
     }
   },
-  searchSnippets: async (term: string) => {
+  searchSnippets: async (term: string, sortOption: SortOption) => {
     const {client, toast, setSnippets} = get()
     try {
       const response = await client!.fetch(
-        QUERY_SNIPPETS_SEARCH,
+        QUERY_SNIPPETS_SEARCH(sortOption),
         {term},
         {perspective: 'published'},
       )

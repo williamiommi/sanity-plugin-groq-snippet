@@ -13,7 +13,7 @@ const GroqSnippetTool = () => {
   useSetupTool()
   return (
     <ThemeProvider theme={theme}>
-      <Box style={{minWidth: '350px'}}>
+      <Box style={{minWidth: '400px'}}>
         <Flex justify="space-between" align="center" gap={2} padding={3}>
           <Heading />
           <MainActions />

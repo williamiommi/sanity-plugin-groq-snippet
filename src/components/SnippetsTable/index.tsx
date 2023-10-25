@@ -7,9 +7,9 @@ import TableHeading from './TableHeading'
 export const tableWidth = {
   gap: 1,
   checkbox: '100px',
-  actions: '100px',
+  actions: '270px',
   wrapper: 'calc(100% - 100px)',
-  snippet: 'calc(100% - 200px)',
+  snippet: 'calc(100% - 370px)',
 }
 
 const SnippetsTable = () => {

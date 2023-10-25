@@ -34,7 +34,7 @@ export const createSnippetSlice: StateCreator<
       await client!.create<GroqSnippetMutation>(mutation, {autoGenerateArrayKeys: true})
       toastSuccess(toast!, {description: 'Snippet created'})
       get().closeInsertUpdateSnippetsDialog()
-      get().fetchData()
+      get().searchSnippets(get().searchTerm, get().sortOption)
     } catch (err: any) {
       toastError(toast!, {err})
     }
@@ -45,7 +45,7 @@ export const createSnippetSlice: StateCreator<
       await client!.patch(id).set(mutation).commit({autoGenerateArrayKeys: true})
       toastSuccess(toast!, {description: 'Snippet updated'})
       get().closeInsertUpdateSnippetsDialog()
-      get().fetchData()
+      get().searchSnippets(get().searchTerm, get().sortOption)
     } catch (err: any) {
       toastError(toast!, {err})
     }
@@ -65,7 +65,7 @@ export const createSnippetSlice: StateCreator<
       toastSuccess(toast!, {description: `Snippet${ids.length > 1 ? 's' : ''} deleted`})
       get().resetCheckedSnippets()
       get().closeDeleteSnippetsDialog()
-      get().fetchData()
+      get().searchSnippets(get().searchTerm, get().sortOption)
     } catch (err: any) {
       toastError(toast!, {err})
     }

@@ -1,6 +1,7 @@
 import {Checkbox, Flex, Label} from '@sanity/ui'
 import {tableWidth} from '.'
 import useSnippetsTable from '../../hooks/useSnippetsTable'
+import Sorting from '../Sorting'
 import {TableHeadingWrapper} from '../Styles'
 import HeaderActions from './HeaderActions'
 
@@ -22,8 +23,12 @@ const TableHeading = () => {
             <Label weight="medium">Snippet</Label>
           </Flex>
         </Flex>
-        <Flex align="center" justify="center" style={{width: tableWidth.actions}}>
-          &nbsp;
+        <Flex
+          align="center"
+          justify="flex-end"
+          style={{width: tableWidth.actions, paddingRight: '30px'}}
+        >
+          <Sorting />
         </Flex>
       </TableHeadingWrapper>
     </>
