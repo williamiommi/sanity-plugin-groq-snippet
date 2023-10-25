@@ -50,6 +50,7 @@ const Sorting = () => {
   const searchSnippets = useGroqSnippetStore((s) => s.searchSnippets)
 
   const handleSort = (option: SortOption) => {
+    if (sortOption.value === option.value) return
     setSortOption(option)
     searchSnippets(searchTerm, option)
   }
@@ -63,6 +64,7 @@ const Sorting = () => {
           text={sortOption.label}
           icon={<SortIcon />}
           fontSize={1}
+          paddingY={2}
         />
       }
       id="menu-button-example"

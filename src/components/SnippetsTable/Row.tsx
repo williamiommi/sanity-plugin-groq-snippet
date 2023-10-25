@@ -50,7 +50,11 @@ const Row = ({snippet}: RowProps) => {
               )}
             </Flex>
           </Flex>
-          <Flex align="center" justify="center" style={{width: tableWidth.actions}}>
+          <Flex
+            align="center"
+            justify="flex-end"
+            style={{width: tableWidth.actions, paddingRight: '35px'}}
+          >
             <Button mode="bleed" icon={ControlsIcon} onClick={handleEditDialog} />
           </Flex>
         </Flex>
