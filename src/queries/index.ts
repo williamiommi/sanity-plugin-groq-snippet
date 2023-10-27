@@ -8,8 +8,14 @@ const SNIPPET_EXPORT_PROJECTION = `_id, title, description, 'tags': tags[]->name
 export const SNIPPETS = `*[_type == "${GROQ_SNIPPET_TYPE}"] | order(lower(title) asc) {${SNIPPET_PROJECTION}}`
 export const SNIPPETS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TYPE}"])`
 export const QUERY_SNIPPET_DELETE = `*[_type == "${GROQ_SNIPPET_TYPE}" && _id in $ids]`
-export const QUERY_SNIPPETS_SEARCH = (sortOption: SortOption): string =>
-  `*[_type == "${GROQ_SNIPPET_TYPE}" && [title, description] match '*'+$term+'*' || tags[]->name.current match '*'+$term+'*'] | ${sortOption.value} {${SNIPPET_PROJECTION}}`
+
+const MATCH_TITLE_DESCRIPTION = `[title, description] match '*'+$term+'*'`
+const MATCH_TAGS = `tags[]->name.current match '*'+$term+'*'`
+const COUNT_TAGS = `&& count((tags[]->name.current)[@ in $tags]) > 0`
+export const QUERY_SNIPPETS_SEARCH = (hasFilterTags: boolean, sortOption: SortOption): string =>
+  `*[_type == "${GROQ_SNIPPET_TYPE}" && (${MATCH_TITLE_DESCRIPTION} || ${MATCH_TAGS}) ${
+    hasFilterTags ? COUNT_TAGS : ''
+  }] | ${sortOption.value} {${SNIPPET_PROJECTION}}`
 export const QUERY_GET_SNIPPET = `*[_type == "${GROQ_SNIPPET_TYPE}" && _id == $id][0] {...}`
 export const QUERY_EXPORT_SNIPPETS = `*[_type == "${GROQ_SNIPPET_TYPE}" && _id in $ids] | order(lower(title) asc) {${SNIPPET_EXPORT_PROJECTION}}`
 

@@ -9,6 +9,7 @@ import {
   QueryInitialDataResponse,
 } from '../../queries'
 import GroqSnippet, {GroqSnippetExport} from '../../types/GroqSnippet'
+import GroqSnippetTag from '../../types/GroqSnippetTag'
 import {SanitySlice} from './SanitySlice'
 import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
@@ -16,10 +17,12 @@ import {TagSlice} from './TagSlice'
 export interface UtilsSlice {
   searchTerm: string
   setSearchTerm: (searchTerm?: string) => void
+  filterTags: GroqSnippetTag[]
+  setFilterTags: (filterTags?: GroqSnippetTag[]) => void
   sortOption: SortOption
   setSortOption: (sortOption?: SortOption) => void
   getSnippet: (id: string) => Promise<GroqSnippet | undefined>
-  searchSnippets: (term: string, sortOption: SortOption) => void
+  searchSnippets: (term: string, filterTags: GroqSnippetTag[], sortOption: SortOption) => void
   fetchData: () => void
   exportData: () => Promise<GroqSnippetExport[]>
 }
@@ -32,6 +35,8 @@ export const createUtilsSlice: StateCreator<
 > = (set, get) => ({
   searchTerm: '',
   setSearchTerm: (searchTerm?: string) => set({searchTerm}),
+  filterTags: [],
+  setFilterTags: (filterTags?: GroqSnippetTag[]) => set({filterTags}),
   sortOption: sortingOptions[0],
   setSortOption: (sortOption?: SortOption) => set({sortOption}),
   getSnippet: async (id: string) => {
@@ -48,12 +53,12 @@ export const createUtilsSlice: StateCreator<
       return undefined
     }
   },
-  searchSnippets: async (term: string, sortOption: SortOption) => {
+  searchSnippets: async (term: string, filterTags: GroqSnippetTag[], sortOption: SortOption) => {
     const {client, toast, setSnippets} = get()
     try {
       const response = await client!.fetch(
-        QUERY_SNIPPETS_SEARCH(sortOption),
-        {term},
+        QUERY_SNIPPETS_SEARCH(filterTags.length > 0, sortOption),
+        {term, tags: filterTags.map((tag) => tag.name.current)},
         {perspective: 'published'},
       )
       setSnippets(response)

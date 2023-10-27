@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import {SortIcon} from '@sanity/icons'
 import {Button, Menu, MenuButton, MenuDivider, MenuItem, Text} from '@sanity/ui'
+import {Fragment} from 'react'
 import {useGroqSnippetStore} from '../../zustand/store'
 
 export type SortOption = {
@@ -45,6 +46,7 @@ export const sortingOptions: SortOption[] = [
 
 const Sorting = () => {
   const searchTerm = useGroqSnippetStore((s) => s.searchTerm)
+  const filterTags = useGroqSnippetStore((s) => s.filterTags)
   const sortOption = useGroqSnippetStore((s) => s.sortOption)
   const setSortOption = useGroqSnippetStore((s) => s.setSortOption)
   const searchSnippets = useGroqSnippetStore((s) => s.searchSnippets)
@@ -52,7 +54,7 @@ const Sorting = () => {
   const handleSort = (option: SortOption) => {
     if (sortOption.value === option.value) return
     setSortOption(option)
-    searchSnippets(searchTerm, option)
+    searchSnippets(searchTerm, filterTags, option)
   }
 
   return (
@@ -67,13 +69,13 @@ const Sorting = () => {
           paddingY={2}
         />
       }
-      id="menu-button-example"
+      id="sorting-menu"
       menu={
         <Menu>
           {sortingOptions.map((option, index) => {
             return (
-              <>
-                <MenuItem size={0} key={option.value} onClick={() => handleSort(option)}>
+              <Fragment key={option.value}>
+                <MenuItem size={0} onClick={() => handleSort(option)}>
                   <Text
                     size={1}
                     style={{fontWeight: sortOption.value === option.value ? 'bold' : 'normal'}}
@@ -84,7 +86,7 @@ const Sorting = () => {
                 {index % 2 === 1 && index > 0 && index + 1 !== sortingOptions.length ? (
                   <MenuDivider />
                 ) : null}
-              </>
+              </Fragment>
             )
           })}
         </Menu>
