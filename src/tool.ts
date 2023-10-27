@@ -1,10 +1,11 @@
 import {Tool} from 'sanity'
 import GroqSnippet from './components/GroqSnippet'
 import SnippetIcon from './components/Icons/SnippetIcon'
+import GroqSnippetPluginOptions from './types/GroqSnippetPluginOptions'
 
-export const GroqSnippetTool: Tool = {
-  name: 'groq-snippet',
-  title: 'Groq Snippet',
-  icon: SnippetIcon,
+export const GroqSnippetTool = (options: GroqSnippetPluginOptions | void): Tool => ({
+  name: options?.name ? encodeURIComponent(options?.name) : 'groq-snippet',
+  title: options?.name || 'Groq Snippet',
+  icon: options?.icon || SnippetIcon,
   component: GroqSnippet,
-}
+})
