@@ -77,10 +77,9 @@ const InsertUpdateDialog = () => {
                     </Text>
                     <Flex align="center" gap={0}>
                       <Copy2ClipboardCta value={query} disabled={!query} />
-                      <BeautifyCta
-                        beautifyFn={beautifyQuery}
-                        disabled={!currentUserCanEdit || !query}
-                      />
+                      {currentUserCanEdit && (
+                        <BeautifyCta beautifyFn={beautifyQuery} disabled={!query} />
+                      )}
                     </Flex>
                   </Flex>
                   <CodeMirrorEditor
@@ -112,10 +111,9 @@ const InsertUpdateDialog = () => {
                     </Flex>
                     <Flex align="center" gap={0}>
                       <Copy2ClipboardCta value={variables} disabled={!variables} />
-                      <BeautifyCta
-                        beautifyFn={beautifyVariables}
-                        disabled={!currentUserCanEdit || !variables}
-                      />
+                      {currentUserCanEdit && (
+                        <BeautifyCta beautifyFn={beautifyVariables} disabled={!variables} />
+                      )}
                     </Flex>
                   </Flex>
                   <Card

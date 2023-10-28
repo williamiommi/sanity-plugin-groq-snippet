@@ -17,14 +17,15 @@ const Footer = () => {
         onClick={openDeleteTagsDialog}
         disabled={!hasAtLeastOneTagChecked}
       />
-      <Button
-        tone="primary"
-        icon={<AddIcon fontSize={0} />}
-        text="Create"
-        fontSize={1}
-        onClick={() => openInsertUpdateTagsDialog()}
-        disabled={!currentUserCanEdit}
-      />
+      {currentUserCanEdit && (
+        <Button
+          tone="primary"
+          icon={<AddIcon fontSize={0} />}
+          text="Create"
+          fontSize={1}
+          onClick={() => openInsertUpdateTagsDialog()}
+        />
+      )}
     </Flex>
   )
 }

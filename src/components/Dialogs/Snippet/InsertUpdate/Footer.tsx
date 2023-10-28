@@ -13,14 +13,16 @@ const Footer = ({isEdit, canConfirm, onCancel, onConfirm}: FooterProps) => {
   return (
     <Flex align="center" justify="space-between" gap={1} padding={3}>
       <Button mode="bleed" tone="default" fontSize={1} text="Cancel" onClick={onCancel} />
-      <Button
-        mode="default"
-        tone="positive"
-        fontSize={1}
-        text={`${isEdit ? 'Update' : 'Save'} snippet`}
-        disabled={!currentUserCanEdit || !canConfirm}
-        onClick={onConfirm}
-      />
+      {currentUserCanEdit && (
+        <Button
+          mode="default"
+          tone="positive"
+          fontSize={1}
+          text={`${isEdit ? 'Update' : 'Save'} snippet`}
+          disabled={!canConfirm}
+          onClick={onConfirm}
+        />
+      )}
     </Flex>
   )
 }

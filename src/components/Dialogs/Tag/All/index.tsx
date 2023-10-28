@@ -32,12 +32,9 @@ const AllDialog = () => {
         ) : (
           <>
             <Flex margin={4} marginBottom={3} align="center" as="label" htmlFor="check-all" gap={2}>
-              <Checkbox
-                id="check-all"
-                onChange={toggleAll}
-                checked={hasAllTagsChecked}
-                disabled={!currentUserCanEdit}
-              />
+              {currentUserCanEdit && (
+                <Checkbox id="check-all" onChange={toggleAll} checked={hasAllTagsChecked} />
+              )}
               <Text muted as="i" size={1}>
                 {hasAllTagsChecked ? 'Deselect' : 'Select'} all
               </Text>
@@ -54,26 +51,28 @@ const AllDialog = () => {
                     paddingX={4}
                   >
                     <Flex gap={2} align="center" as="label" htmlFor={`check-${tag._id}`}>
-                      <Checkbox
-                        id={`check-${tag._id}`}
-                        onChange={toggleTag}
-                        data-id={tag._id}
-                        data-name={tag.name.current}
-                        checked={tag.checked || false}
-                        disabled={!currentUserCanEdit}
-                      />
+                      {currentUserCanEdit && (
+                        <Checkbox
+                          id={`check-${tag._id}`}
+                          onChange={toggleTag}
+                          data-id={tag._id}
+                          data-name={tag.name.current}
+                          checked={tag.checked || false}
+                        />
+                      )}
                       <Text size={1}>{tag.name.current}</Text>
                     </Flex>
                     <Flex align="center" gap={1}>
-                      <Button
-                        mode="bleed"
-                        tone="primary"
-                        icon={EditIcon}
-                        fontSize={1}
-                        padding={2}
-                        onClick={() => openInsertUpdateTagsDialog(tag)}
-                        disabled={!currentUserCanEdit}
-                      />
+                      {currentUserCanEdit && (
+                        <Button
+                          mode="bleed"
+                          tone="primary"
+                          icon={EditIcon}
+                          fontSize={1}
+                          padding={2}
+                          onClick={() => openInsertUpdateTagsDialog(tag)}
+                        />
+                      )}
                     </Flex>
                   </Flex>
                 ))}

@@ -11,15 +11,16 @@ const MainActions = () => {
   const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   return (
     <Flex align="center" gap={2}>
-      <Button
-        mode="ghost"
-        tone="primary"
-        icon={AddIcon}
-        text="Add snippet"
-        fontSize={1}
-        onClick={() => openInsertUpdateSnippetsDialog()}
-        disabled={!currentUserCanEdit}
-      />
+      {currentUserCanEdit && (
+        <Button
+          mode="ghost"
+          tone="primary"
+          icon={AddIcon}
+          text="Add snippet"
+          fontSize={1}
+          onClick={() => openInsertUpdateSnippetsDialog()}
+        />
+      )}
       <Button
         mode="ghost"
         tone="primary"

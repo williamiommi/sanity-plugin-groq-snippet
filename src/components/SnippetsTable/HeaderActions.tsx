@@ -27,17 +27,18 @@ const HeaderActions = () => {
           >
             <Label size={1}>export</Label>
           </Button>
-          <Button
-            mode="bleed"
-            tone="critical"
-            paddingY={1}
-            paddingX={2}
-            style={{cursor: 'pointer'}}
-            onClick={openDeleteSnippetsDialog}
-            disabled={!currentUserCanEdit}
-          >
-            <Label size={1}>Delete</Label>
-          </Button>
+          {currentUserCanEdit && (
+            <Button
+              mode="bleed"
+              tone="critical"
+              paddingY={1}
+              paddingX={2}
+              style={{cursor: 'pointer'}}
+              onClick={openDeleteSnippetsDialog}
+            >
+              <Label size={1}>Delete</Label>
+            </Button>
+          )}
         </Flex>
       </Flex>
     </Card>
