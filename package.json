@@ -1,7 +1,7 @@
 {
   "name": "sanity-plugin-groq-snippet",
   "version": "1.0.0",
-  "description": "A sanity plugin to create reusable groq snippets within your Sanity Studio",
+  "description": "A sanity plugin to create reusable GROQ snippets within your Sanity Studio",
   "keywords": [
     "sanity",
     "sanity-plugin",
@@ -56,13 +56,12 @@
     "@codemirror/search": "^6.5.4",
     "@codemirror/view": "^6.21.3",
     "@lezer/highlight": "^1.1.6",
-    "@react-pdf/renderer": "^3.1.13",
     "@sanity/incompatible-plugin": "^1.0.4",
     "@sanity/ui": "^1.8.2",
     "@uiw/react-codemirror": "^4.21.20",
     "js-beautify": "^1.14.9",
     "json5": "^2.2.3",
-    "react-csv": "^2.2.2",
+    "papaparse": "^5.4.1",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -75,8 +74,8 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@types/js-beautify": "^1.14.1",
+    "@types/papaparse": "^5.3.10",
     "@types/react": "^18.2.23",
-    "@types/react-csv": "^1.1.6",
     "@types/styled-components": "^5.1.28",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
