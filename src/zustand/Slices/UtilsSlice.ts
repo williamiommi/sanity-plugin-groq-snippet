@@ -1,6 +1,5 @@
 import {StateCreator} from 'zustand'
 import {SortOption, sortingOptions} from '../../components/Sorting'
-import {toastError} from '../../lib/toastUtils'
 import {
   QUERY_EXPORT_SNIPPETS,
   QUERY_GET_SNIPPET,
@@ -40,7 +39,7 @@ export const createUtilsSlice: StateCreator<
   sortOption: sortingOptions[0],
   setSortOption: (sortOption?: SortOption) => set({sortOption}),
   getSnippet: async (id: string) => {
-    const {client, toast} = get()
+    const {client, toastError} = get()
     try {
       const response = await client!.fetch<GroqSnippet>(
         QUERY_GET_SNIPPET,
@@ -49,12 +48,12 @@ export const createUtilsSlice: StateCreator<
       )
       return response
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
       return undefined
     }
   },
   searchSnippets: async (term: string, filterTags: GroqSnippetTag[], sortOption: SortOption) => {
-    const {client, toast, setSnippets} = get()
+    const {client, toastError, setSnippets} = get()
     try {
       const response = await client!.fetch(
         QUERY_SNIPPETS_SEARCH(filterTags.length > 0, sortOption),
@@ -63,11 +62,11 @@ export const createUtilsSlice: StateCreator<
       )
       setSnippets(response)
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   fetchData: async () => {
-    const {client, toast, setSnippets, setSnippetsCount, setTags, setTagsCount} = get()
+    const {client, toastError, setSnippets, setSnippetsCount, setTags, setTagsCount} = get()
     try {
       const response = await client!.fetch<QueryInitialDataResponse>(
         QUERY_INITIAL_DATA,
@@ -79,11 +78,11 @@ export const createUtilsSlice: StateCreator<
       setTags(response.tags)
       setTagsCount(response.tagsCount)
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   exportData: async () => {
-    const {client, toast} = get()
+    const {client, toastError} = get()
     try {
       const ids = get()
         .snippets!.filter((t) => t.checked)
@@ -96,7 +95,7 @@ export const createUtilsSlice: StateCreator<
       )
       return response
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
       return []
     }
   },

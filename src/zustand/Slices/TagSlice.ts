@@ -1,5 +1,4 @@
 import {StateCreator} from 'zustand'
-import {toastError, toastSuccess} from '../../lib/toastUtils'
 import {QUERY_TAG_DELETE, QUERY_TAG_HAS_REFERENCES, TAG_EXISTS} from '../../queries'
 import GroqSnippetTag, {
   GROQ_SNIPPET_TAG_TYPE,
@@ -33,7 +32,7 @@ export const createTagSlice: StateCreator<
   resetCheckedTags: () => set({tags: get().tags.map((t) => ({...t, checked: false}))}),
   setTagsCount: (tagsCount: number) => set({tagsCount}),
   addTag: async (name: string) => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     try {
       // check if already exist a tag with the same name
       const alreadyExist = await client!.fetch(TAG_EXISTS, {name})
@@ -45,26 +44,26 @@ export const createTagSlice: StateCreator<
         _type: `${GROQ_SNIPPET_TAG_TYPE}`,
         name: {_type: 'slug', current: name},
       })
-      toastSuccess(toast!, get().toolName, {description: 'Tag created'})
+      toastSuccess({description: 'Tag created'})
       get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   updateTag: async (id: string, name: string) => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     try {
       await client!.patch(id).set({'name.current': name}).commit()
-      toastSuccess(toast!, get().toolName, {description: 'Tag updated'})
+      toastSuccess({description: 'Tag updated'})
       get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   deleteTags: async () => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     const ids = get()
       .tags.filter((t) => t.checked)
       .map((t) => t._id)
@@ -84,12 +83,12 @@ export const createTagSlice: StateCreator<
         query: QUERY_TAG_DELETE,
         params: {ids},
       })
-      toastSuccess(toast!, get().toolName, {description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
+      toastSuccess({description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
       get().resetCheckedTags()
       get().closeDeleteTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
 })

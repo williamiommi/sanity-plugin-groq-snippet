@@ -1,11 +1,10 @@
-import {PDFDownloadLink} from '@react-pdf/renderer'
 import {DocumentPdfIcon} from '@sanity/icons'
 import {Button, Flex, Label} from '@sanity/ui'
 import {useMemo, useState} from 'react'
 import sleep from '../../lib/sleep'
 import {GroqSnippetExport} from '../../types/GroqSnippet'
 import {useGroqSnippetStore} from '../../zustand/store'
-import PdfDocument from './PdfDocument'
+// import PdfDocument from './PdfDocument'
 
 export interface GeneratePdfCtaProps {
   snippetToExport?: GroqSnippetExport
@@ -15,7 +14,7 @@ const GeneratePdfCta = ({snippetToExport = undefined}: GeneratePdfCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<GroqSnippetExport[]>([])
-  const fileName = `groq_snippet_export_${new Date().getTime()}`
+  // const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const pdfData = useMemo(() => {
     if (snippetToExport) return [snippetToExport]
@@ -57,21 +56,21 @@ const GeneratePdfCta = ({snippetToExport = undefined}: GeneratePdfCtaProps) => {
   }
 
   return (
-    <PDFDownloadLink document={<PdfDocument snippets={pdfData} />} fileName={fileName}>
-      <Button
-        mode="bleed"
-        tone="positive"
-        paddingY={1}
-        paddingX={2}
-        style={{cursor: 'pointer', minWidth: '150px'}}
-        disabled={loading}
-      >
-        <Flex align="center" justify="center">
-          <DocumentPdfIcon width={30} height={30} />
-          <Label size={1}>Download PDF</Label>
-        </Flex>
-      </Button>
-    </PDFDownloadLink>
+    // <PDFDownloadLink document={<PdfDocument snippets={pdfData} />} fileName={fileName}>
+    <Button
+      mode="bleed"
+      tone="positive"
+      paddingY={1}
+      paddingX={2}
+      style={{cursor: 'pointer', minWidth: '150px'}}
+      disabled={loading}
+    >
+      <Flex align="center" justify="center">
+        <DocumentPdfIcon width={30} height={30} />
+        <Label size={1}>Download PDF</Label>
+      </Flex>
+    </Button>
+    // </PDFDownloadLink>
   )
 }
 

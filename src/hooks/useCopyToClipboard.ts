@@ -1,20 +1,19 @@
-import {toastError, toastSuccess} from '../lib/toastUtils'
 import {useGroqSnippetStore} from '../zustand/store'
 
 type useCopyToClipboardReturn = (value: string | undefined) => void
 
 const useCopyToClipboard = (): useCopyToClipboardReturn => {
-  const toast = useGroqSnippetStore((s) => s.toast)
-  const toolName = useGroqSnippetStore((s) => s.toolName)
+  const toastError = useGroqSnippetStore((s) => s.toastError)
+  const toastSuccess = useGroqSnippetStore((s) => s.toastSuccess)
 
   const copy2clipboard = async (value: string | undefined) => {
     if (!value) return
 
     try {
       await navigator.clipboard.writeText(value)
-      toastSuccess(toast!, toolName, {description: 'Copied to clipboard'})
+      toastSuccess({description: 'Copied to clipboard'})
     } catch (err: unknown) {
-      toastError(toast!, toolName, {err})
+      toastError({err})
     }
   }
 

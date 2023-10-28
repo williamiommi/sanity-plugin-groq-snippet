@@ -1,5 +1,4 @@
 import {StateCreator} from 'zustand'
-import {toastError, toastSuccess} from '../../lib/toastUtils'
 import {QUERY_SNIPPET_DELETE} from '../../queries'
 import GroqSnippet, {GroqSnippetMutation} from '../../types/GroqSnippet'
 import {DialogSlice} from './DialogSlice'
@@ -29,29 +28,29 @@ export const createSnippetSlice: StateCreator<
   setSnippetsCount: (snippetsCount: number) => set({snippetsCount}),
   resetCheckedSnippets: () => set({snippets: get().snippets!.map((t) => ({...t, checked: false}))}),
   addSnippet: async (mutation: GroqSnippetMutation) => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     try {
       await client!.create<GroqSnippetMutation>(mutation, {autoGenerateArrayKeys: true})
-      toastSuccess(toast!, get().toolName, {description: 'Snippet created'})
+      toastSuccess({description: 'Snippet created'})
       get().closeInsertUpdateSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   updateSnippet: async (id: string, mutation: GroqSnippetMutation) => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     try {
       await client!.patch(id).set(mutation).commit({autoGenerateArrayKeys: true})
-      toastSuccess(toast!, get().toolName, {description: 'Snippet updated'})
+      toastSuccess({description: 'Snippet updated'})
       get().closeInsertUpdateSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
   deleteSnippets: async () => {
-    const {client, toast} = get()
+    const {client, toastSuccess, toastError} = get()
     const ids = get()
       .snippets!.filter((t) => t.checked)
       .map((t) => t._id)
@@ -62,14 +61,14 @@ export const createSnippetSlice: StateCreator<
         query: QUERY_SNIPPET_DELETE,
         params: {ids},
       })
-      toastSuccess(toast!, get().toolName, {
+      toastSuccess({
         description: `Snippet${ids.length > 1 ? 's' : ''} deleted`,
       })
       get().resetCheckedSnippets()
       get().closeDeleteSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, get().toolName, {err})
+      toastError({err})
     }
   },
 })
