@@ -13,7 +13,7 @@ import UserCantEditMessage from '../UserCantEditMessage'
 
 const GroqSnippetTool = ({tool}: {tool: Tool<GroqSnippetPluginOptions>}) => {
   const theme = useTheme()
-  useSetupTool(tool.options)
+  useSetupTool(tool)
   return (
     <ThemeProvider theme={theme}>
       <Box style={{minWidth: '400px'}}>

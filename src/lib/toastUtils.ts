@@ -2,14 +2,16 @@
 import {ToastContextValue} from '@sanity/ui'
 import SimpleHtmlRenderer from '../components/SimpleHtmlRenderer'
 
-const TOAST_TITLE = 'Groq Snippet Tool'
-
 interface ToastObj {
   err?: any
   description?: string
 }
 
-export const toastError = (toast: ToastContextValue, {err, description}: ToastObj): void => {
+export const toastError = (
+  toast: ToastContextValue,
+  title: string,
+  {err, description}: ToastObj,
+): void => {
   if (typeof err === 'string') {
     description = err
   } else if (err instanceof Error) {
@@ -19,16 +21,20 @@ export const toastError = (toast: ToastContextValue, {err, description}: ToastOb
   if (toast)
     toast.push({
       status: 'error',
-      title: TOAST_TITLE,
+      title,
       description: SimpleHtmlRenderer({html: description}),
     })
 }
 
-export const toastSuccess = (toast: ToastContextValue, {description}: ToastObj): void => {
+export const toastSuccess = (
+  toast: ToastContextValue,
+  title: string,
+  {description}: ToastObj,
+): void => {
   if (toast)
     toast.push({
       status: 'success',
-      title: TOAST_TITLE,
+      title,
       description: SimpleHtmlRenderer({html: description}),
     })
 }

@@ -32,22 +32,22 @@ export const createSnippetSlice: StateCreator<
     const {client, toast} = get()
     try {
       await client!.create<GroqSnippetMutation>(mutation, {autoGenerateArrayKeys: true})
-      toastSuccess(toast!, {description: 'Snippet created'})
+      toastSuccess(toast!, get().toolName, {description: 'Snippet created'})
       get().closeInsertUpdateSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   updateSnippet: async (id: string, mutation: GroqSnippetMutation) => {
     const {client, toast} = get()
     try {
       await client!.patch(id).set(mutation).commit({autoGenerateArrayKeys: true})
-      toastSuccess(toast!, {description: 'Snippet updated'})
+      toastSuccess(toast!, get().toolName, {description: 'Snippet updated'})
       get().closeInsertUpdateSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   deleteSnippets: async () => {
@@ -62,12 +62,14 @@ export const createSnippetSlice: StateCreator<
         query: QUERY_SNIPPET_DELETE,
         params: {ids},
       })
-      toastSuccess(toast!, {description: `Snippet${ids.length > 1 ? 's' : ''} deleted`})
+      toastSuccess(toast!, get().toolName, {
+        description: `Snippet${ids.length > 1 ? 's' : ''} deleted`,
+      })
       get().resetCheckedSnippets()
       get().closeDeleteSnippetsDialog()
       get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
 })

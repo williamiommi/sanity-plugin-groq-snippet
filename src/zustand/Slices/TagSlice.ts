@@ -45,22 +45,22 @@ export const createTagSlice: StateCreator<
         _type: `${GROQ_SNIPPET_TAG_TYPE}`,
         name: {_type: 'slug', current: name},
       })
-      toastSuccess(toast!, {description: 'Tag created'})
+      toastSuccess(toast!, get().toolName, {description: 'Tag created'})
       get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   updateTag: async (id: string, name: string) => {
     const {client, toast} = get()
     try {
       await client!.patch(id).set({'name.current': name}).commit()
-      toastSuccess(toast!, {description: 'Tag updated'})
+      toastSuccess(toast!, get().toolName, {description: 'Tag updated'})
       get().closeInsertUpdateTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   deleteTags: async () => {
@@ -84,12 +84,12 @@ export const createTagSlice: StateCreator<
         query: QUERY_TAG_DELETE,
         params: {ids},
       })
-      toastSuccess(toast!, {description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
+      toastSuccess(toast!, get().toolName, {description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
       get().resetCheckedTags()
       get().closeDeleteTagsDialog()
       get().fetchData()
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
 })

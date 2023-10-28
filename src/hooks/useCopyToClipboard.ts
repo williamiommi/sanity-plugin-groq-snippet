@@ -5,15 +5,16 @@ type useCopyToClipboardReturn = (value: string | undefined) => void
 
 const useCopyToClipboard = (): useCopyToClipboardReturn => {
   const toast = useGroqSnippetStore((s) => s.toast)
+  const toolName = useGroqSnippetStore((s) => s.toolName)
 
   const copy2clipboard = async (value: string | undefined) => {
     if (!value) return
 
     try {
       await navigator.clipboard.writeText(value)
-      toastSuccess(toast!, {description: 'Copied to clipboard'})
+      toastSuccess(toast!, toolName, {description: 'Copied to clipboard'})
     } catch (err: unknown) {
-      toastError(toast!, {err})
+      toastError(toast!, toolName, {err})
     }
   }
 

@@ -49,7 +49,7 @@ export const createUtilsSlice: StateCreator<
       )
       return response
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
       return undefined
     }
   },
@@ -63,7 +63,7 @@ export const createUtilsSlice: StateCreator<
       )
       setSnippets(response)
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   fetchData: async () => {
@@ -79,7 +79,7 @@ export const createUtilsSlice: StateCreator<
       setTags(response.tags)
       setTagsCount(response.tagsCount)
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
     }
   },
   exportData: async () => {
@@ -96,7 +96,7 @@ export const createUtilsSlice: StateCreator<
       )
       return response
     } catch (err: any) {
-      toastError(toast!, {err})
+      toastError(toast!, get().toolName, {err})
       return []
     }
   },
