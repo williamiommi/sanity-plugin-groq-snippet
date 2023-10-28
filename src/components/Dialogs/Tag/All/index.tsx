@@ -10,6 +10,7 @@ const AllDialog = () => {
   const isAllTagsDialogOpen = useGroqSnippetStore((s) => s.isAllTagsDialogOpen)
   const closeAllTagsDialog = useGroqSnippetStore((s) => s.closeAllTagsDialog)
   const openInsertUpdateTagsDialog = useGroqSnippetStore((s) => s.openInsertUpdateTagsDialog)
+  const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   const {toggleTag, toggleAll, hasAllTagsChecked} = useTagOperation()
   const tags = useGroqSnippetStore((s) => s.tags)
 
@@ -31,7 +32,12 @@ const AllDialog = () => {
         ) : (
           <>
             <Flex margin={4} marginBottom={3} align="center" as="label" htmlFor="check-all" gap={2}>
-              <Checkbox id="check-all" onChange={toggleAll} checked={hasAllTagsChecked} />
+              <Checkbox
+                id="check-all"
+                onChange={toggleAll}
+                checked={hasAllTagsChecked}
+                disabled={!currentUserCanEdit}
+              />
               <Text muted as="i" size={1}>
                 {hasAllTagsChecked ? 'Deselect' : 'Select'} all
               </Text>
@@ -54,6 +60,7 @@ const AllDialog = () => {
                         data-id={tag._id}
                         data-name={tag.name.current}
                         checked={tag.checked || false}
+                        disabled={!currentUserCanEdit}
                       />
                       <Text size={1}>{tag.name.current}</Text>
                     </Flex>
@@ -65,6 +72,7 @@ const AllDialog = () => {
                         fontSize={1}
                         padding={2}
                         onClick={() => openInsertUpdateTagsDialog(tag)}
+                        disabled={!currentUserCanEdit}
                       />
                     </Flex>
                   </Flex>

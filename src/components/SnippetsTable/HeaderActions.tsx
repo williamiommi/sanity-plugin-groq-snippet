@@ -5,6 +5,7 @@ import {useGroqSnippetStore} from '../../zustand/store'
 const HeaderActions = () => {
   const openDeleteSnippetsDialog = useGroqSnippetStore((s) => s.openDeleteSnippetsDialog)
   const openExportDialog = useGroqSnippetStore((s) => s.openExportDialog)
+  const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   const {selectedSnippetsCount, hasSomeSnippetsChecked} = useSnippetsTable()
   return (
     <Card
@@ -33,6 +34,7 @@ const HeaderActions = () => {
             paddingX={2}
             style={{cursor: 'pointer'}}
             onClick={openDeleteSnippetsDialog}
+            disabled={!currentUserCanEdit}
           >
             <Label size={1}>Delete</Label>
           </Button>

@@ -4,6 +4,7 @@ import {Badge, Box, Flex, Select, Text, TextInput} from '@sanity/ui'
 import {FormEvent, useMemo} from 'react'
 import {GroqSnippetExport} from '../../../../types/GroqSnippet'
 import GroqSnippetTag from '../../../../types/GroqSnippetTag'
+import {useGroqSnippetStore} from '../../../../zustand/store'
 import GenerateCsvCta from '../../../GenerateCsvCta'
 import GeneratePdfCta from '../../../GeneratePdfCta'
 import {TextAreaWrapper} from '../../../Styles'
@@ -27,6 +28,7 @@ const Form = ({
   onChangeDescription,
   onSelectTag,
 }: FormProps) => {
+  const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   const noTagsAvailable = useMemo(() => {
     if (!formTags) return true
     return formTags.every((t) => t.checked)
@@ -62,7 +64,12 @@ const Form = ({
           >
             Title *
           </Text>
-          <TextInput id="title" onChange={handleChangeTitle} defaultValue={title} />
+          <TextInput
+            id="title"
+            onChange={handleChangeTitle}
+            defaultValue={title}
+            disabled={!currentUserCanEdit}
+          />
         </Box>
         <Box style={{marginBottom: '1.25rem'}}>
           <Text
@@ -79,6 +86,7 @@ const Form = ({
             rows={7}
             onChange={handleChangeDescription}
             defaultValue={description}
+            disabled={!currentUserCanEdit}
           />
         </Box>
         <Box style={{marginBottom: '1.25rem'}}>
@@ -93,7 +101,11 @@ const Form = ({
           </Text>
           {formTags && (
             <>
-              <Select id="tags" onChange={handleSelectTag} disabled={noTagsAvailable}>
+              <Select
+                id="tags"
+                onChange={handleSelectTag}
+                disabled={!currentUserCanEdit || noTagsAvailable}
+              >
                 <option>{noTagsAvailable ? 'No tags available' : 'Select tag...'}</option>
                 {formTags
                   .filter((t) => !t.checked)

@@ -12,6 +12,7 @@ import Form from './Form'
 import Header from './Header'
 
 const InsertUpdateDialog = () => {
+  const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   const closeInsertUpdateSnippetsDialog = useGroqSnippetStore(
     (s) => s.closeInsertUpdateSnippetsDialog,
   )
@@ -76,10 +77,17 @@ const InsertUpdateDialog = () => {
                     </Text>
                     <Flex align="center" gap={0}>
                       <Copy2ClipboardCta value={query} disabled={!query} />
-                      <BeautifyCta beautifyFn={beautifyQuery} disabled={!query} />
+                      <BeautifyCta
+                        beautifyFn={beautifyQuery}
+                        disabled={!currentUserCanEdit || !query}
+                      />
                     </Flex>
                   </Flex>
-                  <CodeMirrorEditor value={query} onChange={setQuery} />
+                  <CodeMirrorEditor
+                    value={query}
+                    onChange={setQuery}
+                    readOnly={!currentUserCanEdit}
+                  />
                 </Flex>
               }
               bottomHeight="30%"
@@ -104,14 +112,21 @@ const InsertUpdateDialog = () => {
                     </Flex>
                     <Flex align="center" gap={0}>
                       <Copy2ClipboardCta value={variables} disabled={!variables} />
-                      <BeautifyCta beautifyFn={beautifyVariables} disabled={!variables} />
+                      <BeautifyCta
+                        beautifyFn={beautifyVariables}
+                        disabled={!currentUserCanEdit || !variables}
+                      />
                     </Flex>
                   </Flex>
                   <Card
                     {...(variablesError && {tone: 'critical'})}
                     style={{width: '100%', height: '100%'}}
                   >
-                    <CodeMirrorEditor value={variables} onChange={setVariables} />
+                    <CodeMirrorEditor
+                      value={variables}
+                      onChange={setVariables}
+                      readOnly={!currentUserCanEdit}
+                    />
                   </Card>
                 </Flex>
               }
