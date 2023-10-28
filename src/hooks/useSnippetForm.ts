@@ -50,7 +50,7 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
       _type: snippetToUpdate?._type,
       title: title!,
       description: description!,
-      tags: formTags.map((tag) => tag.name.current),
+      tags: formTags.filter((tag) => tag.checked).map((tag) => tag.name.current),
       query: query!,
       variables,
     }
