@@ -1,7 +1,6 @@
 import {Box, Dialog, Flex, Text} from '@sanity/ui'
 import {useGroqSnippetStore} from '../../../zustand/store'
 import GenerateCsvCta from '../../GenerateCsvCta'
-import GeneratePdfCta from '../../GeneratePdfCta'
 import Header from './Header'
 
 const DialogExport = () => {
@@ -17,7 +16,6 @@ const DialogExport = () => {
       </Box>
       <Flex margin={4} direction="column" align="center" justify="center" gap={3}>
         <GenerateCsvCta />
-        <GeneratePdfCta />
       </Flex>
     </Dialog>
   )

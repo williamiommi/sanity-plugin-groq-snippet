@@ -6,7 +6,6 @@ import {GroqSnippetExport} from '../../../../types/GroqSnippet'
 import GroqSnippetTag from '../../../../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../../../../zustand/store'
 import GenerateCsvCta from '../../../GenerateCsvCta'
-import GeneratePdfCta from '../../../GeneratePdfCta'
 import {TextAreaWrapper} from '../../../Styles'
 
 interface FormProps {
@@ -144,7 +143,6 @@ const Form = ({
             justify="flex-end"
             gap={2}
           >
-            <GeneratePdfCta snippetToExport={snippetToExport} />
             <GenerateCsvCta snippetToExport={snippetToExport} />
           </Flex>
         )}
