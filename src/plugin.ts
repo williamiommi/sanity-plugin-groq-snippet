@@ -7,6 +7,6 @@ export const GroqSnippetPlugin = definePlugin<GroqSnippetPluginOptions | void>((
   return {
     name: `sanity-plugin-groq-snippet`,
     tools: [GroqSnippetTool(options)],
-    schema: schemas,
+    schema: options?.showDocuments ? schemas : [],
   }
 })
