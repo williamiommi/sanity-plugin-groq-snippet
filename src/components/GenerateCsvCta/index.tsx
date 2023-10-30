@@ -1,12 +1,10 @@
 import {DocumentSheetIcon} from '@sanity/icons'
 import {Button, Flex, Label} from '@sanity/ui'
-import Papa from 'papaparse'
 import {useMemo, useState} from 'react'
+import {unparseCsvFile} from '../../lib/csvUtils'
 import sleep from '../../lib/sleep'
 import {GroqSnippetExport} from '../../types/GroqSnippet'
 import {useGroqSnippetStore} from '../../zustand/store'
-
-const CsvHeader = ['Id', 'Title', 'Description', 'Tags', 'Query', 'Variables']
 
 interface GenerateCsvCtaProps {
   snippetToExport?: GroqSnippetExport
@@ -14,30 +12,23 @@ interface GenerateCsvCtaProps {
 
 const GenerateCsvCta = ({snippetToExport = undefined}: GenerateCsvCtaProps) => {
   const exportData = useGroqSnippetStore((s) => s.exportData)
+  const toastError = useGroqSnippetStore((s) => s.toastError)
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<GroqSnippetExport[]>([])
   const fileName = `groq_snippet_export_${new Date().getTime()}`
 
   const csvHref = useMemo(() => {
-    let output: GroqSnippetExport[] = []
-    if (snippetToExport) output = [snippetToExport]
-    else if (data.length > 0) output = data
-    else return ''
-
-    const cvsOutputString = Papa.unparse({
-      fields: CsvHeader,
-      data: output.map((row) => [
-        row._id,
-        row.title,
-        row.description,
-        row.tags,
-        row.query,
-        row.variables,
-      ]),
-    })
-
-    return `data:text/csv;charset=utf-8,${encodeURI(cvsOutputString)}`
-  }, [snippetToExport, data])
+    try {
+      let output: GroqSnippetExport[] = []
+      if (snippetToExport) output = [snippetToExport]
+      else if (data.length > 0) output = data
+      else return ''
+      return `data:text/csv;charset=utf-8,${encodeURI(unparseCsvFile(output))}`
+    } catch (err: any) {
+      toastError({err})
+      return ''
+    }
+  }, [snippetToExport, data, toastError])
 
   const handleGenerateCsv = async () => {
     try {

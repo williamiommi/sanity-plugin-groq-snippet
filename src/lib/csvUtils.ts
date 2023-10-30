@@ -1,13 +1,32 @@
+import Papa from 'papaparse'
 import {GroqSnippetExport} from '../types/GroqSnippet'
 
-export const sanitizeCsvData = (data: GroqSnippetExport) => {
-  const {title, description, tags, query, variables} = data
-  return {
-    ...data,
-    title: title ? title.replace(/"/g, '""') : '',
-    description: description ? description.replace(/"/g, '""') : '',
-    tags: tags && tags.length > 0 ? tags.map((tag) => tag.replace(/"/g, '""')) : [],
-    query: query ? query.replace(/"/g, '""') : '',
-    variables: variables ? variables.replace(/"/g, '""') : '',
-  }
+export const CsvHeader = ['Id', 'Title', 'Description', 'Tags', 'Query', 'Variables']
+const CsvHeaderAlternative = ['Title', 'Description', 'Tags', 'Query', 'Variables']
+
+export const validateCsvHeader = (data: string[]): boolean => {
+  return data.every((item) => CsvHeader.includes(item) || CsvHeaderAlternative.includes(item))
+}
+
+export const parseCsvFile = <T>(
+  file: File,
+  completeCb: (result: Papa.ParseResult<T>) => void,
+): void => {
+  Papa.parse<T>(file, {
+    complete: completeCb,
+  })
+}
+
+export const unparseCsvFile = (rows: GroqSnippetExport[]): string => {
+  return Papa.unparse({
+    fields: CsvHeader,
+    data: rows.map((row) => [
+      row._id,
+      row.title,
+      row.description,
+      row.tags,
+      row.query,
+      row.variables,
+    ]),
+  })
 }
