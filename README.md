@@ -7,6 +7,7 @@ Powered by [Iconify](https://iconify.design/)
 - [🔌 Installation](#-installation)
 - [🧑‍💻 Usage](#-usage)
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
+- [🧩 Interface](#-usage)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
   <br /><br />
@@ -14,6 +15,9 @@ Powered by [Iconify](https://iconify.design/)
 ## ⚡️ Features
 
 - Sanity v3 plugin
+- Store your groq queries within the Sanity Studio
+- Use tags to mark your queries
+- Export your snippets to CSV file.
 
 <br /><br />
 
@@ -44,7 +48,7 @@ export default defineConfig({
 })
 ```
 
-The plugin introduces one new object type called: `icon.manager`. You can define a new field with this type inside your documents.
+The plugin introduces one new tool on top of your Studio navigation. It uses two new documents: `groq.snippet` and `groq.snippet.tag`
 
 <br /><br />
 
@@ -54,12 +58,22 @@ This is the main configuration of the plugin. The available options are:
 
 ```ts
 {
+  // you can change the name of tool, this will affect also the path of the tool.
   name?: string
+  // customize the icon of the tool with a custom component.
   icon?: ComponentType
+  // this option shows the documents used by the tool within the Structure Builder. The tool will use only published documents.
   showDocuments?: boolean
+  // You can define a list of roles for which this tool is editable. The '!' operator allows you to specify the opposite condition.
   editableFor?: string[]
 }
 ```
+
+<br /><br />
+
+## 🧩 Interface
+
+[photo]
 
 <br /><br />
 
