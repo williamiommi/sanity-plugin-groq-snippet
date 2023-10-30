@@ -8,9 +8,11 @@ Powered by [Iconify](https://iconify.design/)
 - [🧑‍💻 Usage](#-usage)
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
 - [🧩 Interface](#-usage)
+- [🗃️ Data Model](#%EF%B8%8F-data-model)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
-  <br /><br />
+
+<br /><br />
 
 ## ⚡️ Features
 
@@ -58,11 +60,11 @@ This is the main configuration of the plugin. The available options are:
 
 ```ts
 {
-  // you can change the name of tool, this will affect also the path of the tool.
+  // You can change the name of tool, this will affect also the path of the tool.
   name?: string
-  // customize the icon of the tool with a custom component.
+  // Customize the icon of the tool with a custom component.
   icon?: ComponentType
-  // this option shows the documents used by the tool within the Structure Builder. The tool will use only published documents.
+  // This option shows the documents used by the tool within the Structure Builder. The tool will use only published documents.
   showDocuments?: boolean
   // You can define a list of roles for which this tool is editable. The '!' operator allows you to specify the opposite condition.
   editableFor?: string[]
@@ -74,6 +76,28 @@ This is the main configuration of the plugin. The available options are:
 ## 🧩 Interface
 
 [photo]
+
+<br /><br />
+
+## 🗃️ Data model
+
+```ts
+  {
+    _type: 'groq.snippet',
+    title: string
+    description?: string
+    tags: 'groq.snippet.tag'[]
+    query: text
+    variables?: text
+  }
+```
+
+```ts
+  {
+    _type: 'groq.snippet.tag',
+    name: slug
+  }
+```
 
 <br /><br />
 
