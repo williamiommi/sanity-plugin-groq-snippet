@@ -1,13 +1,14 @@
 # Sanity Groq Snippet
 
-A Sanity plugin for selecting, managing, and customizing icons. Inspired by [sanity-plugin-icon-picker](https://github.com/christopherafbjur/sanity-plugin-icon-picker).\
-Powered by [Iconify](https://iconify.design/)
+A Sanity plugin that lets you store frequently used or complex GROQ queries within your Sanity Studio.
 
 - [⚡️ Features](#%EF%B8%8F-features)
 - [🔌 Installation](#-installation)
 - [🧑‍💻 Usage](#-usage)
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
-- [🧩 Interface](#-usage)
+- [🏷️ Manage tags](#-manage-tags)
+- [🧩 Manage snippets](#-manage-snippets)
+- [📄 Export snippets](#-export-snippets)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
@@ -50,13 +51,13 @@ export default defineConfig({
 })
 ```
 
-The plugin introduces one new tool on top of your Studio navigation. It uses two new documents: `groq.snippet` and `groq.snippet.tag`
+The plugin introduces one new tool at the top of your Studio navigation. It uses two new documents: `groq.snippet` and `groq.snippet.tag`
 
 <br /><br />
 
 ## ⚙️ Plugin Configuration
 
-This is the main configuration of the plugin. The available options are:
+This is the main configuration of the plugin/tool. The available options are:
 
 ```ts
 {
@@ -66,16 +67,36 @@ This is the main configuration of the plugin. The available options are:
   icon?: ComponentType
   // This option shows the documents used by the tool within the Structure Builder. The tool will use only published documents.
   showDocuments?: boolean
-  // You can define a list of roles for which this tool is editable. The '!' operator allows you to specify the opposite condition.
+  // You can define a list of roles for which this tool is not in view only mode. The '!' operator allows you to specify the opposite condition.
   editableFor?: string[]
 }
 ```
 
 <br /><br />
 
-## 🧩 Interface
+## 🏷️ Manage tags
 
+Tags allow you to categorize your queries under a specific topics. You can manage them via the dedicated CTA in the top-right corner.
 [photo]
+
+<br /><br />
+
+## 🧩 Manage snippets
+
+A snippet is composed by the following fields:
+
+- title: represents the name of the snippet and it's mandatory.
+- description: you can add a short description of your snippet. It will be visible also in the results list.
+- tags: you can associate multiple tags to you query. It could be useful if you want filter results by a specific tag.
+- query: this is the other mandatory field for a snippet and contains your GROQ query.
+- variables: you can also store parameters within your snippet in a JSON format.
+
+<br /><br />
+
+## 📄 Export snippets
+
+The tools comes with the possibility to export your queries in a CSV format.
+You can downlaod the csv directly from the 'Edit Snippet' modal or select multiple snippets from the results list to generate the CSV.
 
 <br /><br />
 
