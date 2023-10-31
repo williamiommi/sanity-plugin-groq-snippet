@@ -1,6 +1,6 @@
 # Sanity Groq Snippet
 
-A Sanity plugin that lets you store frequently used or complex GROQ queries within your Sanity Studio.
+A Sanity plugin that lets you store and have quick access to frequently used or complex GROQ queries within your Sanity Studio.
 
 - [⚡️ Features](#%EF%B8%8F-features)
 - [🔌 Installation](#-installation)
@@ -76,8 +76,12 @@ This is the main configuration of the plugin/tool. The available options are:
 
 ## 🏷️ Manage tags
 
-Tags allow you to categorize your queries under a specific topics. You can manage them via the dedicated CTA in the top-right corner.
-[photo]
+Tags allow you to categorize your queries under a specific topics. You can manage them via the dedicated call-to-action in the top-right corner.
+
+<p align="center">
+  <img width="70%" src="docs/images/tags-modal.jpg" alt="Tags Modal"/>
+  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/tags-modal.jpg" alt="Tags Modal"/> -->
+</p>
 
 <br /><br />
 
@@ -85,18 +89,28 @@ Tags allow you to categorize your queries under a specific topics. You can manag
 
 A snippet is composed by the following fields:
 
-- title: represents the name of the snippet and it's mandatory.
-- description: you can add a short description of your snippet. It will be visible also in the results list.
-- tags: you can associate multiple tags to you query. It could be useful if you want filter results by a specific tag.
-- query: this is the other mandatory field for a snippet and contains your GROQ query.
-- variables: you can also store parameters within your snippet in a JSON format.
+- Title: Represents the name of the snippet and is mandatory.
+- Description: You can add a short description of your snippet. It will also be visible in the results list.
+- You can associate multiple tags with your query. This could be useful for filtering results by a specific tag.
+- Query: This is the other mandatory field for a snippet and contains your GROQ query.
+- Variables: You can also store parameters within your snippet in a JSON format.
+
+<p align="center">
+  <img width="70%" src="docs/images/snippet-modal.jpg" alt="Snippet Modal"/>
+  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/snippet-modal.jpg" alt="Tags Modal"/> -->
+</p>
 
 <br /><br />
 
 ## 📄 Export snippets
 
-The tools comes with the possibility to export your queries in a CSV format.
-You can downlaod the csv directly from the 'Edit Snippet' modal or select multiple snippets from the results list to generate the CSV.
+The tool comes with the ability to export your queries in CSV format.
+You can download the CSV directly from the 'Edit Snippet' modal or select multiple snippets from the results list to generate the CSV.
+
+<p align="center">
+  <img width="70%" src="docs/images/export-csv.jpg" alt="Snippet Modal"/>
+  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/export-csv.jpg" alt="Tags Modal"/> -->
+</p>
 
 <br /><br />
 
