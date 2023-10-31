@@ -8,7 +8,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
 - [🏷️ Manage tags](#-manage-tags)
 - [🧩 Manage snippets](#-manage-snippets)
-- [📄 Export snippets](#-export-snippets)
+- [🛫 Export snippets](#-export-snippets)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
@@ -102,7 +102,7 @@ A snippet is composed by the following fields:
 
 <br /><br />
 
-## 📄 Export snippets
+## 🛫 Export snippets
 
 The tool comes with the ability to export your queries in CSV format.
 You can download the CSV directly from the 'Edit Snippet' modal or select multiple snippets from the results list to generate the CSV.
