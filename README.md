@@ -1,5 +1,10 @@
 # Sanity Groq Snippet
 
+<p align="center">
+  <img width="50%" src="docs/images/logo.4x.png" alt="Tags Modal"/>
+  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/logo.4x.png" alt="Tags Modal"/> -->
+</p>
+
 A Sanity plugin that lets you store and have quick access to frequently used or complex GROQ queries within your Sanity Studio.
 
 - [⚡️ Features](#%EF%B8%8F-features)
