@@ -6,7 +6,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - [🔌 Installation](#-installation)
 - [🧑‍💻 Usage](#-usage)
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
-- [🏷️ Manage tags](#-manage-tags)
+- [🏷️ Manage tags](#%EF%B8%8F-manage-tags)
 - [🧩 Manage snippets](#-manage-snippets)
 - [🛫 Export snippets](#-export-snippets)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
@@ -139,6 +139,8 @@ You can download the CSV directly from the 'Edit Snippet' modal or select multip
 ## 📝 License
 
 [MIT](LICENSE) © William Iommi
+
+<br /><br />
 
 ## 🧪 Develop & test
 
