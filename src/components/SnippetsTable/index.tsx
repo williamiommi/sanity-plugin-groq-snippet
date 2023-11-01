@@ -1,4 +1,5 @@
-import {Flex, Label} from '@sanity/ui'
+import {AddIcon} from '@sanity/icons'
+import {Button, Flex, Label, Text} from '@sanity/ui'
 import {useGroqSnippetStore} from '../../zustand/store'
 import SearchInput from '../SearchInput'
 import Row from './Row'
@@ -13,8 +14,31 @@ export const tableWidth = {
 }
 
 const SnippetsTable = () => {
+  const isToolLoaded = useGroqSnippetStore((s) => s.isToolLoaded)
   const snippets = useGroqSnippetStore((s) => s.snippets)
-  if (!snippets) return null
+  const openInsertUpdateSnippetsDialog = useGroqSnippetStore(
+    (s) => s.openInsertUpdateSnippetsDialog,
+  )
+  if (!isToolLoaded) return null
+
+  if (!snippets)
+    return (
+      <Flex direction="column" align="center" justify="center" gap={4} marginY={5}>
+        <span style={{fontSize: '60px'}}>👀</span>
+        <Text size={4} weight="bold">
+          Nothing to see here
+        </Text>
+        <Button
+          mode="ghost"
+          tone="primary"
+          icon={<AddIcon />}
+          text="Add your first snippet"
+          padding={4}
+          style={{cursor: 'pointer'}}
+          onClick={() => openInsertUpdateSnippetsDialog()}
+        />
+      </Flex>
+    )
 
   return (
     <>
