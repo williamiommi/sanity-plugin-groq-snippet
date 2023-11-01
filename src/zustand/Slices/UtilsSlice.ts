@@ -14,6 +14,7 @@ import {SnippetSlice} from './SnippetSlice'
 import {TagSlice} from './TagSlice'
 
 export interface UtilsSlice {
+  isToolLoaded: boolean
   searchTerm: string
   setSearchTerm: (searchTerm?: string) => void
   filterTags: GroqSnippetTag[]
@@ -21,7 +22,12 @@ export interface UtilsSlice {
   sortOption: SortOption
   setSortOption: (sortOption?: SortOption) => void
   getSnippet: (id: string) => Promise<GroqSnippet | undefined>
-  searchSnippets: (term: string, filterTags: GroqSnippetTag[], sortOption: SortOption) => void
+  searchSnippets: (
+    term: string,
+    filterTags: GroqSnippetTag[],
+    sortOption: SortOption,
+    zeroIsUndefined?: boolean,
+  ) => void
   fetchData: () => void
   exportData: () => Promise<GroqSnippetExport[]>
 }
@@ -32,6 +38,7 @@ export const createUtilsSlice: StateCreator<
   [],
   UtilsSlice
 > = (set, get) => ({
+  isToolLoaded: false,
   searchTerm: '',
   setSearchTerm: (searchTerm?: string) => set({searchTerm}),
   filterTags: [],
@@ -52,15 +59,20 @@ export const createUtilsSlice: StateCreator<
       return undefined
     }
   },
-  searchSnippets: async (term: string, filterTags: GroqSnippetTag[], sortOption: SortOption) => {
+  searchSnippets: async (
+    term: string,
+    filterTags: GroqSnippetTag[],
+    sortOption: SortOption,
+    zeroIsUndefined?: boolean,
+  ) => {
     const {client, toastError, setSnippets} = get()
     try {
-      const response = await client!.fetch(
+      const response = await client!.fetch<GroqSnippet[]>(
         QUERY_SNIPPETS_SEARCH(filterTags.length > 0, sortOption),
         {term, tags: filterTags.map((tag) => tag.name.current)},
         {perspective: 'published'},
       )
-      setSnippets(response)
+      setSnippets(zeroIsUndefined && response.length === 0 ? undefined : response)
     } catch (err: any) {
       toastError({err})
     }
@@ -77,6 +89,7 @@ export const createUtilsSlice: StateCreator<
       setSnippetsCount(response.snippetsCount)
       setTags(response.tags)
       setTagsCount(response.tagsCount)
+      set({isToolLoaded: true})
     } catch (err: any) {
       toastError({err})
     }

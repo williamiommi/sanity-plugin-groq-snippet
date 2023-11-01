@@ -32,6 +32,16 @@ export interface QueryInitialDataResponse {
   tagsCount: number
 }
 
+export const FETCH_SNIPPETS_DATA = `{
+  "snippets": ${SNIPPETS},
+  "snippetsCount": ${SNIPPETS_COUNT}
+}`
+
+export const FETCH_TAGS_DATA = `{
+  "tags": ${QUERY_TAGS},
+  "tagsCount": ${TAGS_COUNT}
+}`
+
 export const QUERY_INITIAL_DATA = `{
   "snippets": ${SNIPPETS},
   "snippetsCount": ${SNIPPETS_COUNT},

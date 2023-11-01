@@ -66,7 +66,7 @@ export const createSnippetSlice: StateCreator<
       })
       get().resetCheckedSnippets()
       get().closeDeleteSnippetsDialog()
-      get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption)
+      get().searchSnippets(get().searchTerm, get().filterTags, get().sortOption, true)
     } catch (err: any) {
       toastError({err})
     }
