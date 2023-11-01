@@ -1,8 +1,7 @@
 # Sanity Groq Snippet
 
 <p align="center">
-  <img width="50%" src="docs/images/logo.4x.png" alt="Tags Modal"/>
-  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/logo.4x.png" alt="Tags Modal"/> -->
+  <img width="50%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/logo.4x.png" alt="Tags Modal"/>
 </p>
 
 A Sanity plugin that lets you store and have quick access to frequently used or complex GROQ queries within your Sanity Studio.
@@ -83,8 +82,7 @@ This is the main configuration of the plugin/tool. The available options are:
 Tags allow you to categorize your queries under a specific topics. You can manage them via the dedicated call-to-action in the top-right corner.
 
 <p align="center">
-  <img width="70%" src="docs/images/tags-modal.jpg" alt="Tags Modal"/>
-  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/tags-modal.jpg" alt="Tags Modal"/> -->
+  <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/tags-modal.jpg" alt="Tags Modal"/>
 </p>
 
 <br /><br />
@@ -100,8 +98,7 @@ A snippet is composed by the following fields:
 - **Query Params**: You can also store parameters within your snippet in a JSON format.
 
 <p align="center">
-  <img width="70%" src="docs/images/snippet-modal.jpg" alt="Snippet Modal"/>
-  <!-- <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/snippet-modal.jpg" alt="Tags Modal"/> -->
+  <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/snippet-modal.jpg" alt="Tags Modal"/>
 </p>
 
 <br /><br />
