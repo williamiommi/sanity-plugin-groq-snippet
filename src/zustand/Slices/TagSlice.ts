@@ -1,5 +1,11 @@
 import {StateCreator} from 'zustand'
-import {QUERY_TAG_DELETE, QUERY_TAG_HAS_REFERENCES, TAG_EXISTS} from '../../queries'
+import {
+  FETCH_TAGS_DATA,
+  QUERY_TAG_DELETE,
+  QUERY_TAG_HAS_REFERENCES,
+  QueryInitialDataResponse,
+  TAG_EXISTS,
+} from '../../queries'
 import GroqSnippetTag, {
   GROQ_SNIPPET_TAG_TYPE,
   GroqSnippetTagMutation,
@@ -15,6 +21,7 @@ export interface TagSlice {
   setTags: (tags: GroqSnippetTag[]) => void
   resetCheckedTags: () => void
   setTagsCount: (tagsCount: number) => void
+  fetchTags: () => void
   addTag: (name: string) => void
   updateTag: (id: string, name: string) => void
   deleteTags: () => void
@@ -31,6 +38,20 @@ export const createTagSlice: StateCreator<
   setTags: (tags: GroqSnippetTag[]) => set({tags}),
   resetCheckedTags: () => set({tags: get().tags.map((t) => ({...t, checked: false}))}),
   setTagsCount: (tagsCount: number) => set({tagsCount}),
+  fetchTags: async () => {
+    const {client, toastError, setTags, setTagsCount} = get()
+    try {
+      const response = await client!.fetch<QueryInitialDataResponse>(
+        FETCH_TAGS_DATA,
+        {},
+        {perspective: 'published'},
+      )
+      setTags(response.tags)
+      setTagsCount(response.tagsCount)
+    } catch (err: any) {
+      toastError({err})
+    }
+  },
   addTag: async (name: string) => {
     const {client, toastSuccess, toastError} = get()
     try {
@@ -46,7 +67,7 @@ export const createTagSlice: StateCreator<
       })
       toastSuccess({description: 'Tag created'})
       get().closeInsertUpdateTagsDialog()
-      get().fetchData()
+      get().fetchTags()
     } catch (err: any) {
       toastError({err})
     }
@@ -57,7 +78,7 @@ export const createTagSlice: StateCreator<
       await client!.patch(id).set({'name.current': name}).commit()
       toastSuccess({description: 'Tag updated'})
       get().closeInsertUpdateTagsDialog()
-      get().fetchData()
+      get().fetchTags()
     } catch (err: any) {
       toastError({err})
     }
@@ -86,7 +107,7 @@ export const createTagSlice: StateCreator<
       toastSuccess({description: `Tag${ids.length > 1 ? 's' : ''} deleted`})
       get().resetCheckedTags()
       get().closeDeleteTagsDialog()
-      get().fetchData()
+      get().fetchTags()
     } catch (err: any) {
       toastError({err})
     }
