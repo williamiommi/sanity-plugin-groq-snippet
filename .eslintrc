@@ -11,5 +11,15 @@
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "plugin:react/jsx-runtime"
-  ]
+  ],
+  "rules": {
+    "react/jsx-no-bind": 0,
+    "react/require-default-props": [
+      "error",
+      {
+        "forbidDefaultForRequired": true,
+        "functions": "defaultArguments" //Here
+      }
+    ]
+  }
 }

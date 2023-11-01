@@ -11,6 +11,14 @@
     "rootDir": ".",
     "outDir": "./dist",
     "jsx": "react-jsx",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "types": [
+      "node",
+      "vitest",
+      "vitest/globals",
+      "@testing-library/react",
+      "@testing-library/user-event",
+      "@testing-library/jest-dom"
+    ]
   }
 }
