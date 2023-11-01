@@ -2,17 +2,17 @@
 import {CloseIcon} from '@sanity/icons'
 import {Badge, Box, Flex, Select, Text, TextInput} from '@sanity/ui'
 import {FormEvent, useMemo} from 'react'
-import {GroqSnippetExport} from '../../../../types/GroqSnippet'
+import {transformToLocaleDate} from '../../../../lib/dateUtils'
 import GroqSnippetTag from '../../../../types/GroqSnippetTag'
 import {useGroqSnippetStore} from '../../../../zustand/store'
-import GenerateCsvCta from '../../../GenerateCsvCta'
 import {TextAreaWrapper} from '../../../Styles'
 
 interface FormProps {
   title: string | undefined
   description: string | undefined
   formTags: GroqSnippetTag[] | undefined
-  snippetToExport: GroqSnippetExport | undefined
+  createdAt: string | undefined
+  updatedAt: string | undefined
   onChangeTitle: (value: string) => void
   onChangeDescription: (value: string) => void
   onSelectTag: (value: string) => void
@@ -22,7 +22,8 @@ const Form = ({
   title,
   description,
   formTags,
-  snippetToExport,
+  createdAt,
+  updatedAt,
   onChangeTitle,
   onChangeDescription,
   onSelectTag,
@@ -32,6 +33,9 @@ const Form = ({
     if (!formTags) return true
     return formTags.every((t) => t.checked)
   }, [formTags])
+
+  const localeCreatedAt = useMemo(() => transformToLocaleDate(createdAt), [createdAt])
+  const localeUpdatedAt = useMemo(() => transformToLocaleDate(updatedAt), [updatedAt])
 
   const handleChangeTitle = (e: FormEvent<HTMLInputElement>) => {
     onChangeTitle(e.currentTarget.value)
@@ -136,16 +140,18 @@ const Form = ({
         </Box>
       </Box>
       <Box style={{padding: '1.25rem'}}>
-        {snippetToExport && (
-          <Flex
-            align="center"
-            direction={['column', 'column', 'column', 'row']}
-            justify="flex-end"
-            gap={2}
-          >
-            <GenerateCsvCta snippetToExport={snippetToExport} />
-          </Flex>
-        )}
+        <Flex direction="column" align="flex-end" gap={2}>
+          {localeCreatedAt && (
+            <Text size={1} muted>
+              <strong>Created at:</strong> {localeCreatedAt}
+            </Text>
+          )}
+          {localeUpdatedAt && localeCreatedAt !== localeUpdatedAt && (
+            <Text size={1} muted>
+              <strong>Updated at:</strong> {localeUpdatedAt}
+            </Text>
+          )}
+        </Flex>
       </Box>
     </Flex>
   )

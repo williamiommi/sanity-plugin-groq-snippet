@@ -4,7 +4,6 @@ import {useGroqSnippetStore} from '../../zustand/store'
 
 const HeaderActions = () => {
   const openDeleteSnippetsDialog = useGroqSnippetStore((s) => s.openDeleteSnippetsDialog)
-  const openExportDialog = useGroqSnippetStore((s) => s.openExportDialog)
   const currentUserCanEdit = useGroqSnippetStore((s) => s.currentUserCanEdit)
   const {selectedSnippetsCount, hasSomeSnippetsChecked} = useSnippetsTable()
   return (
@@ -17,16 +16,6 @@ const HeaderActions = () => {
       <Flex align="center" justify="space-between">
         <Label size={1}>{selectedSnippetsCount} selected</Label>
         <Flex>
-          <Button
-            mode="bleed"
-            tone="default"
-            paddingY={1}
-            paddingX={2}
-            style={{cursor: 'pointer'}}
-            onClick={openExportDialog}
-          >
-            <Label size={1}>export</Label>
-          </Button>
           {currentUserCanEdit && (
             <Button
               mode="bleed"

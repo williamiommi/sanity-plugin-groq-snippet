@@ -25,7 +25,6 @@ const InsertUpdateDialog = () => {
     queryParams,
     queryParamsError,
     canConfirm,
-    snippetToExport,
     setTitle,
     setDescription,
     setFormTag,
@@ -59,7 +58,8 @@ const InsertUpdateDialog = () => {
             title={title}
             description={description}
             formTags={formTags}
-            snippetToExport={snippetToExport}
+            createdAt={snippetToUpdate?._createdAt}
+            updatedAt={snippetToUpdate?._updatedAt}
             onSelectTag={setFormTag}
             onChangeTitle={setTitle}
             onChangeDescription={setDescription}

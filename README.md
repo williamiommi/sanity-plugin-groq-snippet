@@ -14,6 +14,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - [🏷️ Manage tags](#%EF%B8%8F-manage-tags)
 - [🧩 Manage snippets](#-manage-snippets)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
+- [🛣️ Roadmap](#%EF%B8%8F-roadmap)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
 
@@ -124,6 +125,15 @@ A snippet is composed by the following fields:
     name: slug
   }
 ```
+
+<br /><br />
+
+## 🛣️ Roadmap
+
+- Pagination
+- 🤔 Export to CSV/PDF?
+- 🤔 CSV Import?
+- 🤔
 
 <br /><br />
 

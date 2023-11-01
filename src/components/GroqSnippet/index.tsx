@@ -3,7 +3,6 @@ import {Tool} from 'sanity'
 import {ThemeProvider} from 'styled-components'
 import useSetupTool from '../../hooks/useSetupTool'
 import GroqSnippetPluginOptions from '../../types/GroqSnippetPluginOptions'
-import DialogExport from '../Dialogs/Export'
 import DialogSnippets from '../Dialogs/Snippet'
 import DialogTags from '../Dialogs/Tag'
 import Heading from '../Heading'
@@ -26,7 +25,6 @@ const GroqSnippetTool = ({tool}: {tool: Tool<GroqSnippetPluginOptions>}) => {
       </Box>
       <DialogSnippets />
       <DialogTags />
-      <DialogExport />
     </ThemeProvider>
   )
 }
