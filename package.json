@@ -1,7 +1,7 @@
 {
   "name": "sanity-plugin-groq-snippet",
   "version": "1.0.0",
-  "description": "A sanity plugin to create reusable GROQ snippets within your Sanity Studio",
+  "description": "A Sanity plugin that lets you store and have quick access to frequently used or complex GROQ queries within your Sanity Studio.",
   "keywords": [
     "sanity",
     "sanity-plugin",
@@ -61,7 +61,6 @@
     "@uiw/react-codemirror": "^4.21.20",
     "js-beautify": "^1.14.9",
     "json5": "^2.2.3",
-    "papaparse": "^5.4.1",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -74,7 +73,6 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@types/js-beautify": "^1.14.1",
-    "@types/papaparse": "^5.3.10",
     "@types/react": "^18.2.23",
     "@types/styled-components": "^5.1.28",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
