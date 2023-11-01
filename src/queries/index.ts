@@ -3,7 +3,7 @@ import GroqSnippet, {GROQ_SNIPPET_TYPE} from '../types/GroqSnippet'
 import GroqSnippetTag, {GROQ_SNIPPET_TAG_TYPE} from '../types/GroqSnippetTag'
 
 const SNIPPET_PROJECTION = `_id, title, description, tags[]->{'_ref': _id, 'name': name.current}`
-const SNIPPET_EXPORT_PROJECTION = `_id, title, description, 'tags': tags[]->name.current, query, variables`
+const SNIPPET_EXPORT_PROJECTION = `_id, title, description, 'tags': tags[]->name.current, query, queryParams`
 
 export const SNIPPETS = `*[_type == "${GROQ_SNIPPET_TYPE}"] | order(lower(title) asc) {${SNIPPET_PROJECTION}}`
 export const SNIPPETS_COUNT = `count(*[_type == "${GROQ_SNIPPET_TYPE}"])`

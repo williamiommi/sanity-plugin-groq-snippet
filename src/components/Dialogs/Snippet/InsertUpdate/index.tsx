@@ -22,8 +22,8 @@ const InsertUpdateDialog = () => {
     description,
     formTags,
     query,
-    variables,
-    variablesError,
+    queryParams,
+    queryParamsError,
     canConfirm,
     snippetToExport,
     setTitle,
@@ -31,8 +31,8 @@ const InsertUpdateDialog = () => {
     setFormTag,
     setQuery,
     beautifyQuery,
-    setVariables,
-    beautifyVariables,
+    setQueryParams,
+    beautifyQueryParams,
     saveSnippet,
   } = useSnippetForm(snippetToUpdate)
 
@@ -97,11 +97,11 @@ const InsertUpdateDialog = () => {
                       <Text weight="semibold" size={1} style={{margin: '7px 0 7px 2px'}}>
                         Params
                       </Text>
-                      {variablesError && (
+                      {queryParamsError && (
                         <Tooltip
                           content={
                             <Box padding={2}>
-                              <Text size={1}>{variablesError}</Text>
+                              <Text size={1}>{queryParamsError}</Text>
                             </Box>
                           }
                         >
@@ -110,19 +110,19 @@ const InsertUpdateDialog = () => {
                       )}
                     </Flex>
                     <Flex align="center" gap={0}>
-                      <Copy2ClipboardCta value={variables} disabled={!variables} />
+                      <Copy2ClipboardCta value={queryParams} disabled={!queryParams} />
                       {currentUserCanEdit && (
-                        <BeautifyCta beautifyFn={beautifyVariables} disabled={!variables} />
+                        <BeautifyCta beautifyFn={beautifyQueryParams} disabled={!queryParams} />
                       )}
                     </Flex>
                   </Flex>
                   <Card
-                    {...(variablesError && {tone: 'critical'})}
+                    {...(queryParamsError && {tone: 'critical'})}
                     style={{width: '100%', height: '100%'}}
                   >
                     <CodeMirrorEditor
-                      value={variables}
-                      onChange={setVariables}
+                      value={queryParams}
+                      onChange={setQueryParams}
                       readOnly={!currentUserCanEdit}
                     />
                   </Card>

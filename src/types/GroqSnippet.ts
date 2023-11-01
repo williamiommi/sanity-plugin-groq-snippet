@@ -8,19 +8,19 @@ export interface GroqSnippet extends SanityDocumentLike {
   title: string
   description?: string
   query: string
-  variables?: string
+  queryParams?: string
   tags?: GroqSnippetTagReference[]
   checked?: boolean // used only in form for checkbox selection
 }
 
 export type GroqSnippetMutation = Pick<
   GroqSnippet,
-  '_type' | 'title' | 'description' | 'query' | 'tags' | 'variables'
+  '_type' | 'title' | 'description' | 'query' | 'tags' | 'queryParams'
 >
 
 export type GroqSnippetExport = Pick<
   GroqSnippet,
-  '_id' | '_type' | 'title' | 'description' | 'query' | 'variables'
+  '_id' | '_type' | 'title' | 'description' | 'query' | 'queryParams'
 > & {tags: string[]}
 
 export default GroqSnippet

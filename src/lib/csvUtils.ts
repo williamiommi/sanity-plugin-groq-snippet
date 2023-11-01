@@ -1,8 +1,8 @@
 import Papa from 'papaparse'
 import {GroqSnippetExport} from '../types/GroqSnippet'
 
-export const CsvHeader = ['Id', 'Title', 'Description', 'Tags', 'Query', 'Variables']
-const CsvHeaderAlternative = ['Title', 'Description', 'Tags', 'Query', 'Variables']
+export const CsvHeader = ['Id', 'Title', 'Description', 'Tags', 'Query', 'QueryParams']
+const CsvHeaderAlternative = CsvHeader.filter((header) => header !== 'Id')
 
 export const validateCsvHeader = (data: string[]): boolean => {
   return data.every((item) => CsvHeader.includes(item) || CsvHeaderAlternative.includes(item))
@@ -26,7 +26,7 @@ export const unparseCsvFile = (rows: GroqSnippetExport[]): string => {
       row.description,
       row.tags,
       row.query,
-      row.variables,
+      row.queryParams,
     ]),
   })
 }

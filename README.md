@@ -98,7 +98,7 @@ A snippet is composed by the following fields:
 - **Description**: You can add a short description of your snippet. It will also be visible in the results list.
 - **Tags**: You can associate multiple tags with your query. This could be useful for filtering results by a specific tag.
 - **Query**: This is the other mandatory field for a snippet and contains your GROQ query.
-- **Variables**: You can also store parameters within your snippet in a JSON format.
+- **Query Params**: You can also store parameters within your snippet in a JSON format.
 
 <p align="center">
   <img width="70%" src="docs/images/snippet-modal.jpg" alt="Snippet Modal"/>
@@ -128,7 +128,7 @@ You can download the CSV directly from the 'Edit Snippet' modal or select multip
     description?: string
     tags: 'groq.snippet.tag'[]
     query: text
-    variables?: text
+    queryParams?: text
   }
 ```
 

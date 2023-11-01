@@ -14,8 +14,8 @@ interface useSnippetFormReturn {
   title?: string
   description?: string
   query?: string
-  variables?: string
-  variablesError?: string | undefined
+  queryParams?: string
+  queryParamsError?: string | undefined
   formTags?: GroqSnippetTag[]
   snippetToExport: GroqSnippetExport | undefined
   setTitle: (title: string) => void
@@ -23,8 +23,8 @@ interface useSnippetFormReturn {
   setQuery: (query: string) => void
   beautifyQuery: () => void
   setFormTag: (query: string) => void
-  setVariables: (variables: string) => void
-  beautifyVariables: () => void
+  setQueryParams: (queryParams: string) => void
+  beautifyQueryParams: () => void
   saveSnippet: () => void
 }
 
@@ -35,11 +35,11 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
   const [title, setTitle] = useState(snippetToUpdate?.title)
   const [description, setDescription] = useState(snippetToUpdate?.description)
   const [query, setQuery] = useState(snippetToUpdate?.query)
-  const [variables, setVariables] = useState(snippetToUpdate?.variables)
-  const [variablesError, setVariablesError] = useState<string | undefined>()
+  const [queryParams, setQueryParams] = useState(snippetToUpdate?.queryParams)
+  const [queryParamsError, setQueryParamsError] = useState<string | undefined>()
   const canConfirm = useMemo(
-    () => !!title && !!query && !variablesError,
-    [title, query, variablesError],
+    () => !!title && !!query && !queryParamsError,
+    [title, query, queryParamsError],
   )
   const [formTags, setFormTags] = useState<GroqSnippetTag[]>([])
 
@@ -52,9 +52,9 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
       description: description!,
       tags: formTags.filter((tag) => tag.checked).map((tag) => tag.name.current),
       query: query!,
-      variables,
+      queryParams,
     }
-  }, [snippetToUpdate, title, description, formTags, query, variables])
+  }, [snippetToUpdate, title, description, formTags, query, queryParams])
 
   useEffect(() => {
     if (tags) {
@@ -91,7 +91,7 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
         title,
         description,
         query,
-        variables,
+        queryParams,
         tags: tagsToSave,
       }
 
@@ -103,13 +103,13 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     }
   }
 
-  const handleVariables = (value: string) => {
+  const handleQueryParams = (value: string) => {
     const isValid = isValidJSON(value)
     if (typeof isValid === 'boolean') {
-      setVariables(value)
-      setVariablesError(undefined)
+      setQueryParams(value)
+      setQueryParamsError(undefined)
     } else {
-      setVariablesError(isValid)
+      setQueryParamsError(isValid)
     }
   }
 
@@ -117,9 +117,9 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     if (query) setQuery(beautify(query))
   }, [query])
 
-  const beautifyVariables = useCallback(() => {
-    if (variables) setVariables(beautify(variables))
-  }, [variables])
+  const beautifyQueryParams = useCallback(() => {
+    if (queryParams) setQueryParams(beautify(queryParams))
+  }, [queryParams])
 
   return {
     title,
@@ -127,15 +127,15 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     formTags,
     canConfirm,
     query,
-    variables,
-    variablesError,
+    queryParams,
+    queryParamsError,
     snippetToExport,
     setQuery,
     beautifyQuery,
     setTitle,
     setDescription,
-    setVariables: handleVariables,
-    beautifyVariables,
+    setQueryParams: handleQueryParams,
+    beautifyQueryParams,
     saveSnippet,
     setFormTag,
   }
