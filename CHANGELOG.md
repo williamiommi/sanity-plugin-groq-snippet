@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/williamiommi/sanity-plugin-groq-snippet/compare/v1.0.0...v1.0.1) (2023-11-02)
+
+### Bug Fixes
+
+- issue with multiple codemirror packages ([562c83c](https://github.com/williamiommi/sanity-plugin-groq-snippet/commit/562c83cef2b0e9a6faf3af2249e1188ed38b3452))
+
 ## 1.0.0 (2023-11-02)
 
 ### Features
