@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/williamiommi/sanity-plugin-groq-snippet/compare/v1.0.1...v1.0.2) (2023-11-03)
+
+### Bug Fixes
+
+- minor on docs ([c3b8ef6](https://github.com/williamiommi/sanity-plugin-groq-snippet/commit/c3b8ef6593ca5561913bf60f77442df3c4d46c94))
+
 ## [1.0.1](https://github.com/williamiommi/sanity-plugin-groq-snippet/compare/v1.0.0...v1.0.1) (2023-11-02)
 
 ### Bug Fixes
