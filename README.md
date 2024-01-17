@@ -12,7 +12,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
 - [🏷️ Manage tags](#%EF%B8%8F-manage-tags)
 - [🧩 Manage snippets](#-manage-snippets)
-- [▶️ Load Snippet on Vision](#-load-snippet-on-vision)
+- [▶️ Load Snippet on Vision](#%EF%B8%8F-load-snippet-on-vision)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
