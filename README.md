@@ -12,6 +12,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - [⚙️ Plugin Configuration](#%EF%B8%8F-plugin-configuration)
 - [🏷️ Manage tags](#%EF%B8%8F-manage-tags)
 - [🧩 Manage snippets](#-manage-snippets)
+- [▶️ Load Snippet on Vision](#-load-snippet-on-vision)
 - [🗃️ Data Model](#%EF%B8%8F-data-model)
 - [📝 License](#-license)
 - [🧪 Develop & test](#-develop--test)
@@ -23,6 +24,7 @@ A Sanity plugin that lets you store and have quick access to frequently used or 
 - Sanity v3 plugin
 - Store your groq queries within the Sanity Studio
 - Use tags to mark your queries
+- v1.1.0+: Load your snippet on Vision tool
 
 <br /><br />
 
@@ -71,6 +73,8 @@ This is the main configuration of the plugin/tool. The available options are:
   showDocuments?: boolean
   // You can define a list of roles for which this tool is not in view only mode. The '!' operator allows you to specify the opposite condition.
   editableFor?: string[]
+  // If you changed the name of the Vision tool, you need to insert the same name here. This is how the plugin recognizes the correct tool to redirect to when you want to load your snippet.
+  visionToolCustomName?: string
 }
 ```
 
@@ -99,6 +103,14 @@ A snippet is composed by the following fields:
 <p align="center">
   <img width="70%" src="https://raw.githubusercontent.com/williamiommi/sanity-plugin-groq-snippet/main/docs/images/snippet-modal.jpg" alt="Tags Modal"/>
 </p>
+
+<br /><br />
+
+## ▶️ Load Snippet on Vision
+
+It is possible to load your snippet directly on the Vision Tool. The feature, available in the 'Edit snippet' modal, will redirect you to the installed Vision tool with your query (and parameters) preloaded.
+The 'Load it on Vision' CTA will be visible only if a valid Vision tool is available.
+If, for any reason, you changed the name of your Vision tool, you need to provide the same name to the `visionToolCustomName` configuration option.
 
 <br /><br />
 
