@@ -1,5 +1,8 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
+import {useProjectId} from 'sanity'
+import {useRouter} from 'sanity/router'
 import beautify from '../lib/beautify'
+import {VISION_LOCAL_STORAGE_VARIABLE} from '../lib/constants'
 import isValidJSON from '../lib/isValidJSON'
 import GroqSnippet, {
   GROQ_SNIPPET_TYPE,
@@ -26,12 +29,16 @@ interface useSnippetFormReturn {
   setQueryParams: (queryParams: string) => void
   beautifyQueryParams: () => void
   saveSnippet: () => void
+  loadSnippetOnVision: () => void
 }
 
 const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => {
+  const projectId = useProjectId()
+  const router = useRouter()
   const tags = useGroqSnippetStore((s) => s.tags)
   const addSnippet = useGroqSnippetStore((s) => s.addSnippet)
   const updateSnippet = useGroqSnippetStore((s) => s.updateSnippet)
+  const visionTool = useGroqSnippetStore((s) => s.visionTool)
   const [title, setTitle] = useState(snippetToUpdate?.title)
   const [description, setDescription] = useState(snippetToUpdate?.description)
   const [query, setQuery] = useState(snippetToUpdate?.query)
@@ -121,6 +128,20 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     if (queryParams) setQueryParams(beautify(queryParams))
   }, [queryParams])
 
+  const loadSnippetOnVision = useCallback(() => {
+    if (!visionTool) return
+    const localStorageVariable = `${VISION_LOCAL_STORAGE_VARIABLE}:${projectId}`
+    const lastQueryString = localStorage.getItem(localStorageVariable)
+    let newQueryObj = {query, params: queryParams}
+    if (lastQueryString) {
+      newQueryObj = JSON.parse(lastQueryString)
+      newQueryObj.query = query
+      newQueryObj.params = queryParams
+    }
+    localStorage.setItem(localStorageVariable, JSON.stringify(newQueryObj))
+    router.navigateUrl({path: `${visionTool.name}`, replace: false})
+  }, [projectId, router, visionTool, query, queryParams])
+
   return {
     title,
     description,
@@ -138,6 +159,7 @@ const useSnippetForm = (snippetToUpdate?: GroqSnippet): useSnippetFormReturn => 
     beautifyQueryParams,
     saveSnippet,
     setFormTag,
+    loadSnippetOnVision,
   }
 }
 

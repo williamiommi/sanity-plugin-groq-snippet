@@ -5,4 +5,5 @@ export default interface GroqSnippetPluginOptions {
   icon?: ComponentType
   showDocuments?: boolean
   editableFor?: string[]
+  visionToolCustomName?: string
 }
