@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/williamiommi/sanity-plugin-groq-snippet/compare/v1.0.2...v1.1.0) (2024-01-18)
+
+### Features
+
+- **load-snippet-vision:** load on vision cta ([083140e](https://github.com/williamiommi/sanity-plugin-groq-snippet/commit/083140e34976f8b409b98b58ccd008fa35366d20))
+
 ## [1.0.2](https://github.com/williamiommi/sanity-plugin-groq-snippet/compare/v1.0.1...v1.0.2) (2023-11-03)
 
 ### Bug Fixes
