@@ -109,7 +109,7 @@ A snippet is composed by the following fields:
 ## ▶️ Load Snippet on Vision
 
 It is possible to load your snippet directly on the Vision Tool. The feature, available in the 'Edit snippet' modal, will redirect you to the installed Vision tool with your query (and parameters) preloaded.
-The 'Load it on Vision' CTA will be visible only if a valid Vision tool is available.
+The 'Load on Vision' CTA will be visible only if a valid Vision tool is available.
 If, for any reason, you changed the name of your Vision tool, you need to provide the same name to the `visionToolCustomName` configuration option.
 
 <br /><br />
