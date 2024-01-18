@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {ToastContextValue} from '@sanity/ui'
-import {SanityClient} from 'sanity'
+import {SanityClient, Tool} from 'sanity'
 import {StateCreator} from 'zustand'
 import SimpleHtmlRenderer from '../../components/SimpleHtmlRenderer'
 import {TOOL_TITLE} from '../../lib/constants'
@@ -11,8 +11,10 @@ export interface SanitySlice {
   toast?: ToastContextValue
   currentUserCanEdit?: boolean
   toolName: string
+  visionTool?: Tool
   setupSanity: (client: SanityClient, toast: ToastContextValue) => void
   setToolName: (toolName: string) => void
+  setVisionTool: (visionTool: Tool) => void
   setCurrentUserCanEdit: (currentUserCanEdit: boolean) => void
   toastError: (toastMessage: ToastMessage) => void
   toastSuccess: (toastMessage: ToastMessage) => void
@@ -22,6 +24,7 @@ export const createSanitySlice: StateCreator<SanitySlice, [], [], SanitySlice> =
   toolName: TOOL_TITLE,
   setupSanity: (client: SanityClient, toast: ToastContextValue) => set({client, toast}),
   setToolName: (toolName: string) => set({toolName}),
+  setVisionTool: (visionTool: Tool) => set({visionTool}),
   setCurrentUserCanEdit: (currentUserCanEdit: boolean) => set({currentUserCanEdit}),
   toastError: ({err, description}: ToastMessage) => {
     const toast = get().toast

@@ -33,6 +33,7 @@ const InsertUpdateDialog = () => {
     setQueryParams,
     beautifyQueryParams,
     saveSnippet,
+    loadSnippetOnVision,
   } = useSnippetForm(snippetToUpdate)
 
   return (
@@ -45,6 +46,7 @@ const InsertUpdateDialog = () => {
           onCancel={closeInsertUpdateSnippetsDialog}
           canConfirm={canConfirm}
           onConfirm={saveSnippet}
+          onLoadSnippet={loadSnippetOnVision}
         />
       }
       onClose={closeInsertUpdateSnippetsDialog}
